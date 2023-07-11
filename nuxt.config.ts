@@ -3,6 +3,7 @@ import AutoImport from "unplugin-auto-import/vite";
 export default defineNuxtConfig({
 	modules: [
 		"@vueuse/nuxt",
+		"nuxt-headlessui",
 		"@nuxthq/ui",
 		"@nuxt/image-edge",
 		"nuxt-svgo"
@@ -13,7 +14,7 @@ export default defineNuxtConfig({
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
 			meta: [
-				{ name: "theme-color", content: "#000000" },
+				{ name: "theme-color", content: "#ffffff" },
 				{ name: "format-detection", content: "no" }
 			],
 			link: [
@@ -26,6 +27,12 @@ export default defineNuxtConfig({
 	},
 	experimental: {
 		typedPages: true
+	},
+	headlessui: {
+		prefix: ""
+	},
+	colorMode: {
+		preference: "light"
 	},
 	svgo: {
 		autoImportPath: "./assets/"

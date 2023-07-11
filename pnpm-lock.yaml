@@ -29,6 +29,9 @@ devDependencies:
   nuxt:
     specifier: ^3.6.2
     version: 3.6.2(@types/node@20.2.5)(eslint@8.44.0)(sass@1.63.6)(typescript@5.1.6)
+  nuxt-headlessui:
+    specifier: ^1.1.4
+    version: 1.1.4(vue@3.3.4)
   nuxt-svgo:
     specifier: ^3.3.0
     version: 3.3.0
@@ -1808,7 +1811,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.1
+      semver: 7.5.4
       tsutils: 3.21.0(typescript@5.1.6)
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -1849,7 +1852,7 @@ packages:
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.1.6)
       eslint: 8.44.0
       eslint-scope: 5.1.1
-      semver: 7.5.1
+      semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -5846,6 +5849,18 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /nuxt-headlessui@1.1.4(vue@3.3.4):
+    resolution: {integrity: sha512-/8C1w/nfBJBFzWvD/WUxwHFviPECO6owj8JgmwOK348E0IE7ZKhpFuEuy8rZ2hSm/JWexvz3QbmMRfndfzl3qw==}
+    dependencies:
+      '@headlessui/vue': 1.7.14(vue@3.3.4)
+      '@nuxt/kit': 3.6.2
+      pathe: 1.1.1
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+      - vue
+    dev: true
+
   /nuxt-svgo@3.3.0:
     resolution: {integrity: sha512-kUxMjxdufwWsjXqW5famZljc0Z3uV01ivm3V8mtQGc3u0yuYafZA9Qiatp0oFF7kkq11vYVeuPRcoE+eNIo9bw==}
     peerDependencies:
@@ -8199,7 +8214,7 @@ packages:
       espree: 9.5.2
       esquery: 1.5.0
       lodash: 4.17.21
-      semver: 7.5.1
+      semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
     dev: true

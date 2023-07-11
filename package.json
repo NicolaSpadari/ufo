@@ -22,6 +22,7 @@
         "@vueuse/nuxt": "^10.2.1",
         "eslint": "^8.44.0",
         "nuxt": "^3.6.2",
+        "nuxt-headlessui": "^1.1.4",
         "nuxt-svgo": "^3.3.0",
         "sass": "^1.63.6",
         "typescript": "^5.1.6",

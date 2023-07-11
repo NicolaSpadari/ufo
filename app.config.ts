@@ -3,8 +3,5 @@ export default defineAppConfig({
 		primary: "emerald",
 		gray: "zinc",
 		safeListColors: ["emerald", "zinc"]
-	},
-	colorMode: {
-		preference: "light"
 	}
 });
