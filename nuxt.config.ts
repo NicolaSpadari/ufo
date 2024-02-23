@@ -1,59 +1,65 @@
 import AutoImport from "unplugin-auto-import/vite";
+import { colors } from "@unocss/preset-mini";
+
+const dark800 = typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800];
 
 export default defineNuxtConfig({
-	modules: [
+	"modules": [
 		"@vueuse/nuxt",
-		"nuxt-headlessui",
-		"@nuxthq/ui",
-		"@nuxt/image-edge",
+		"@unocss/nuxt",
+		"@nuxt/image",
 		"nuxt-svgo"
 	],
-	app: {
-		head: {
-			title: "Ufo",
-			charset: "utf-8",
-			viewport: "width=device-width, initial-scale=1",
-			meta: [
-				{ name: "theme-color", content: "#ffffff" },
-				{ name: "format-detection", content: "no" }
+	runtimeConfig: {
+		redditApiKey: process.env.REDDIT_API_KEY,
+		redditSecretKey: process.env.REDDIT_SECRET_KEY
+	},
+	"app": {
+		"head": {
+			"title": "Nuxt 3 template",
+			"charset": "utf-8",
+			"viewport": "width=device-width, initial-scale=1",
+			"meta": [
+				{ "name": "theme-color", "content": dark800 },
+				{ "name": "format-detection", "content": "no" }
 			],
-			link: [
-				{ rel: "shortcut-icon", href: "/favicon.svg" }
+			"bodyAttrs": {
+				"class": "font-text"
+			},
+			"link": [
+				{ "rel": "shortcut-icon", "href": "/favicon.svg" }
 			],
-			noscript: [
-				{ children: "JavaScript is required to run this project" }
+			"noscript": [
+				{ "children": "JavaScript is required to run this project" }
 			]
 		}
 	},
-	experimental: {
-		typedPages: true
+	"experimental": {
+		"typedPages": true
 	},
-	headlessui: {
-		prefix: ""
+	"css": [
+		"@unocss/reset/tailwind.css"
+	],
+	"svgo": {
+		"autoImportPath": "./assets/"
 	},
-	colorMode: {
-		preference: "light"
-	},
-	svgo: {
-		autoImportPath: "./assets/"
-	},
-	vite: {
-		plugins: [
+	"vite": {
+		"plugins": [
 			AutoImport({})
 		]
 	},
-	vue: {
-		compilerOptions: {
-			isCustomElement: (tag: string) => tag.startsWith("i-")
+	"vue": {
+		"compilerOptions": {
+			"isCustomElement": (tag: string) => tag.startsWith("i-")
 		}
 	},
-	nitro: {
-		prerender: {
-			routes: ["/"]
+	"nitro": {
+		"prerender": {
+			"routes": ["/"]
 		}
 	},
-	sourcemap: {
-		server: true,
-		client: false
+	"sourcemap": {
+		"server": true,
+		"client": false
 	}
 });
