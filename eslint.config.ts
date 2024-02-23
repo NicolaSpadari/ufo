@@ -20,7 +20,7 @@ export default eslintConfig(
 			"no-new-func": "off",
 			"style/semi": ["error", "always"],
 			"style/indent": ["error", "tab"],
-			"style/quote-props": ["warn", "always"],
+			"style/quote-props": ["warn", "as-needed"],
 			"style/comma-dangle": ["warn", "never"],
 			"style/brace-style": ["warn", "1tbs"],
 			"style/arrow-parens": ["error", "always"],

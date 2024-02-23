@@ -1,20 +1,13 @@
 <template>
-    <div>
-        <p>me:</p>
-
-        <div>
-            <pre>data:{{ data }}</pre>
-        </div>
-    </div>
+	<div>
+		<pre>{{ user }}</pre>
+	</div>
 </template>
 
 <script lang="ts" setup>
-    const { data } = await useFetch("/api/reddit");
-</script>
+	const { user, setUser } = useUser();
 
-<style scoped>
-	.tkn{
-		max-width: 12rem;
-		overflow-x: scroll;
+	if (!user.value) {
+		await setUser();
 	}
-</style>
+</script>
