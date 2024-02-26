@@ -16,10 +16,11 @@ export default defineNuxtConfig({
 	},
 	app: {
 		head: {
-			title: "Nuxt 3 template",
+			title: "Ufo",
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
 			meta: [
+				{ name: "description", content: "A reddit clone that uses the official APIs" },
 				{ name: "theme-color", content: dark800 },
 				{ name: "format-detection", content: "no" }
 			],
@@ -57,11 +58,6 @@ export default defineNuxtConfig({
 	vue: {
 		compilerOptions: {
 			isCustomElement: (tag: string) => tag.startsWith("i-")
-		}
-	},
-	nitro: {
-		prerender: {
-			routes: ["/"]
 		}
 	},
 	sourcemap: {
