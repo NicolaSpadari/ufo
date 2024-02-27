@@ -1,6 +1,7 @@
 <template>
-	<SiteNavbar />
-	<NuxtPage />
+	<NuxtLayout>
+		<NuxtPage />
+	</NuxtLayout>
 </template>
 
 <style lang="scss">

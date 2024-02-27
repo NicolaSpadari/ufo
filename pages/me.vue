@@ -1,13 +1,9 @@
 <template>
 	<div>
-		<pre>{{ user }}</pre>
+		<pre>user: {{ user }}</pre>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { user, setUser } = useUser();
-
-	if (!user.value) {
-		await setUser();
-	}
+	const { user } = useUser();
 </script>

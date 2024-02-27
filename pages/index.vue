@@ -1,20 +1,15 @@
 <template>
-	<div class="grid h-screen place-content-center">
+	<div class="grid place-content-center">
 		<NuxtLink v-if="!user" to="/login">
 			Login
 		</NuxtLink>
 
-		<pre v-else>
-			{{ feed }}
-		</pre>
+		<div v-else>
+			Page
+		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
 	const { user } = useUser();
-	const { feed, getFeed } = useReddit();
-
-	// if (!feed.value.length) {
-	// 	await getFeed();
-	// }
 </script>

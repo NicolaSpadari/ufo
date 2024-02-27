@@ -1,15 +1,39 @@
 export default defineEventHandler(async (event) => {
-	const access_token = getCookie(event, "access_token");
+	const accessToken = getCookie(event, "accessToken");
+	const subreddits = [] as DemoSubreddit[];
+	const limit = 100;
 
-	const data = await $fetch("https://oauth.reddit.com/.json", {
-		headers: {
-			Authorization: `Bearer ${access_token}`,
-			Content_Type: "application/json",
-			Accept: "application/json"
+	const getSubreddits = async (after = "") => {
+		const data = await $fetch("https://oauth.reddit.com/subreddits/mine/subscriber", {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				Content_Type: "application/json",
+				Accept: "application/json"
+			},
+			query: {
+				limit,
+				after
+			}
+		});
+
+		subreddits.push(...data.data.children);
+
+		if(data.data.dist === limit){
+			await getSubreddits(data.data.children[data.data.children.length - 1].data.name);
 		}
-	});
+	}
 
-	console.log("res", data);
+	await getSubreddits();
 
-	return data;
+	return subreddits.sort((a, b) => a.data.display_name.localeCompare(b.data.display_name));
+
+	return {
+		after: data.data.after,
+		before: data.data.before,
+		subreddits: data.data.children.map((sr) => {
+			return {
+				name: sr.data.display_name
+			};
+		})
+	};
 });

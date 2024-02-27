@@ -1,6 +1,8 @@
 export default defineEventHandler(async (event) => {
 	const { code, redirectUrl } = await readBody(event);
-	const { redditApiKey, redditSecretKey } = useRuntimeConfig();
+	const { public: { redditApiKey }, redditSecretKey } = useRuntimeConfig();
+
+	// eslint-disable-next-line node/prefer-global/buffer
 	const btoa = Buffer.from(`${redditApiKey}:${redditSecretKey}`).toString("base64");
 
 	const res = await $fetch<RedditToken>("https://www.reddit.com/api/v1/access_token", {

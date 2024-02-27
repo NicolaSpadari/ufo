@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts" setup>
-	const { redditApiKey } = useRuntimeConfig();
-	const { authRedirectUrl } = useConstants();
+	const { public: { redditApiKey } } = useRuntimeConfig();
+	const { authRedirectUrl, randomString } = useConstants();
 
-	const endpoint = `https://www.reddit.com/api/v1/authorize?client_id=${redditApiKey}&response_type=code&state=test&redirect_uri=${authRedirectUrl}&duration=permanent&scope=identity,mysubreddits`;
+	const endpoint = `https://www.reddit.com/api/v1/authorize?client_id=${redditApiKey}&response_type=code&state=${randomString}&redirect_uri=${authRedirectUrl}&duration=permanent&scope=identity,mysubreddits`;
 </script>

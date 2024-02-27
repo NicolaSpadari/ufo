@@ -11,7 +11,9 @@ export default defineNuxtConfig({
 		"nuxt-svgo"
 	],
 	runtimeConfig: {
-		redditApiKey: process.env.REDDIT_API_KEY,
+		public: {
+			redditApiKey: process.env.REDDIT_API_KEY
+		},
 		redditSecretKey: process.env.REDDIT_SECRET_KEY
 	},
 	app: {
@@ -46,13 +48,7 @@ export default defineNuxtConfig({
 	},
 	vite: {
 		plugins: [
-			AutoImport({
-				imports: [
-					{
-						"buffer/": ["Buffer"]
-					}
-				]
-			})
+			AutoImport({})
 		]
 	},
 	vue: {

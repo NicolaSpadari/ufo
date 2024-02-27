@@ -1,9 +1,11 @@
 export default defineEventHandler(async (event) => {
-	const access_token = getCookie(event, "access_token");
+	const accessToken = getCookie(event, "accessToken");
+
+	console.log("server access token", accessToken);
 
 	const data = await $fetch("https://oauth.reddit.com/api/v1/me", {
 		headers: {
-			Authorization: `Bearer ${access_token}`,
+			Authorization: `Bearer ${accessToken}`,
 			Content_Type: "application/json",
 			Accept: "application/json"
 		}

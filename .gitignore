@@ -7,5 +7,3 @@ node_modules
 .output
 .env
 dist
-localhost-key.pem
-localhost.pem
