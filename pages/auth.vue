@@ -1,16 +1,24 @@
 <template>
 	<div>
-		<div>Loading...</div>
+		<button v-if="code" @click="getCredentials(code)">get credentials</button>
+
+		<p v-else>No code provided</p>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { setTokens } = useTokens();
-	const { setUser } = useUser();
-	const router = useRouter();
+	const code = ref("");
+	const route = useRoute();
+	const { getCredentials } = useSnoowrap();
+	
+	code.value = new URLSearchParams(route.fullPath).get("code")!;
 
-	await setTokens();
-	await setUser();
+	// const { setTokens } = useTokens();
+	// const { setUser } = useUser();
+	// const router = useRouter();
 
-	router.push("/me");
+	// await setTokens();
+	// await setUser();
+
+	// router.push("/me");
 </script>

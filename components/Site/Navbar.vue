@@ -6,15 +6,12 @@
 		<NuxtLink to="/me">
 			Me
 		</NuxtLink>
-		<NuxtLink v-if="!user" to="/login">
+		<NuxtLink :to="authUrl">
 			Login
 		</NuxtLink>
-		<button v-else @click="logout()">
-			Logout
-		</button>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { user, logout } = useUser();
+	const { authUrl } = useSnoowrap();
 </script>

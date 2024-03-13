@@ -1,5 +1,6 @@
 import AutoImport from "unplugin-auto-import/vite";
 import { colors } from "@unocss/preset-mini";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 const dark800 = typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800];
 
@@ -8,13 +9,15 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 		"@unocss/nuxt",
 		"@nuxt/image",
+		"@pinia/nuxt",
+		"@pinia-plugin-persistedstate/nuxt",
 		"nuxt-svgo"
 	],
 	runtimeConfig: {
 		public: {
-			redditApiKey: process.env.REDDIT_API_KEY
+			redditApiKey: process.env.REDDIT_API_KEY,
+			redditSecretKey: process.env.REDDIT_SECRET_KEY
 		},
-		redditSecretKey: process.env.REDDIT_SECRET_KEY
 	},
 	app: {
 		head: {
@@ -22,7 +25,7 @@ export default defineNuxtConfig({
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
 			meta: [
-				{ name: "description", content: "A reddit clone that uses the official APIs" },
+				{ name: "description", content: "A Reddit clone" },
 				{ name: "theme-color", content: dark800 },
 				{ name: "format-detection", content: "no" }
 			],
@@ -48,7 +51,10 @@ export default defineNuxtConfig({
 	},
 	vite: {
 		plugins: [
-			AutoImport({})
+			AutoImport({
+				imports: [{ "snoowrap": [ ["default", "Snoowrap"] ] }]
+			}),
+			nodePolyfills()
 		]
 	},
 	vue: {
@@ -56,6 +62,7 @@ export default defineNuxtConfig({
 			isCustomElement: (tag: string) => tag.startsWith("i-")
 		}
 	},
+	ssr: false,
 	sourcemap: {
 		server: true,
 		client: false
