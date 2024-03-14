@@ -29,12 +29,16 @@ export const useReddit = () => {
 			client.value!.getMe().then(me => {
 				user.value = me;
 
-				// @ts-ignore: "then" exists in getSubscriptions() function
-				client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
-					subscriptions.value = subreddits;
-				})
+				setSubscriptions();
 			});
 		});
+	}
+
+	const setSubscriptions = () => {
+		// @ts-ignore: "then" exists in getSubscriptions() function
+		client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
+			subscriptions.value = subreddits.sort((a, b) => a.display_name.localeCompare(b.display_name));
+		})
 	}
 
 	const initializeClient = () => {
@@ -57,6 +61,7 @@ export const useReddit = () => {
 		authorize,
 		logout,
 		client,
-		initializeClient
+		initializeClient,
+		setSubscriptions
 	}
 }

@@ -1,6 +1,8 @@
 <template>
 	<NuxtLayout>
 		<NuxtPage />
+
+		<!-- <Dev /> -->
 	</NuxtLayout>
 </template>
 
@@ -16,7 +18,7 @@
 	@apply min-h-screen;
 }
 body {
-	@apply overflow-x-hidden;
+	@apply overflow-hidden;
 }
 img {
 	-webkit-user-drag: none;

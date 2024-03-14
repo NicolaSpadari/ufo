@@ -1,11 +1,9 @@
 <template>
-	<div>
-		<p text-center>Subreddit: {{ ($route.params as RouteParams).subreddit }}</p>
-
-		<div v-if="posts.length" space-y-4 max-h="90vh" overflow-y="auto">
-			<div v-for="post in posts" :key="post.name">
+	<div ref="container" col-span-9 overflow-y-scroll>
+		<div v-if="props.posts.length" space-y-7>
+			<div v-for="post in props.posts" :key="post.name">
 				<details>
-					<summary>{{ post.title }}</summary>
+					<summary>{{ post.title }} ({{ post.subreddit_name_prefixed }})</summary>
 
 					<pre>
 						{{ post }}
@@ -29,12 +27,14 @@
 </template>
 
 <script lang="ts" setup>
-	const route = useRoute();
-	const { client } = useReddit();
-	const posts = ref<Submission[]>([]);
+	const props = defineProps<{
+		posts: Submission[]
+	}>();
 
-	client.value!.getNew((route.params as RouteParams).subreddit, { limit: 10 }).then(result => {
-		posts.value = result;
-		console.log("subreddit posts", posts.value)
+	const emit = defineEmits(["more"]);
+	const container = ref<HTMLElement | null>(null);
+
+	useInfiniteScroll(container, () => {
+		emit("more");
 	});
 </script>

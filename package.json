@@ -21,7 +21,9 @@
 	"dependencies": {
 		"@nuxt/image": "^1.4.0",
 		"@pinia/nuxt": "^0.5.1",
-		"snoowrap": "^1.23.0"
+		"snoowrap": "^1.23.0",
+		"unocss-preset-grid": "^1.5.0",
+		"vue-plyr": "^7.0.0"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^2.8.1",
