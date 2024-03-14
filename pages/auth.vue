@@ -1,24 +1,17 @@
 <template>
 	<div>
-		<button v-if="code" @click="getCredentials(code)">get credentials</button>
-
-		<p v-else>No code provided</p>
+		Loading...
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const code = ref("");
 	const route = useRoute();
 	const { getCredentials } = useSnoowrap();
-	
-	code.value = new URLSearchParams(route.fullPath).get("code")!;
+	const { randomString } = useConstants();
 
-	// const { setTokens } = useTokens();
-	// const { setUser } = useUser();
-	// const router = useRouter();
+	const reddit = useRedditStore();
 
-	// await setTokens();
-	// await setUser();
-
-	// router.push("/me");
+	if(route.query.state === randomString){
+		getCredentials(route.query.code as string);
+	}
 </script>

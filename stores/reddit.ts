@@ -1,4 +1,4 @@
-export const useStore = defineStore("reddit", () => {
+export const useRedditStore = defineStore("reddit", () => {
 	const someValue = ref("initial");
 
 	return {

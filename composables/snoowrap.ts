@@ -1,7 +1,6 @@
 import snoowrap from "snoowrap";
 
 export const useSnoowrap = () => {
-	const credentials = ref();
 	const config = useRuntimeConfig();
 	const { allScopes, authRedirectUrl, randomString, userAgent } = useConstants();	
 
@@ -18,6 +17,7 @@ export const useSnoowrap = () => {
 			code: authCode,
 			userAgent,
 			clientId: config.public.redditApiKey,
+			clientSecret: config.public.redditSecretKey,
 			redirectUri: authRedirectUrl
 		}).then(res => console.log("res is", res));
 	}
