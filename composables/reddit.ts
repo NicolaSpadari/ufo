@@ -2,7 +2,7 @@ const client = ref<Snoowrap | null>(null);
 
 export const useReddit = () => {
 	const config = useRuntimeConfig();
-	const redditStore = useRedditStore();
+	const { accessToken, refreshToken, user, subscriptions } = storeToRefs(useRedditStore());
 	const { allScopes, authRedirectUrl, randomString, userAgent } = useConstants();
 
 	const authUrl = reddit.getAuthUrl({
@@ -21,16 +21,17 @@ export const useReddit = () => {
 			clientSecret: config.public.redditSecretKey,
 			redirectUri: authRedirectUrl
 		}).then(res => {
-			redditStore.accessToken = res.accessToken;
-			redditStore.refreshToken = res.refreshToken
+			accessToken.value = res.accessToken;
+			refreshToken.value = res.refreshToken
 
 			initializeClient();
 
-			client.value.getMe().then(user => {
-				redditStore.user = user;
+			client.value!.getMe().then(me => {
+				user.value = me;
 
-				client.value.getSubscriptions({ limit: 999 }).then(subreddits => {
-					redditStore.subscriptions = subreddits;
+				// @ts-ignore: "then" exists in getSubscriptions() function
+				client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
+					subscriptions.value = subreddits;
 				})
 			});
 		});
@@ -41,16 +42,14 @@ export const useReddit = () => {
 			userAgent,
 			clientId: config.public.redditApiKey,
 			clientSecret: config.public.redditSecretKey,
-			refreshToken: redditStore.refreshToken
+			refreshToken: refreshToken.value
 		});
-
-		console.log("client initialized")
 	}
 
 	const logout = () => {
-		redditStore.user = null;
-		redditStore.accessToken = "";
-		redditStore.refreshToken = "";
+		user.value = null;
+		accessToken.value = "";
+		refreshToken.value = "";
 	}
 	
 	return {

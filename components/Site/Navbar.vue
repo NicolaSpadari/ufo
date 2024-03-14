@@ -6,7 +6,7 @@
 		<NuxtLink to="/me">
 			Me
 		</NuxtLink>
-		<NuxtLink v-if="!redditStore.user" :to="authUrl">
+		<NuxtLink v-if="!user" :to="authUrl">
 			Login
 		</NuxtLink>
 		<button v-else @click="logout()">
@@ -17,5 +17,5 @@
 
 <script lang="ts" setup>
 	const { authUrl, logout } = useReddit();
-	const redditStore = useRedditStore();
+	const { user } = storeToRefs(useRedditStore());
 </script>

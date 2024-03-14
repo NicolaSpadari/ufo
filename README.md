@@ -1,11 +1,13 @@
-<h1 align="center">Personal Nuxt 3 template</h1>
+<h1 align="center">UFO</h1>
 <hr />
+
+A lightweight Reddit client made with Nuxt
 
 ## Usage
 
 Clone to local:
 ```sh
-$ npx degit NicolaSpadari/nuxt-template my-nuxt-app
+$ npx degit NicolaSpadari/ufo my-ufo
 ```
 
 Install dependencies:

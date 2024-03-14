@@ -58,7 +58,7 @@ export default defineNuxtConfig({
 					},
 					{
 						from: "snoowrap",
-						imports: ["RedditUser", "Subreddit"],
+						imports: ["RedditUser", "Subreddit", "Submission"],
 						type: true
 					},
 					{

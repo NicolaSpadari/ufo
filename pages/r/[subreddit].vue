@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<p text-center>Subreddit: {{ $route.params.subreddit }}</p>
+		<p text-center>Subreddit: {{ ($route.params as RouteParams).subreddit }}</p>
 
 		<div v-if="posts.length" space-y-4>
 			<div v-for="post in posts" :key="post.name">
@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 	const route = useRoute();
 	const { client } = useReddit();
-	const posts = ref<any[]>([]);
+	const posts = ref<Submission[]>([]);
 
-	client.value.getNew(route.params.subreddit).then(result => posts.value = result);
+	client.value!.getNew((route.params as RouteParams).subreddit).then(result => posts.value = result);
 </script>

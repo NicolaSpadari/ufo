@@ -1,11 +1,11 @@
 <template>
 	<div class="grid place-content-center">
-		<div v-if="redditStore.user">
-			Logged in as {{ redditStore.user.name }}
+		<div v-if="user">
+			Logged in as {{ user.name }}
 		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const redditStore = useRedditStore();
+	const { user } = storeToRefs(useRedditStore())
 </script>

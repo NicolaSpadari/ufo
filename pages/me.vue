@@ -5,5 +5,5 @@
 </template>
 
 <script lang="ts" setup>
-	const { user } = useUser();
+	const { user } = storeToRefs(useRedditStore());
 </script>
