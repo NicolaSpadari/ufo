@@ -6,12 +6,16 @@
 		<NuxtLink to="/me">
 			Me
 		</NuxtLink>
-		<NuxtLink :to="authUrl">
+		<NuxtLink v-if="!redditStore.user" :to="authUrl">
 			Login
 		</NuxtLink>
+		<button v-else @click="logout()">
+			Logout
+		</button>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { authUrl } = useSnoowrap();
+	const { authUrl, logout } = useReddit();
+	const redditStore = useRedditStore();
 </script>

@@ -6,5 +6,16 @@
 export {}
 declare global {
   const Snoowrap: typeof import('snoowrap')['default']
-  const snoowrap: typeof import('Snoowrap')['default']
+  const default: typeof import('snoowrap')['default']
+  const reddit: typeof import('@/utils/snoowrap')['reddit']
+  const snoowrap: typeof import('@/utils/snoowrap')['snoowrap']
+}
+// for type re-export
+declare global {
+  // @ts-ignore
+  export type { RedditUser, Subreddit } from 'snoowrap'
+  import('snoowrap')
+  // @ts-ignore
+  export type { Snoowrap } from '@/utils/snoowrap'
+  import('@/utils/snoowrap')
 }

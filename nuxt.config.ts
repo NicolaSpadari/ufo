@@ -52,7 +52,21 @@ export default defineNuxtConfig({
 	vite: {
 		plugins: [
 			AutoImport({
-				imports: [{ "snoowrap": [ ["default", "Snoowrap"] ] }]
+				imports: [
+					{
+						"@/utils/snoowrap": [["reddit", "reddit"]]
+					},
+					{
+						from: "snoowrap",
+						imports: ["RedditUser", "Subreddit"],
+						type: true
+					},
+					{
+						from: "@/utils/snoowrap",
+						imports: ["Snoowrap"],
+						type: true
+					}
+				]
 			}),
 			nodePolyfills()
 		]

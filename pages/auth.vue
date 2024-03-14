@@ -5,13 +5,15 @@
 </template>
 
 <script lang="ts" setup>
+	const router = useRouter();
 	const route = useRoute();
-	const { getCredentials } = useSnoowrap();
+	const { authorize } = useReddit();
 	const { randomString } = useConstants();
 
-	const reddit = useRedditStore();
-
 	if(route.query.state === randomString){
-		getCredentials(route.query.code as string);
+		authorize(route.query.code as string);
+		router.push("/")
+	}else{
+		alert("Code mismatch")
 	}
 </script>

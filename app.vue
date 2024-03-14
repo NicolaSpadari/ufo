@@ -4,6 +4,11 @@
 	</NuxtLayout>
 </template>
 
+<script lang="ts" setup>
+	const { initializeClient } = useReddit();
+	initializeClient();
+</script>
+
 <style lang="scss">
 	html {
 	-webkit-tap-highlight-color: transparent;

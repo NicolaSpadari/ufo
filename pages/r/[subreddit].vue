@@ -2,32 +2,28 @@
 	<div>
 		<p text-center>Subreddit: {{ $route.params.subreddit }}</p>
 
-		<ul v-if="data?.data.children" space-y-8>
-			<li v-for="post in data.data.children" :key="post.data.id">
-				<p>{{ post.data.title }}</p>
-
-				<div v-if="post.data.preview?.enabled">
-					<NuxtImg :src="post.data.preview.images[0].source.url"/>
-				</div>
-
+		<div v-if="posts.length" space-y-4>
+			<div v-for="post in posts" :key="post.name">
 				<details>
-					<summary cursor-pointer>debug:</summary>
-					<pre text-sm>
+					<summary>{{ post.title }}</summary>
+
+					<pre>
 						{{ post }}
 					</pre>
 				</details>
-			</li>
-		</ul>
+
+				<p>{{ post.title }}</p>
+
+				<!-- <NuxtImg v-if="post.thumbnail" :src="post.preview.images[0].resolutions[post.preview.images[0].resolutions.length-1].url" /> -->
+			</div>
+		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
 	const route = useRoute();
-	const { data } = await useFetch("/api/reddit/posts", {
-		query: {
-			subreddit: route.params.subreddit
-		}
-	})
-	
-	console.log("res", data.value)
+	const { client } = useReddit();
+	const posts = ref<any[]>([]);
+
+	client.value.getNew(route.params.subreddit).then(result => posts.value = result);
 </script>

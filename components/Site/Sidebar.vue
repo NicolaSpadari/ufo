@@ -1,18 +1,19 @@
 <template>
-	<ul v-if="user && feed">
-		<li v-for="(subreddit, sIndex) in feed" :key="sIndex">
-			<NuxtLink :to="`/r/${subreddit.data.display_name}`">
-				{{ subreddit.data.display_name }}
-			</NuxtLink>
-		</li>
-	</ul>
+	<div>
+		<p>Sidebar</p>
+
+		<ul v-if="redditStore.subscriptions.length" m-4 space-y-3>
+			<li v-for="subreddit in redditStore.subscriptions" :key="subreddit.name">
+				<NuxtLink :to="`/${subreddit.display_name_prefixed.toLowerCase()}`">
+					{{ subreddit.display_name_prefixed }}
+				</NuxtLink>
+			</li>
+		</ul>
+
+		<pre>{{ redditStore.subscriptions }}</pre>
+	</div>
 </template>
 
 <script lang="ts" setup>
-	const { user } = useUser();
-	const { feed, getFeed } = useReddit();
-
-	if (user.value) {
-		await getFeed();
-	}
+	const redditStore = useRedditStore();
 </script>
