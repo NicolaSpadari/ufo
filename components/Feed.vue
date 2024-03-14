@@ -28,7 +28,8 @@
 
 <script lang="ts" setup>
 	const props = defineProps<{
-		posts: Submission[]
+		posts: Submission[],
+		loading: boolean
 	}>();
 
 	const emit = defineEmits(["more"]);
@@ -36,5 +37,7 @@
 
 	useInfiniteScroll(container, () => {
 		emit("more");
+	}, {
+		canLoadMore: () => props.posts.length > 0 && !props.loading
 	});
 </script>

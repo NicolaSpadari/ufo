@@ -1,21 +1,24 @@
 <template>
-	<Feed :posts="posts" @more="loadMore()" />
+	<Feed :posts="posts" :loading="loading" @more="loadMore()" />
 </template>
 
 <script lang="ts" setup>
 	const { client } = useReddit();
+	const { batchSize } = useConstants();
 	const posts = ref<Submission[]>([])
+	const loading = ref(true);
 
-	client.value?.getHot(undefined, { limit: 15 }).then(res => posts.value = res);
+	client.value?.getHot(undefined, { limit: batchSize }).then(res => {
+		posts.value = res;
+		loading.value = false;
+	});
 
 	const loadMore = () => {
-		console.log("todo loadmore")
-		// res.fetchMore({
-		// 	amount: 10,
-		// 	skipReplies: true,
-		// 	append: false
-		// }).then(newRes => {
-		// 	posts.value.push(...newRes)
-		// });
+		loading.value = true;
+
+		client.value?.getHot(undefined, { limit: batchSize, after: posts.value[posts.value.length-1].name }).then(res => {
+			posts.value.push(...res);
+			loading.value = false;
+		});
 	}
 </script>
