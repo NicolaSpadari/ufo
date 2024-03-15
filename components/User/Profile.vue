@@ -6,15 +6,15 @@
 				<div w="3.5" h="3.5" top="-0.5" right="-0.5" absolute border-2 border-raised rounded-full bg-accent />
 			</div>
 			<div flex-auto text-center>
-				<p text-sm text-light font-semibold leading-6>
+				<p text-sm text-light font-semibold leading-6 font-text>
 					{{ user?.name }}
 				</p>
 				<div flex items-center gap-1>
 					<div h-3 w-3 flex-center rounded-full bg-accent>
 						<i-heroicons-solid-star text-light />
 					</div>
-					<p text-xs text-accent>
-						Karma {{ user?.total_karma }}
+					<p text-xs text-accent font-text>
+						Karma {{ formatNumber(user?.total_karma) }}
 					</p>
 				</div>
 			</div>
@@ -26,7 +26,7 @@
 					<NuxtLink to="/profile" w-full flex rounded-lg px-4 py-2 text-sm hover="bg-light/15">
 						<span ml-auto text-light>Profile</span>
 					</NuxtLink>
-					<button flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm hover="bg-red-700/25" @click="logout()">
+					<button w-full flex items-center gap-2 rounded-lg px-4 py-2 text-sm hover="bg-red-700/25" @click="logout()">
 						<span ml-auto text-red-600>Logout</span>
 					</button>
 				</div>
@@ -43,6 +43,7 @@
 	const { logout } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
 	const { isOpen, openDropdown, closeDropdown } = useDropdown(props.id);
+	const { formatNumber } = useUtils();
 	const dropdown = ref<HTMLElement | null>(null);
 	const dropdownIsOpen = computed(() => isOpen.value.get(props.id));
 

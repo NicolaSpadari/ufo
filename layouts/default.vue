@@ -5,7 +5,9 @@
 		<div grid grid-cols="12" overflow-hidden>
 			<LazySiteSidebar col-span-3 />
 
-			<slot />
+			<div col-span-9 p-6>
+				<slot />
+			</div>
 		</div>
 	</div>
 </template>

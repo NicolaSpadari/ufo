@@ -1,8 +1,8 @@
 <template>
 	<li>
 		<details open class="group [&_summary::-webkit-details-marker]:hidden">
-			<summary flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-light hover="bg-light/15">
-				<span text-sm font-medium>
+			<summary flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-light hover="bg-light/15">
+				<span text-sm font-medium font-text>
 					{{ props.title }}
 				</span>
 
@@ -11,10 +11,13 @@
 				</span>
 			</summary>
 
-			<ul mt-2 px-4 space-y-1>
+			<ul mt-1 px-2 space-y-1>
 				<li v-for="entry in props.list" :key="entry.name">
-					<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" block rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-gray-100 text-gray-700">
-						{{ entry.display_name_prefixed }}
+					<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
+						<SubredditIcon :image="entry.icon_img" size="small" />
+						<span font-text>
+							{{ entry.display_name_prefixed }}
+						</span>
 					</NuxtLink>
 				</li>
 			</ul>

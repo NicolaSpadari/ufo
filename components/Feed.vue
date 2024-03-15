@@ -1,32 +1,10 @@
 <template>
-	<div id="feed" ref="container" col-span-9 h-screen overflow-y-scroll>
-		<div v-if="props.posts.length" space-y-7>
-			<div v-for="post in props.posts" :key="post.name">
-				<details>
-					<summary>{{ post.title }} ({{ post.subreddit_name_prefixed }})</summary>
-
-					<pre>
-						{{ post }}
-					</pre>
-				</details>
-
-				<p>{{ post.title }}</p>
-
-				<div v-if="post.secure_media?.reddit_video?.fallback_url">
-					<VuePlyr :options="{ autoplay: true }">
-						<video controls playsinline>
-							<source :src="post.secure_media.reddit_video.fallback_url">
-						</video>
-					</VuePlyr>
-				</div>
-
-				<NuxtImg v-else-if="post.preview?.images" :src="post.preview.images[0].resolutions[post.preview.images[0].resolutions.length - 1].url" />
-			</div>
+	<div id="feed" ref="container" scrollbar="~ track-color-transparent thumb-color-neutral-700 rounded">
+		<div mr-2 space-y-7>
+			<Post v-for="post in props.posts" :post="post" :key="post.name" />
 		</div>
 
-		<p py-3 text-center text-light>
-			Loading...
-		</p>
+		<Loader />
 	</div>
 </template>
 
@@ -37,6 +15,7 @@
 	}>();
 
 	const emit = defineEmits(["more"]);
+
 	const container = ref<HTMLElement | null>(null);
 
 	useInfiniteScroll(container, () => {
