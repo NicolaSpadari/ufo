@@ -22,7 +22,6 @@
 		"@nuxt/image": "^1.4.0",
 		"@pinia/nuxt": "^0.5.1",
 		"snoowrap": "^1.23.0",
-		"unocss-preset-grid": "^1.5.0",
 		"vue-plyr": "^7.0.0"
 	},
 	"devDependencies": {
@@ -33,9 +32,8 @@
 		"@unocss/nuxt": "^0.58.5",
 		"@vueuse/core": "^10.9.0",
 		"@vueuse/nuxt": "^10.9.0",
-		"eslint": "npm:eslint-ts-patch@8.56.0-0",
+		"eslint": "8.57.0",
 		"eslint-plugin-format": "^0.1.0",
-		"eslint-ts-patch": "8.56.0-0",
 		"nuxt": "^3.10.3",
 		"nuxt-svgo": "^4.0.0",
 		"sass": "^1.71.1",

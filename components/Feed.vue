@@ -15,22 +15,24 @@
 				<div v-if="post.secure_media?.reddit_video?.fallback_url">
 					<VuePlyr :options="{ autoplay: true }">
 						<video controls playsinline>
-							<source :src="post.secure_media.reddit_video.fallback_url" />
+							<source :src="post.secure_media.reddit_video.fallback_url">
 						</video>
 					</VuePlyr>
 				</div>
 
-				<NuxtImg v-else-if="post.preview?.images" :src="post.preview.images[0].resolutions[post.preview.images[0].resolutions.length-1].url" />
+				<NuxtImg v-else-if="post.preview?.images" :src="post.preview.images[0].resolutions[post.preview.images[0].resolutions.length - 1].url" />
 			</div>
 		</div>
 
-		<p text-center>Loading...</p>
+		<p text-center text-light py-3>
+			Loading...
+		</p>
 	</div>
 </template>
 
 <script lang="ts" setup>
 	const props = defineProps<{
-		posts: Submission[],
+		posts: Submission[]
 		loading: boolean
 	}>();
 

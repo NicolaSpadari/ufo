@@ -1,21 +1,33 @@
 <template>
-	<div flex justify-center bg-neutral-200 h-12 space-x-5 py-3>
-		<NuxtLink to="/">
-			Home
-		</NuxtLink>
-		<NuxtLink to="/me">
-			Me
-		</NuxtLink>
-		<NuxtLink v-if="!user" :to="authUrl">
-			Login
-		</NuxtLink>
-		<button v-else @click="logout()">
-			Logout
-		</button>
+	<div id="navbar" bg-raised py-3 shadow-sm>
+		<div crate>
+			<div flex items-center justify-between>
+				<div flex flex-grow>
+					<NuxtLink to="/">
+						<div flex items-center gap-2>
+							<SvgoLogo w="16!" h="16!" text-accent />
+							<span md="flex" hidden text-2xl text-light tracking-wider font-heading uppercase>
+								{{ appName }}
+							</span>
+						</div>
+					</NuxtLink>
+
+					<div flex flex-1 justify-around>
+						<SiteNavigation />
+						<SiteSearch />
+					</div>
+				</div>
+				<UserProfile v-if="user" id="userProfile" />
+				<NuxtLink v-else :to="authUrl" inline-block border border-accent rounded bg-accent px-12 py-3 text-sm text-light font-medium hover="bg-transparent text-accent" focus="outline-none ring text-accent">
+					Login
+				</NuxtLink>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { authUrl, logout } = useReddit();
+	const { authUrl } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
+	const { appName } = useConstants();
 </script>

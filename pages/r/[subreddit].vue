@@ -10,10 +10,10 @@
 	const posts = ref<Submission[]>([]);
 	const loading = ref(true);
 
-	if(user.value){
-		console.log("call subreddit posts")
+	if (user.value) {
+		console.log("call subreddit posts");
 
-		client.value!.getNew((route.params as RouteParams).subreddit, { limit: batchSize }).then(res => {
+		client.value!.getNew((route.params as RouteParams).subreddit, { limit: batchSize }).then((res) => {
 			posts.value = res;
 			loading.value = false;
 			// console.log("subreddit posts", posts.value)
@@ -22,11 +22,11 @@
 
 	const loadMore = () => {
 		loading.value = true;
-		console.log("call loadmore")
+		console.log("call loadmore");
 
-		client.value?.getNew((route.params as RouteParams).subreddit, { limit: batchSize, after: posts.value[posts.value.length-1].name }).then(res => {
+		client.value?.getNew((route.params as RouteParams).subreddit, { limit: batchSize, after: posts.value[posts.value.length - 1].name }).then((res) => {
 			posts.value.push(...res);
 			loading.value = false;
 		});
-	}
+	};
 </script>

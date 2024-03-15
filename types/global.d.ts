@@ -1,3 +1,3 @@
 declare interface RouteParams {
-	subreddit?: string;
+	subreddit?: string
 }

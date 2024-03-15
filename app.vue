@@ -10,7 +10,7 @@
 	const { initializeClient } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
 
-	if(user.value){
+	if (user.value) {
 		initializeClient();
 	}
 </script>
@@ -22,7 +22,7 @@
 	@apply min-h-screen;
 }
 body {
-	@apply overflow-hidden;
+	@apply overflow-hidden bg-main;
 }
 img {
 	-webkit-user-drag: none;

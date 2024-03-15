@@ -17,7 +17,7 @@ export default defineNuxtConfig({
 		public: {
 			redditApiKey: process.env.REDDIT_API_KEY,
 			redditSecretKey: process.env.REDDIT_SECRET_KEY
-		},
+		}
 	},
 	app: {
 		head: {

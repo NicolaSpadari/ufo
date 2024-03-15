@@ -10,11 +10,11 @@ import {
 	transformerVariantGroup
 } from "unocss";
 
-import { presetGrid } from 'unocss-preset-grid'
+import { colors } from "@unocss/preset-mini";
 
 export default defineConfig({
 	"shortcuts": [
-		["crate", "container max-w-5xl mx-auto px-4 sm:px-2 md:px-10 xl:px-20"],
+		["crate", "mx-auto px-3 xxl:max-w-1320px"],
 		["flex-center", "flex justify-center items-center"]
 	],
 	"presets": [
@@ -36,10 +36,15 @@ export default defineConfig({
 				},
 				"text": "Inter"
 			}
-		}),
-		presetGrid()
+		})
 	],
 	"theme": {
+		colors: {
+			accent: typeof colors?.green === "string" ? colors?.green : colors?.green?.[500],
+			main: typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800],
+			raised: typeof colors?.neutral === "string" ? colors?.neutral : colors?.neutral?.[800],
+			light: typeof colors?.light === "string" ? colors?.light : colors?.light?.[100],
+		},
 		"breakpoints": {
 			"sm": "576px",
 			"md": "768px",
