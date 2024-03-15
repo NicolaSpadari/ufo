@@ -21,6 +21,11 @@
 		loadFeed();
 	}
 
+	watchOnce(user, (val) => {
+		if (val)
+			loadFeed();
+	});
+
 	const loadMore = () => {
 		loading.value = true;
 		console.log("call loadmore");

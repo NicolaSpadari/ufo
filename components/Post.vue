@@ -4,7 +4,7 @@
 			<div flex items-center gap-3>
 				<SubredditIcon :image="subredditIcon" size="big" />
 				<div flex flex-col>
-					<NuxtLink to="/" text-light font-text>
+					<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" text-light font-text>
 						{{ props.post.subreddit_name_prefixed }}
 					</NuxtLink>
 					<NuxtLink :to="`/u/${authorName}`" text-xs text-neutral-400 font-text hover="underline">
@@ -36,7 +36,19 @@
 				</video>
 			</VuePlyr>
 
-			<NuxtImg v-else-if="props.post.preview?.images" :src="previewImage" w-full />
+			<div v-else-if="props.post.gallery_data?.items?.length" relative>
+				<NuxtImg :src="props.post.media_metadata[state.media_id].p[3].u" max-h="32rem" mx-auto />
+
+				<div absolute-center-h absolute bottom-3 flex items-center gap-2 rounded-full bg-main p-2 text-sm text-gray-400 shadow-sm>
+					<button i-heroicons-solid-chevron-left h-4 w-4 @click="prev()" />
+					<span>{{ curIndex }} / {{ props.post.gallery_data?.items?.length }}</span>
+					<button i-heroicons-solid-chevron-right h-4 w-4 @click="next()" />
+				</div>
+			</div>
+
+			<NuxtImg v-else-if="props.post.url_overridden_by_dest" :src="props.post.url_overridden_by_dest" max-h="32rem" mx-auto />
+
+			<NuxtImg v-else-if="props.post.preview?.images" :src="previewImage" max-h="32rem" mx-auto />
 		</div>
 		<div flex gap-3>
 			<div flex items-center gap-2 rounded-full bg-main hover="bg-main/70" p-2 text-sm text-gray-400 shadow-sm>
@@ -61,11 +73,13 @@
 		post: Submission
 	}>();
 
-	console.log(props.post.media?.oembed?.html);
+	console.log(props.post);
 
 	const { formatNumber, share } = useUtils();
 
 	const subredditIcon = await props.post.subreddit.icon_img;
 	const authorName = await props.post.author.name;
-	const previewImage = props.post.preview.images[0].resolutions[props.post.preview.images[0].resolutions.length - 1].url;
+	const previewImage = props.post.preview?.images[0].resolutions[props.post.preview.images[0].resolutions.length - 1].url;
+	const { state, index, next, prev } = useCycleList(props.post.gallery_data?.items || []);
+	const curIndex = computed(() => index.value + 1);
 </script>

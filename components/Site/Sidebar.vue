@@ -1,6 +1,6 @@
 <template>
 	<div id="sidebar" flex flex-col justify-between scrollbar="~ track-color-transparent thumb-color-neutral-700 rounded">
-		<div bg-raised p-2 m-2 rounded-md>
+		<div v-if="favorites.length || subscriptions.length" bg-raised p-2 m-2 rounded-md>
 			<ul space-y-1>
 				<!-- <li>
 					<a
