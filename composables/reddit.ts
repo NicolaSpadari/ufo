@@ -37,7 +37,7 @@ export const useReddit = () => {
 	const setSubscriptions = () => {
 		// @ts-ignore: "then" exists in getSubscriptions() function
 		client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
-			subscriptions.value = subreddits.sort((a, b) => a.display_name.localeCompare(b.display_name));
+			subscriptions.value = subreddits.sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
 		})
 	}
 
