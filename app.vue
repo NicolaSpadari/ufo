@@ -8,7 +8,11 @@
 
 <script lang="ts" setup>
 	const { initializeClient } = useReddit();
-	initializeClient();
+	const { user } = storeToRefs(useRedditStore());
+
+	if(user.value){
+		initializeClient();
+	}
 </script>
 
 <style lang="scss">

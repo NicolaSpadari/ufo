@@ -1,40 +1,32 @@
 <template>
-	<div>
-		<p text-center>Subreddit: {{ ($route.params as RouteParams).subreddit }}</p>
-
-		<div v-if="posts.length" space-y-4 max-h="90vh" overflow-y="auto">
-			<div v-for="post in posts" :key="post.name">
-				<details>
-					<summary>{{ post.title }}</summary>
-
-					<pre>
-						{{ post }}
-					</pre>
-				</details>
-
-				<p>{{ post.title }}</p>
-
-				<div v-if="post.secure_media?.reddit_video?.fallback_url">
-					<VuePlyr :options="{ autoplay: true }">
-						<video controls playsinline>
-							<source :src="post.secure_media.reddit_video.fallback_url" />
-						</video>
-					</VuePlyr>
-				</div>
-
-				<NuxtImg v-else-if="post.preview?.images" :src="post.preview.images[0].resolutions[post.preview.images[0].resolutions.length-1].url" />
-			</div>
-		</div>
-	</div>
+	<Feed v-if="user" :posts="posts" :loading="loading" @more="loadMore()" />
 </template>
 
 <script lang="ts" setup>
 	const route = useRoute();
 	const { client } = useReddit();
+	const { user } = storeToRefs(useRedditStore());
+	const { batchSize } = useConstants();
 	const posts = ref<Submission[]>([]);
+	const loading = ref(true);
 
-	client.value!.getNew((route.params as RouteParams).subreddit, { limit: 10 }).then(result => {
-		posts.value = result;
-		console.log("subreddit posts", posts.value)
-	});
+	if(user.value){
+		console.log("call subreddit posts")
+
+		client.value!.getNew((route.params as RouteParams).subreddit, { limit: batchSize }).then(res => {
+			posts.value = res;
+			loading.value = false;
+			// console.log("subreddit posts", posts.value)
+		});
+	}
+
+	const loadMore = () => {
+		loading.value = true;
+		console.log("call loadmore")
+
+		client.value?.getNew((route.params as RouteParams).subreddit, { limit: batchSize, after: posts.value[posts.value.length-1].name }).then(res => {
+			posts.value.push(...res);
+			loading.value = false;
+		});
+	}
 </script>

@@ -14,6 +14,7 @@ export const useReddit = () => {
 	});
 
 	const authorize = (authCode: string) => {
+		console.log("call authorize")
 		reddit.fromAuthCode({
 			code: authCode,
 			userAgent,
@@ -26,6 +27,7 @@ export const useReddit = () => {
 
 			initializeClient();
 
+			console.log("call get me")
 			client.value!.getMe().then(me => {
 				user.value = me;
 
@@ -35,6 +37,7 @@ export const useReddit = () => {
 	}
 
 	const setSubscriptions = () => {
+		console.log("call set subscriptions")
 		// @ts-ignore: "then" exists in getSubscriptions() function
 		client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
 			subscriptions.value = subreddits.sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
@@ -42,6 +45,7 @@ export const useReddit = () => {
 	}
 
 	const initializeClient = () => {
+		console.log("call init client")
 		client.value = new reddit({
 			userAgent,
 			clientId: config.public.redditApiKey,

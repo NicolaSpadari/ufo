@@ -23,6 +23,8 @@
 				<NuxtImg v-else-if="post.preview?.images" :src="post.preview.images[0].resolutions[post.preview.images[0].resolutions.length-1].url" />
 			</div>
 		</div>
+
+		<p text-center>Loading...</p>
 	</div>
 </template>
 

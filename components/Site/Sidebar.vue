@@ -11,5 +11,5 @@
 <script lang="ts" setup>
 	const { subscriptions } = storeToRefs(useRedditStore());
 
-	console.log("subscriptions", subscriptions.value)
+	// console.log("subscriptions", subscriptions.value)
 </script>
