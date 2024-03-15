@@ -21,10 +21,13 @@
 		</button>
 
 		<Transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-			<div v-show="dropdownIsOpen" ref="dropdown" absolute end-0 z-10 mt-2 w-48 rounded-md top="100%" bg-raised shadow-lg>
+			<div v-show="dropdownIsOpen" ref="dropdown" absolute end-0 z-10 mt-2 w-48 rounded-b-lg top="125%" bg-raised shadow-lg>
 				<div flex flex-col p-2>
-					<button w-full rounded-lg px-4 py-2 text-sm text-light @click="logout()">
-						<span ml-auto>Logout</span>
+					<NuxtLink to="/profile" w-full flex rounded-lg px-4 py-2 text-sm hover="bg-light/15">
+						<span ml-auto text-light>Profile</span>
+					</NuxtLink>
+					<button flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm hover="bg-red-700/25" @click="logout()">
+						<span ml-auto text-red-600>Logout</span>
 					</button>
 				</div>
 			</div>

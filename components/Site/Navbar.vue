@@ -1,5 +1,5 @@
 <template>
-	<div id="navbar" bg-raised py-3 shadow-sm>
+	<div id="navbar" bg-raised py-3 shadow-lg z-5>
 		<div crate>
 			<div flex items-center justify-between>
 				<div flex flex-grow>

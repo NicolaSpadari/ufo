@@ -26,6 +26,7 @@
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^2.8.1",
+		"@iconify-json/heroicons-outline": "^1.1.10",
 		"@iconify-json/heroicons-solid": "^1.1.11",
 		"@pinia-plugin-persistedstate/nuxt": "^1.2.0",
 		"@unocss/eslint-plugin": "^0.58.5",

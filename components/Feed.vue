@@ -1,5 +1,5 @@
 <template>
-	<div ref="container" col-span-9 overflow-y-scroll>
+	<div id="feed" ref="container" col-span-9 h-screen overflow-y-scroll>
 		<div v-if="props.posts.length" space-y-7>
 			<div v-for="post in props.posts" :key="post.name">
 				<details>
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 
-		<p text-center text-light py-3>
+		<p py-3 text-center text-light>
 			Loading...
 		</p>
 	</div>
@@ -45,3 +45,9 @@
 		canLoadMore: () => props.posts.length > 0 && !props.loading
 	});
 </script>
+
+<style scoped>
+#feed {
+	height: calc(100vh - 90px);
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-	<div id="sidebar" h-screen flex flex-col justify-between bg-raised>
+	<div id="sidebar" flex flex-col justify-between overflow-y-scroll bg-raised>
 		<div px-4 py-6>
 			<ul space-y-1>
 				<!-- <li>
@@ -23,3 +23,9 @@
 
 	// console.log("subscriptions", subscriptions.value)
 </script>
+
+<style scoped>
+#sidebar {
+	height: calc(100vh - 90px);
+}
+</style>
