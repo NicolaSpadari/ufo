@@ -1,5 +1,5 @@
 <template>
-	<Feed v-if="user" :posts="posts" :loading="loading" @more="loadMore()" />
+	<Feed v-if="user" :posts="posts" type="feed" :loading="loading" @more="loadMore()" />
 </template>
 
 <script lang="ts" setup>

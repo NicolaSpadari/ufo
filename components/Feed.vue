@@ -1,7 +1,7 @@
 <template>
 	<div id="feed" ref="container" scrollbar="~ track-color-transparent thumb-color-neutral-700 rounded">
 		<div mr-2 space-y-7>
-			<Post v-for="post in props.posts" :post="post" :key="post.name" />
+			<Post v-for="post in props.posts" :post="post" :from="props.type" :key="post.name" />
 		</div>
 
 		<Loader />
@@ -11,6 +11,7 @@
 <script lang="ts" setup>
 	const props = defineProps<{
 		posts: Submission[]
+		type: "feed" | "subreddit"
 		loading: boolean
 	}>();
 

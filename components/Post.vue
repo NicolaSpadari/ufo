@@ -2,15 +2,25 @@
 	<div flex flex-col gap-2 rounded-xl bg-raised p-3>
 		<div flex justify-between>
 			<div flex items-center gap-3>
-				<SubredditIcon :image="subredditIcon" size="big" />
-				<div flex flex-col>
-					<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" text-light font-text>
-						{{ props.post.subreddit_name_prefixed }}
-					</NuxtLink>
-					<NuxtLink :to="`/u/${authorName}`" text-xs text-neutral-400 font-text hover="underline">
-						u/{{ authorName }}
-					</NuxtLink>
-				</div>
+				<template v-if="props.from === 'feed'">
+					<SubredditIcon :image="subredditIcon" size="medium" />
+					<div flex flex-col>
+						<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" text-light font-text>
+							{{ props.post.subreddit_name_prefixed }}
+						</NuxtLink>
+						<NuxtLink :to="`/u/${authorName}`" text-xs text-neutral-400 font-text hover="underline">
+							u/{{ authorName }}
+						</NuxtLink>
+					</div>
+				</template>
+				<template v-if="props.from === 'subreddit'">
+					<SubredditIcon :image="authorImage" size="medium" />
+					<div flex flex-col>
+						<NuxtLink :to="`/u/${authorName}`" text-light font-text>
+							u/{{ authorName }}
+						</NuxtLink>
+					</div>
+				</template>
 			</div>
 			<button h-6 w-6 flex flex-center rounded-full hover="bg-elevated" @click="console.log(props.post)">
 				<i-heroicons-solid-ellipsis-horizontal text-light />
@@ -50,10 +60,12 @@
 <script lang="ts" setup>
 	const props = defineProps<{
 		post: Submission
+		from: "feed" | "subreddit"
 	}>();
 
 	const { formatNumber, share } = useUtils();
 
 	const subredditIcon = await props.post.subreddit.icon_img;
+	const authorImage = await props.post.author.icon_img;
 	const authorName = await props.post.author.name;
 </script>
