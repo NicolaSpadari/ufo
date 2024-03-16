@@ -1,6 +1,6 @@
 <template>
 	<div v-if="props.post.post_hint === 'rich:video'">
-		<div v-html="props.post.secure_media_embed?.content?.replace('position:absolute;', '')" h="42rem" />
+		<div class="video-wrapper" h="42rem" v-html="props.post.secure_media_embed?.content?.replace('position:absolute;', '')" />
 	</div>
 
 	<div v-else-if="props.post.post_hint === 'hosted:video'">
@@ -42,3 +42,9 @@
 	const { state, index, next, prev } = useCycleList(props.post.gallery_data?.items || []);
 	const curIndex = computed(() => index.value + 1);
 </script>
+
+<style>
+.video-wrapper > iframe {
+	@apply w-full h-full;
+}
+</style>

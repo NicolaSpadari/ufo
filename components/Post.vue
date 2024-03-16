@@ -12,7 +12,7 @@
 					</NuxtLink>
 				</div>
 			</div>
-			<button @click="console.log(props.post)" h-6 w-6 flex flex-center rounded-full hover="bg-elevated">
+			<button h-6 w-6 flex flex-center rounded-full hover="bg-elevated" @click="console.log(props.post)">
 				<i-heroicons-solid-ellipsis-horizontal text-light />
 			</button>
 		</div>
@@ -21,8 +21,13 @@
 				{{ props.post.title }}
 			</p>
 		</div>
-		<div my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
+		<div v-if="props.post.post_hint" my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
 			<MediaSwitcher :post="props.post" />
+		</div>
+		<div v-else my-3 max-h="48rem">
+			<p text-sm text-light font-text>
+				{{ props.post.selftext }}
+			</p>
 		</div>
 		<div flex gap-3>
 			<div flex items-center gap-2 rounded-full bg-main hover="bg-main/70" p-2 text-sm text-gray-400 shadow-sm>
