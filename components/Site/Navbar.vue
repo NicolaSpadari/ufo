@@ -14,7 +14,7 @@
 
 					<SiteSearch />
 				</div>
-				<UserProfile v-if="user" id="userProfile" />
+				<UserInfo v-if="user" id="userProfile" />
 				<NuxtLink v-else :to="authUrl" inline-block border border-accent rounded bg-accent px-12 py-3 text-sm text-light font-medium hover="bg-transparent text-accent" focus="outline-none ring text-accent">
 					Login
 				</NuxtLink>
