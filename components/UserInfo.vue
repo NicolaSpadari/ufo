@@ -23,7 +23,7 @@
 		<Transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
 			<div v-show="dropdownIsOpen" ref="dropdown" absolute end-0 z-10 mt-2 w-48 rounded-b-lg top="125%" bg-raised shadow-lg>
 				<div flex flex-col p-2>
-					<NuxtLink to="/profile" w-full flex rounded-lg px-4 py-2 text-sm hover="bg-light/15">
+					<NuxtLink :to="`/${user?.subreddit?.display_name_prefixed}`" w-full flex rounded-lg px-4 py-2 text-sm hover="bg-light/15">
 						<span ml-auto text-light>Profile</span>
 					</NuxtLink>
 					<button w-full flex items-center gap-2 rounded-lg px-4 py-2 text-sm hover="bg-red-700/25" @click="logout()">
