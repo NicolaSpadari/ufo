@@ -1,7 +1,7 @@
 <template>
 	<div id="feed" ref="container" scrollbar="~ track-color-transparent thumb-color-neutral-700 rounded">
 		<div mr-2 space-y-7>
-			<Post v-for="post in props.posts" :post="post" :from="props.type" :key="post.name" />
+			<Post v-for="post in props.posts" :key="post.name" :post="post" :from="props.type" />
 		</div>
 
 		<Loader />

@@ -17,23 +17,24 @@
 	if (user.value) {
 		console.log("call user details");
 
-		client.value?.getUser((route.params as RouteParams).profile!).fetch().then((profile) => {
+		client.value!.getUser((route.params as RouteParams).profile!).fetch().then((profile) => {
 			redditor.value = profile;
 			console.log(redditor.value);
 
 			redditor.value.getSubmissions({ limit: batchSize }).then((res) => {
 				posts.value = res;
+				loading.value = false;
 			});
 		});
 	}
 
 	const loadMore = () => {
-		// loading.value = true;
-		// console.log("call loadmore");
+		loading.value = true;
+		console.log("call loadmore");
 
-		// client.value?.getNew((route.params as RouteParams).subreddit, { limit: batchSize, after: posts.value[posts.value.length - 1].name }).then((res) => {
-		// 	posts.value.push(...res);
-		// 	loading.value = false;
-		// });
+		redditor.value!.getSubmissions({ limit: batchSize, after: posts.value[posts.value.length - 1].name }).then((res) => {
+			posts.value.push(...res);
+			loading.value = false;
+		});
 	};
 </script>
