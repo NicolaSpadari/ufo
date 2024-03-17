@@ -1,6 +1,6 @@
 <template>
 	<div v-if="user">
-		<Banner v-if="subreddit" :subreddit="subreddit" />
+		<Banner v-if="subreddit" type="subreddit" :subreddit="subreddit" />
 		<Feed :posts="posts" type="subreddit" :loading="loading" @more="loadMore()" />
 	</div>
 </template>
@@ -19,7 +19,6 @@
 
 		client.value!.getSubreddit((route.params as RouteParams).subreddit).fetch().then((res) => {
 			subreddit.value = res;
-			console.log(res)
 		});
 
 		client.value!.getNew((route.params as RouteParams).subreddit, { limit: batchSize }).then((res) => {

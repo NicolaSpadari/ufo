@@ -26,18 +26,16 @@
 				<i-heroicons-solid-ellipsis-horizontal text-light />
 			</button>
 		</div>
-		<div>
-			<p text-lg text-light font-text>
-				{{ props.post.title }}
-			</p>
-		</div>
-		<div v-if="props.post.post_hint" my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
-			<MediaSwitcher :post="props.post" />
-		</div>
-		<div v-else my-3 max-h="48rem">
-			<p text-sm text-light font-text>
+		<p text-lg text-light font-text>
+			{{ props.post.title }}
+		</p>
+		<div v-if="props.post.selftext !== ''" my-3 max-h="48rem">
+			<p class="limit-lines" text-sm text-light font-text>
 				{{ props.post.selftext }}
 			</p>
+		</div>
+		<div v-if="hasMedia" my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
+			<MediaSwitcher :post="props.post" />
 		</div>
 		<div flex gap-3>
 			<div flex items-center gap-2 rounded-full bg-main hover="bg-main/70" p-2 text-sm text-gray-400 shadow-sm>
@@ -68,4 +66,21 @@
 	const subredditIcon = await props.post.subreddit.icon_img;
 	const authorImage = await props.post.author.icon_img;
 	const authorName = await props.post.author.name;
+
+	const hasMedia = computed(() => {
+		return props.post.post_hint === "rich:video"
+			|| props.post.post_hint === "hosted:video"
+			|| props.post.is_gallery
+			|| props.post.post_hint === "image"
+			|| props.post.post_hint === "link";
+	});
 </script>
+
+<style scoped>
+.limit-lines {
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	overflow: hidden;
+}
+</style>
