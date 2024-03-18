@@ -16,7 +16,8 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			redditApiKey: process.env.REDDIT_API_KEY,
-			redditSecretKey: process.env.REDDIT_SECRET_KEY
+			redditSecretKey: process.env.REDDIT_SECRET_KEY,
+			authRedirectUrl: process.env.AUTH_REDIRECT_URL
 		}
 	},
 	app: {

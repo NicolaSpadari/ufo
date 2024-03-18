@@ -3,12 +3,12 @@ const client = ref<Snoowrap | null>(null);
 export const useReddit = () => {
 	const config = useRuntimeConfig();
 	const { accessToken, refreshToken, user, subscriptions, favorites } = storeToRefs(useRedditStore());
-	const { allScopes, authRedirectUrl, randomString, userAgent } = useConstants();
+	const { allScopes, randomString, userAgent } = useConstants();
 
 	const authUrl = reddit.getAuthUrl({
 		clientId: config.public.redditApiKey,
 		scope: allScopes,
-		redirectUri: authRedirectUrl,
+		redirectUri: config.public.authRedirectUrl,
 		permanent: true,
 		state: randomString
 	});
@@ -39,7 +39,7 @@ export const useReddit = () => {
 			userAgent,
 			clientId: config.public.redditApiKey,
 			clientSecret: config.public.redditSecretKey,
-			redirectUri: authRedirectUrl
+			redirectUri: config.public.authRedirectUrl
 		}).then((res) => {
 			accessToken.value = res.accessToken;
 			refreshToken.value = res.refreshToken;
