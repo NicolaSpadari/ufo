@@ -50,6 +50,9 @@ export default defineNuxtConfig({
 	svgo: {
 		autoImportPath: "./assets/"
 	},
+	image: {
+		domains: []
+	},
 	vite: {
 		plugins: [
 			AutoImport({
