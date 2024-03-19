@@ -51,7 +51,7 @@ export default defineNuxtConfig({
 		autoImportPath: "./assets/"
 	},
 	image: {
-		domains: []
+		provider: "ipx"
 	},
 	vite: {
 		plugins: [
