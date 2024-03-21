@@ -4,11 +4,19 @@
 
 		<!-- <Dev /> -->
 	</NuxtLayout>
+
+	<Modal id="zoomModal">
+		<ZoomedPost />
+		<button @click="closeModal('zoomModal')">
+			close modal
+		</button>
+	</Modal>
 </template>
 
 <script lang="ts" setup>
 	const { initializeClient } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
+	const { closeModal } = useModal();
 
 	if (user.value) {
 		initializeClient();

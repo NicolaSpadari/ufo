@@ -26,19 +26,17 @@
 				<i-heroicons-solid-ellipsis-horizontal text-light />
 			</button>
 		</div>
-		<p text-lg text-light font-text>
+		<NuxtLink :to="`/comment/${props.post.id}`" text-lg text-light font-text>
 			{{ props.post.title }}
-		</p>
-		<NuxtLink :to="`/comment/${props.post.id}`">
-			<div v-if="props.post.selftext !== ''" my-3 max-h="48rem">
-				<p class="limit-lines" text-sm text-light font-text>
-					{{ props.post.selftext }}
-				</p>
-			</div>
-			<div v-if="hasMedia" my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
-				<MediaSwitcher :post="props.post" />
-			</div>
 		</NuxtLink>
+		<div v-if="props.post.selftext !== ''" my-3 max-h="48rem">
+			<p class="limit-lines" text-sm text-light font-text>
+				{{ props.post.selftext }}
+			</p>
+		</div>
+		<div v-if="hasMedia" my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
+			<MediaSwitcher :post="props.post" />
+		</div>
 		<div flex gap-3>
 			<div flex items-center gap-2 rounded-full bg-main hover="bg-main/70" p-2 text-sm text-gray-400 shadow-sm>
 				<button i-heroicons-solid-chevron-up h-4 w-4 hover="text-orange-500" />

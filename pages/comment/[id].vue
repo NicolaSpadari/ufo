@@ -1,7 +1,11 @@
 <template>
 	<div v-if="user" space-y-3>
-		<Post from="feed" :post="submission" />
-		<Comments :comments="submission?.comments" />
+		<Loader v-if="loading" />
+
+		<template v-else>
+			<Post from="feed" :post="submission" />
+			<Comments :comments="submission?.comments" />
+		</template>
 	</div>
 </template>
 

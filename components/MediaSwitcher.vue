@@ -26,9 +26,13 @@
 	</div>
 
 	<div v-else-if="post.post_hint === 'image' || post.post_hint === 'link'">
-		<div w-full bg-neutral-700>
+		<div class="group" w-full bg-neutral-700 relative>
 			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto />
 			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto />
+
+			<button type="button" @click="openModal('zoomModal')" absolute right-2 bottom-2 opacity-0 transition-opacity class="group-hover:opacity-100">
+				<i-heroicons-outline-arrows-pointing-out w-6 h-6 text-light />
+			</button>
 		</div>
 	</div>
 </template>
@@ -39,6 +43,7 @@
 	}>();
 
 	const post = toRef(props.post);
+	const { openModal } = useModal();
 
 	if (props.post.crosspost_parent && props.post.crosspost_parent !== "") {
 		post.value = props.post.crosspost_parent_list[0];
