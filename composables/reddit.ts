@@ -1,8 +1,9 @@
 const client = ref<Snoowrap | null>(null);
+const activePost = ref<Submission | null>(null);
 
 export const useReddit = () => {
 	const config = useRuntimeConfig();
-	const { accessToken, refreshToken, user, subscriptions, favorites } = storeToRefs(useRedditStore());
+	const { accessToken, refreshToken, user, subscriptions, favorites, multireddits } = storeToRefs(useRedditStore());
 	const { allScopes, randomString, userAgent } = useConstants();
 
 	const authUrl = reddit.getAuthUrl({
@@ -32,6 +33,15 @@ export const useReddit = () => {
 		});
 	};
 
+	const setMultireddits = () => {
+		console.log("call set multireddits");
+		// @ts-expect-error: "then" exists in getSubscriptions() function
+		client.value!.getUser(user.value.name).getMultireddits().then((multis: MultiReddit[]) => {
+			console.log("got", multis);
+			multireddits.value = multis;
+		});
+	};
+
 	const authorize = (authCode: string) => {
 		console.log("call authorize");
 		reddit.fromAuthCode({
@@ -51,6 +61,7 @@ export const useReddit = () => {
 				user.value = me;
 
 				setSubscriptions();
+				setMultireddits();
 			});
 		});
 	};
@@ -69,6 +80,8 @@ export const useReddit = () => {
 		logout,
 		client,
 		initializeClient,
-		setSubscriptions
+		setSubscriptions,
+		setMultireddits,
+		activePost
 	};
 };

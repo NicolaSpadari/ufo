@@ -4,13 +4,15 @@ export const useRedditStore = defineStore("reddit", () => {
 	const user = ref<RedditUser | null>(null);
 	const favorites = ref<Subreddit[]>([]);
 	const subscriptions = ref<Subreddit[]>([]);
+	const multireddits = ref<Multireddit[]>([]);
 
 	return {
 		accessToken,
 		refreshToken,
 		user,
 		subscriptions,
-		favorites
+		favorites,
+		multireddits
 	};
 }, {
 	persist: {

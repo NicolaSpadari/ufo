@@ -6,9 +6,12 @@
 		<button @click="setSubscriptions()">
 			setSubscriptions
 		</button>
+		<button @click="setMultireddits()">
+			setMultireddits
+		</button>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { initializeClient, setSubscriptions } = useReddit();
+	const { initializeClient, setSubscriptions, setMultireddits } = useReddit();
 </script>

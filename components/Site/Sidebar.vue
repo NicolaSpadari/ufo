@@ -25,7 +25,8 @@
 						<div v-show="open" pointer-events-auto relative max-w-sm w-screen>
 							<div ref="sidebar" h-full flex flex-col bg-raised py-6 shadow-xl scrollbar="~ track-color-transparent thumb-color-neutral-700 rounded">
 								<div relative flex-1 px-4 sm="px-6">
-									<ul space-y-1>
+									<ul space-y-4>
+										<MultiList v-if="multireddits.length" title="Multireddits" :list="multireddits" />
 										<GroupList v-if="favorites.length" title="Favorites" :list="favorites" />
 										<GroupList v-if="subscriptions.length" title="Subscriptions" :list="subscriptions" />
 									</ul>
@@ -46,7 +47,7 @@
 
 	const emit = defineEmits(["close"]);
 
-	const { subscriptions, favorites } = storeToRefs(useRedditStore());
+	const { subscriptions, favorites, multireddits } = storeToRefs(useRedditStore());
 	const sidebar = ref<HTMLElement | null>(null);
 
 	onClickOutside(sidebar, () => emit("close"));

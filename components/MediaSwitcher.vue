@@ -26,12 +26,12 @@
 	</div>
 
 	<div v-else-if="post.post_hint === 'image' || post.post_hint === 'link'">
-		<div class="group" w-full bg-neutral-700 relative>
+		<div class="group" relative w-full bg-neutral-700>
 			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto />
 			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto />
 
-			<button type="button" @click="openModal('zoomModal')" absolute right-2 bottom-2 opacity-0 transition-opacity class="group-hover:opacity-100">
-				<i-heroicons-outline-arrows-pointing-out w-6 h-6 text-light />
+			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="group-hover:opacity-100" @click="setActivePost()">
+				<i-heroicons-outline-arrows-pointing-out h-6 w-6 text-light />
 			</button>
 		</div>
 	</div>
@@ -44,6 +44,7 @@
 
 	const post = toRef(props.post);
 	const { openModal } = useModal();
+	const { activePost } = useReddit();
 
 	if (props.post.crosspost_parent && props.post.crosspost_parent !== "") {
 		post.value = props.post.crosspost_parent_list[0];
@@ -52,10 +53,19 @@
 	const previewImage = post.value.preview?.images[0].resolutions[post.value.preview.images[0].resolutions.length - 1].url;
 	const { state, index, next, prev } = useCycleList(post.value.gallery_data?.items || []);
 	const curIndex = computed(() => index.value + 1);
+
+	const setActivePost = () => {
+		console.log("setting", props.post)
+		activePost.value = props.post;
+		openModal("zoomModal");
+	};
 </script>
 
 <style>
 .video-wrapper > iframe {
 	@apply w-full h-full;
+}
+dialog img {
+	@apply max-h-full!;
 }
 </style>

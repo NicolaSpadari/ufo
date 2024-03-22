@@ -13,10 +13,10 @@
 
 			<ul mt-1 px-2 pb-2 space-y-1>
 				<li v-for="entry in props.list" :key="entry.name">
-					<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
-						<SubredditIcon :image="entry.icon_img" size="small" />
+					<NuxtLink :to="`/m/${entry.name}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
+						<SubredditIcon :image="entry.icon_url" size="small" />
 						<span font-text>
-							{{ entry.display_name_prefixed }}
+							{{ entry.display_name }}
 						</span>
 					</NuxtLink>
 				</li>
@@ -28,6 +28,6 @@
 <script lang="ts" setup>
 	const props = defineProps<{
 		title: string
-		list: Subreddit[]
+		list: Multireddit[]
 	}>();
 </script>

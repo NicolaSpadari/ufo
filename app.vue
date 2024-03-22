@@ -1,12 +1,14 @@
 <template>
 	<NuxtLayout>
 		<NuxtPage />
+
+		<Dev />
 	</NuxtLayout>
 
 	<Modal id="zoomModal">
 		<ZoomedPost />
-		<button @click="closeModal('zoomModal')">
-			close modal
+		<button absolute flex flex-center right-3 top-3 rounded-full bg="light/70" p-2 @click="closeModal('zoomModal')">
+			<i-heroicons-outline-x-mark w-8 h-8 text-main />
 		</button>
 	</Modal>
 </template>

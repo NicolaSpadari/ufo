@@ -13,7 +13,7 @@ declare global {
 // for type re-export
 declare global {
   // @ts-ignore
-  export type { RedditUser, Subreddit, Submission } from 'snoowrap'
+  export type { RedditUser, Subreddit, Submission, Multireddit } from 'snoowrap'
   import('snoowrap')
   // @ts-ignore
   export type { Snoowrap } from '@/utils/snoowrap'

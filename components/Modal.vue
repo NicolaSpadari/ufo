@@ -1,5 +1,5 @@
 <template>
-	<dialog ref="dialog">
+	<dialog ref="dialog" w-screen h-screen overflow-hidden>
 		<slot />
 	</dialog>
 </template>
@@ -37,7 +37,7 @@
 }
 
 dialog {
-	@apply fixed inset-0 block invisible rounded-lg p-10 shadow-lg ease-in duration-300 opacity-0 transition-opacity;
+	@apply fixed inset-0 block invisible rounded-lg ease-in duration-300 opacity-0 transition-opacity;
 	&::backdrop {
 		@apply backdrop-filter backdrop-blur-5;
 	}
