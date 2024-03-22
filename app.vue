@@ -1,8 +1,6 @@
 <template>
 	<NuxtLayout>
 		<NuxtPage />
-
-		<!-- <Dev /> -->
 	</NuxtLayout>
 
 	<Modal id="zoomModal">
@@ -30,7 +28,7 @@
 	@apply min-h-screen;
 }
 body {
-	@apply overflow-hidden bg-main;
+	@apply overflow-x-hidden bg-main scrollbar scrollbar-track-color-raised scrollbar-thumb-color-neutral-700 scrollbar-rounded;
 }
 img {
 	-webkit-user-drag: none;

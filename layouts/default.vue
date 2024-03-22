@@ -1,15 +1,17 @@
 <template>
-	<div grid auto-rows-max h-screen w-screen>
-		<SiteNavbar />
+	<div>
+		<SiteNavbar @toggleSidebar="sidebarOpen = !sidebarOpen" />
+
+		<LazySiteSidebar :open="sidebarOpen" @close="sidebarOpen = false" />
 
 		<div crate>
-			<div grid grid-cols="12" overflow-hidden>
-				<LazySiteSidebar col-span-3 />
-
-				<div col-span-9 p-6>
-					<slot />
-				</div>
+			<div max-w="850px" mx-auto>
+				<slot />
 			</div>
 		</div>
 	</div>
 </template>
+
+<script lang="ts" setup>
+	const sidebarOpen = ref(false);
+</script>

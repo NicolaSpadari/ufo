@@ -17,7 +17,8 @@ export default defineConfig({
 	shortcuts: [
 		["crate", "mx-auto px-3 xxl:max-w-1320px"],
 		["flex-center", "flex justify-center items-center"],
-		["absolute-center-h", "transform translate-x-1/2 right-1/2"]
+		["absolute-center-h", "transform translate-x-1/2 right-1/2"],
+		["absolute-center-v", "transform -translate-y-1/2 top-1/2"],
 	],
 	presets: [
 		presetUno(),

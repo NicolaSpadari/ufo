@@ -1,10 +1,8 @@
 <template>
-	<div id="feed" ref="container" scrollbar="~ track-color-transparent thumb-color-neutral-700 rounded">
-		<div mr-2 space-y-7>
-			<Post v-for="post in props.posts" :key="post.name" :post="post" :from="props.type" />
-		</div>
+	<div py-5 space-y-7>
+		<Post v-for="post in props.posts" :key="post.name" :post="post" :from="props.type" />
 
-		<Loader />
+		<Loader ref="loader" />
 	</div>
 </template>
 
@@ -17,17 +15,11 @@
 
 	const emit = defineEmits(["more"]);
 
-	const container = ref<HTMLElement | null>(null);
+	const loader = ref<HTMLElement | null>(null);
 
-	useInfiniteScroll(container, () => {
-		emit("more");
-	}, {
-		canLoadMore: () => props.posts.length > 0 && !props.loading
+	useIntersectionObserver(loader, ([{ isIntersecting }]) => {
+		if (isIntersecting && !props.loading) {
+			emit("more");
+		}
 	});
 </script>
-
-<style scoped>
-#feed {
-	height: calc(100vh - 90px);
-}
-</style>

@@ -1,12 +1,15 @@
 <template>
-	<div id="navbar" bg-raised py-3 shadow-lg z-5>
+	<div id="navbar" sticky top-0 z-5 bg-raised py-3 shadow-lg>
+		<button @click="emit('toggleSidebar')" absolute left-5 absolute-center-v>
+			<i-heroicons-solid-bars-3 h-8 w-8 text-light />
+		</button>
 		<div crate>
 			<div flex items-center justify-between>
 				<div flex flex-grow>
 					<NuxtLink to="/">
 						<div flex items-center gap-2>
 							<SvgoLogo w="16!" h="16!" text-accent />
-							<span md="flex" hidden text-2xl text-light tracking-wider font-heading uppercase>
+							<span md="flex" text-2xl text-light tracking-wider font-heading uppercase hidden>
 								{{ appName }}
 							</span>
 						</div>
@@ -24,6 +27,8 @@
 </template>
 
 <script lang="ts" setup>
+	const emit = defineEmits(["toggleSidebar"]);
+
 	const { authUrl } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
 	const { appName } = useConstants();
