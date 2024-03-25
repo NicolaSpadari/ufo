@@ -26,9 +26,9 @@
 				<i-heroicons-solid-ellipsis-horizontal text-light />
 			</button>
 		</div>
-		<NuxtLink :to="`/comment/${props.post.id}`" text-lg text-light font-text>
+		<p text-lg text-light font-text>
 			{{ props.post.title }}
-		</NuxtLink>
+		</p>
 		<div v-if="props.post.selftext !== ''" my-3 max-h="48rem">
 			<p class="limit-lines" text-sm text-light font-text>
 				{{ props.post.selftext }}
@@ -43,13 +43,16 @@
 				<span>{{ formatNumber(props.post.score) }}</span>
 				<button i-heroicons-solid-chevron-down h-4 w-4 hover="text-blue-500" />
 			</div>
-			<button hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm>
+			<NuxtLink :to="`/comment/${props.post.id}`" hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm>
 				<i-heroicons-outline-chat-bubble-oval-left h-4 w-4 />
 				<span>{{ formatNumber(props.post.num_comments) }}</span>
-			</button>
-			<button hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm @click="share()">
-				<i-heroicons-outline-share h-4 w-4 />
-				<span>Share</span>
+			</NuxtLink>
+			<button hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 @click="copy(`${productionUrl}/comment/${props.post.id}`)" shadow-sm>
+				<span v-if="copied">Url copied!</span>
+				<template v-else>
+					<i-heroicons-outline-share h-4 w-4 />
+					<span>Share</span>
+				</template>
 			</button>
 		</div>
 	</div>
@@ -61,7 +64,9 @@
 		from: "feed" | "subreddit"
 	}>();
 
-	const { formatNumber, share } = useUtils();
+	const { productionUrl } = useConstants();
+	const { formatNumber } = useUtils();
+	const { copy, copied } = useClipboard();
 
 	const subredditIcon = await props.post.subreddit?.icon_img;
 	const authorImage = await props.post.author.icon_img;

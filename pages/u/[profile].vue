@@ -9,7 +9,7 @@
 	const route = useRoute();
 	const { client } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
-	const { batchSize } = useConstants();
+	const { appName, batchSize } = useConstants();
 	const posts = ref<Submission[]>([]);
 	const redditor = ref<RedditUser | null>(null);
 	const loading = ref(true);
@@ -19,7 +19,10 @@
 
 		client.value!.getUser((route.params as RouteParams).profile!).fetch().then((profile) => {
 			redditor.value = profile;
-			console.log(redditor.value);
+
+			useSeoMeta({
+				title: `${redditor.value.name} | ${appName}`
+			});
 
 			redditor.value.getSubmissions({ limit: batchSize }).then((res) => {
 				posts.value = res;

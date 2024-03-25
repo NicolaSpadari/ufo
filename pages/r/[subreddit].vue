@@ -9,9 +9,9 @@
 	const route = useRoute();
 	const { client } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
-	const { batchSize } = useConstants();
+	const { appName, batchSize } = useConstants();
 	const posts = ref<Submission[]>([]);
-	const subreddit = ref();
+	const subreddit = ref<Subreddit | null>(null);
 	const loading = ref(true);
 
 	if (user.value) {
@@ -19,6 +19,10 @@
 
 		client.value!.getSubreddit((route.params as RouteParams).subreddit).fetch().then((res) => {
 			subreddit.value = res;
+
+			useSeoMeta({
+				title: `${subreddit.value.display_name} | ${appName}`
+			});
 		});
 
 		client.value!.getNew((route.params as RouteParams).subreddit, { limit: batchSize }).then((res) => {
