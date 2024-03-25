@@ -22,9 +22,20 @@
 					</div>
 				</template>
 			</div>
-			<button h-6 w-6 flex flex-center rounded-full hover="bg-elevated" @click="console.log(props.post)">
-				<i-heroicons-solid-ellipsis-horizontal text-light />
-			</button>
+			<Dropdown :id="`post-${post.id}`">
+				<template #button>
+					<div h-6 w-6 flex flex-center rounded-full hover="bg-elevated">
+						<i-heroicons-solid-ellipsis-horizontal text-light />
+					</div>
+				</template>
+				<template #content>
+					<div flex flex-col p-2>
+						<button w-full flex rounded-lg px-4 py-2 text-sm hover="bg-light/15" @click="console.log(post)">
+							<span ml-auto text-light>Debug</span>
+						</button>
+					</div>
+				</template>
+			</Dropdown>
 		</div>
 		<p text-lg text-light font-text>
 			{{ props.post.title }}
@@ -47,7 +58,7 @@
 				<i-heroicons-outline-chat-bubble-oval-left h-4 w-4 />
 				<span>{{ formatNumber(props.post.num_comments) }}</span>
 			</NuxtLink>
-			<button hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 @click="copy(`${productionUrl}/comment/${props.post.id}`)" shadow-sm>
+			<button hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm @click="copy(`${productionUrl}/comment/${props.post.id}`)">
 				<span v-if="copied">Url copied!</span>
 				<template v-else>
 					<i-heroicons-outline-share h-4 w-4 />
