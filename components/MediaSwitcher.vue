@@ -25,10 +25,10 @@
 		</div>
 	</div>
 
-	<div v-else-if="post.post_hint === 'image' || post.post_hint === 'link'">
-		<div class="group" relative w-full bg-neutral-700>
-			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto />
-			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto />
+	<div v-else-if="post.post_hint === 'image' || post.post_hint === 'link'" h-full>
+		<div class="group" relative w-full bg-neutral-700 h-full>
+			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" h-full object-contain mx-auto />
+			<NuxtImg v-else :src="previewImage" max-h="40rem" h-full object-contain mx-auto />
 
 			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="group-hover:opacity-100" @click="setActivePost()">
 				<i-heroicons-outline-arrows-pointing-out h-6 w-6 text-light />
