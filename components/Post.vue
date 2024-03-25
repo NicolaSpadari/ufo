@@ -30,9 +30,9 @@
 				</template>
 				<template #content>
 					<div flex flex-col p-2>
-						<button w-full flex rounded-lg px-4 py-2 text-sm hover="bg-light/15" @click="console.log(post)">
-							<span ml-auto text-light>Debug</span>
-						</button>
+						<DropdownEntry @click="console.log(post)">
+							Debug
+						</DropdownEntry>
 					</div>
 				</template>
 			</Dropdown>
@@ -49,24 +49,39 @@
 			<MediaSwitcher :post="props.post" />
 		</div>
 		<div flex gap-3>
-			<div flex items-center gap-2 rounded-full bg-main hover="bg-main/70" p-2 text-sm text-gray-400 shadow-sm>
-				<button i-heroicons-solid-chevron-up h-4 w-4 hover="text-orange-500" @click="upvote()" />
-				<span
-					:class="{
-						'text-orange-500': upvoted,
-						'text-blue-500': downvoted,
-					}"
-				>{{ formatNumber(props.post.score) }}</span>
-				<button i-heroicons-solid-chevron-down h-4 w-4 hover="text-blue-500" @click="downvote()" />
-			</div>
-			<NuxtLink :to="`/comment/${props.post.id}`" hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm>
-				<i-heroicons-outline-chat-bubble-oval-left h-4 w-4 />
-				<span>{{ formatNumber(props.post.num_comments) }}</span>
-			</NuxtLink>
-			<button hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm @click="share(postInfos)">
-				<i-heroicons-outline-share h-4 w-4 />
-				<span>Share</span>
-			</button>
+			<Action>
+				<template #left>
+					<button i-heroicons-solid-chevron-up h-4 w-4 hover="text-orange-500" @click="upvote()" />
+				</template>
+				<template #center>
+					<span
+						cursor-text
+						:class="{
+							'text-orange-500': upvoted,
+							'text-blue-500': downvoted,
+						}"
+					>{{ formatNumber(props.post.score) }}</span>
+				</template>
+				<template #right>
+					<button i-heroicons-solid-chevron-down h-4 w-4 hover="text-blue-500" @click="downvote()" />
+				</template>
+			</Action>
+			<Action :to="`/comment/${props.post.id}`">
+				<template #left>
+					<i-heroicons-outline-chat-bubble-oval-left h-4 w-4 />
+				</template>
+				<template #center>
+					{{ formatNumber(props.post.num_comments) }}
+				</template>
+			</Action>
+			<Action @click="share(postInfos)">
+				<template #left>
+					<i-heroicons-outline-share h-4 w-4 />
+				</template>
+				<template #center>
+					Share
+				</template>
+			</Action>
 		</div>
 	</div>
 </template>
