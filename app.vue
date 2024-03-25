@@ -1,10 +1,6 @@
 <template>
 	<NuxtLayout>
 		<NuxtPage />
-
-		<DevOnly>
-			<Debug />
-		</DevOnly>
 	</NuxtLayout>
 
 	<Modal id="zoomModal">

@@ -1,5 +1,5 @@
 <template>
-	<div fixed bottom-0 right-0 flex flex-col bg-gray-200 space-y-3>
+	<div flex flex-col bg-gray-200 space-y-3>
 		<button @click="initializeClient()">
 			initializeClient
 		</button>
