@@ -1,5 +1,5 @@
 <template>
-	<div v-if="user" space-y-3>
+	<div v-if="user" py-5 space-y-5>
 		<Loader v-if="loading" />
 
 		<template v-else>

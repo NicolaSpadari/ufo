@@ -1,5 +1,5 @@
 <template>
-	<ul space-y-2 rounded-xl bg-raised p-3 h="30rem" scrollbar="~ track-color-transparent thumb-color-neutral-700 rounded">
+	<ul space-y-2 rounded-xl bg-raised p-3>
 		<li v-for="comment in props.comments" :key="comment.id">
 			<p text-light font-text text-sm>
 				{{ comment.body }}
