@@ -30,7 +30,10 @@
 		loading.value = true;
 		console.log("call loadmore");
 
-		client.value?.getHot(undefined, { limit: batchSize, after: posts.value[posts.value.length - 1].name }).then((res) => {
+		client.value?.getHot(undefined, {
+			limit: batchSize,
+			after: posts.value[posts.value.length - 1].name
+		}).then((res) => {
 			posts.value.push(...res);
 			loading.value = false;
 		});

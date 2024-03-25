@@ -50,9 +50,14 @@
 		</div>
 		<div flex gap-3>
 			<div flex items-center gap-2 rounded-full bg-main hover="bg-main/70" p-2 text-sm text-gray-400 shadow-sm>
-				<button i-heroicons-solid-chevron-up h-4 w-4 hover="text-orange-500" />
-				<span>{{ formatNumber(props.post.score) }}</span>
-				<button i-heroicons-solid-chevron-down h-4 w-4 hover="text-blue-500" />
+				<button i-heroicons-solid-chevron-up h-4 w-4 hover="text-orange-500" @click="upvote()" />
+				<span
+					:class="{
+						'text-orange-500': upvoted,
+						'text-blue-500': downvoted,
+					}"
+				>{{ formatNumber(props.post.score) }}</span>
+				<button i-heroicons-solid-chevron-down h-4 w-4 hover="text-blue-500" @click="downvote()" />
 			</div>
 			<NuxtLink :to="`/comment/${props.post.id}`" hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm>
 				<i-heroicons-outline-chat-bubble-oval-left h-4 w-4 />
@@ -74,10 +79,13 @@
 
 	const { productionUrl } = useConstants();
 	const { formatNumber, share } = useUtils();
+	const { client } = useReddit();
 
 	const subredditIcon = await props.post.subreddit?.icon_img;
 	const authorImage = await props.post.author.icon_img;
 	const authorName = await props.post.author.name;
+	const upvoted = ref(false);
+	const downvoted = ref(false);
 
 	const postInfos = {
 		title: props.post.title,
@@ -92,6 +100,18 @@
 			|| props.post.post_hint === "image"
 			|| props.post.post_hint === "link";
 	});
+
+	const upvote = () => {
+		client.value!.getSubmission(props.post.id).upvote();
+		upvoted.value = true;
+		downvoted.value = false;
+	};
+
+	const downvote = () => {
+		client.value!.getSubmission(props.post.id).downvote();
+		upvoted.value = false;
+		downvoted.value = true;
+	};
 </script>
 
 <style scoped>
