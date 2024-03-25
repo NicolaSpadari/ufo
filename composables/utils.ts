@@ -6,15 +6,12 @@ export const useUtils = () => {
 		}).format(num);
 	};
 
-	const share = async () => {
+	const share = async (infos: PostInfos) => {
 		try {
-			await navigator.share({
-				title: "Post title",
-				text: "Post text",
-				url: "Post url"
-			});
+			await navigator.share(infos);
 		} catch (err) {
-
+			const { copy } = useClipboard();
+			copy(infos.url);
 		}
 	};
 

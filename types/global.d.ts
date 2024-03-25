@@ -4,3 +4,9 @@ declare interface RouteParams {
 	id?: string
 	name: string
 }
+
+declare interface PostInfos {
+	title: string
+	text: string
+	url: string
+}

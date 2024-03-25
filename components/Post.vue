@@ -58,12 +58,9 @@
 				<i-heroicons-outline-chat-bubble-oval-left h-4 w-4 />
 				<span>{{ formatNumber(props.post.num_comments) }}</span>
 			</NuxtLink>
-			<button hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm @click="copy(`${productionUrl}/comment/${props.post.id}`)">
-				<span v-if="copied">Url copied!</span>
-				<template v-else>
-					<i-heroicons-outline-share h-4 w-4 />
-					<span>Share</span>
-				</template>
+			<button hover="bg-main/70" flex items-center gap-2 rounded-full bg-main p-2 px-3 text-sm text-gray-400 shadow-sm @click="share(postInfos)">
+				<i-heroicons-outline-share h-4 w-4 />
+				<span>Share</span>
 			</button>
 		</div>
 	</div>
@@ -76,12 +73,17 @@
 	}>();
 
 	const { productionUrl } = useConstants();
-	const { formatNumber } = useUtils();
-	const { copy, copied } = useClipboard();
+	const { formatNumber, share } = useUtils();
 
 	const subredditIcon = await props.post.subreddit?.icon_img;
 	const authorImage = await props.post.author.icon_img;
 	const authorName = await props.post.author.name;
+
+	const postInfos = {
+		title: props.post.title,
+		text: props.post.selftext || "",
+		url: `${productionUrl}/comment/${props.post.id}`
+	};
 
 	const hasMedia = computed(() => {
 		return props.post.post_hint === "rich:video"
