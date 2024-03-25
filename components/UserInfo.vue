@@ -27,6 +27,9 @@
 				<NuxtLink :to="`/${user?.subreddit?.display_name_prefixed}`" w-full flex rounded-lg px-4 py-2 text-sm hover="bg-light/15">
 					<span ml-auto text-light>Profile</span>
 				</NuxtLink>
+				<NuxtLink to="/settings" w-full flex rounded-lg px-4 py-2 text-sm hover="bg-light/15">
+					<span ml-auto text-light>Settings</span>
+				</NuxtLink>
 				<button w-full flex items-center gap-2 rounded-lg px-4 py-2 text-sm hover="bg-red-700/25" @click="logout()">
 					<span ml-auto text-red-600>Logout</span>
 				</button>
