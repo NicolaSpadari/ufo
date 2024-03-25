@@ -6,8 +6,16 @@ export const useUtils = () => {
 		}).format(num);
 	};
 
-	const share = () => {
-		console.log("todo: share");
+	const share = async () => {
+		try {
+			await navigator.share({
+				title: "Post title",
+				text: "Post text",
+				url: "Post url"
+			});
+		} catch (err) {
+
+		}
 	};
 
 	return {
