@@ -4,7 +4,7 @@
 	</div>
 
 	<div v-else-if="post.post_hint === 'hosted:video'">
-		<VuePlyr :options="{ autoplay: true }" max-h="48rem">
+		<VuePlyr ref="player" :options="{ loop: { active: true } }" max-h="48rem">
 			<video controls playsinline>
 				<source :src="post.secure_media?.reddit_video?.fallback_url">
 			</video>
@@ -26,9 +26,9 @@
 	</div>
 
 	<div v-else-if="post.post_hint === 'image' || post.post_hint === 'link'" h-full>
-		<div class="group" relative w-full bg-neutral-700 h-full>
-			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" h-full object-contain mx-auto />
-			<NuxtImg v-else :src="previewImage" max-h="40rem" h-full object-contain mx-auto />
+		<div class="group" relative h-full w-full bg-neutral-700>
+			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto h-full object-contain />
+			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto h-full object-contain />
 
 			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="group-hover:opacity-100" @click="setActivePost()">
 				<i-heroicons-outline-arrows-pointing-out h-6 w-6 text-light />
@@ -46,6 +46,8 @@
 	const { openModal } = useModal();
 	const { activePost } = useReddit();
 
+	const player = ref<HTMLElement | null>(null);
+
 	if (props.post.crosspost_parent && props.post.crosspost_parent !== "") {
 		post.value = props.post.crosspost_parent_list[0];
 	}
@@ -55,10 +57,20 @@
 	const curIndex = computed(() => index.value + 1);
 
 	const setActivePost = () => {
-		console.log("setting", props.post)
+		console.log("setting", props.post);
 		activePost.value = props.post;
 		openModal("zoomModal");
 	};
+
+	useIntersectionObserver(player, ([{ isIntersecting }]) => {
+		if (isIntersecting) {
+			player.value.player.play();
+		} else {
+			player.value.player.pause();
+		}
+	}, {
+		threshold: 0.2
+	});
 </script>
 
 <style>

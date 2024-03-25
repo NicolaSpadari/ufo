@@ -51,7 +51,13 @@
 		<div flex gap-3>
 			<Action>
 				<template #left>
-					<button i-heroicons-solid-chevron-up h-4 w-4 hover="text-orange-500" @click="upvote()" />
+					<i-heroicons-solid-chevron-up h-4 w-4
+						:class="{
+							'text-orange-500': upvoted,
+						}"
+						hover="text-orange-500"
+						@click="upvote()"
+					/>
 				</template>
 				<template #center>
 					<span
@@ -63,7 +69,13 @@
 					>{{ formatNumber(props.post.score) }}</span>
 				</template>
 				<template #right>
-					<button i-heroicons-solid-chevron-down h-4 w-4 hover="text-blue-500" @click="downvote()" />
+					<i-heroicons-solid-chevron-down h-4 w-4
+						:class="{
+							'text-blue-500': downvoted,
+						}"
+						hover="text-blue-500"
+						@click="downvote()"
+					/>
 				</template>
 			</Action>
 			<Action :to="`/comment/${props.post.id}`">
