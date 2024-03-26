@@ -30,7 +30,7 @@
 			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto h-full object-contain />
 			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto h-full object-contain />
 
-			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="group-hover:opacity-100" @click="setActivePost()">
+			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="expander group-hover:opacity-100" @click="setActivePost()">
 				<i-heroicons-outline-arrows-pointing-out h-6 w-6 text-light />
 			</button>
 		</div>
@@ -79,5 +79,8 @@
 }
 dialog img {
 	@apply max-h-full!;
+}
+dialog .expander {
+	@apply hidden;
 }
 </style>
