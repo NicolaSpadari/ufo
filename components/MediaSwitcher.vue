@@ -4,11 +4,18 @@
 	</div>
 
 	<div v-else-if="post.post_hint === 'hosted:video'">
-		<VuePlyr ref="player" :options="{ loop: { active: true } }" max-h="48rem">
-			<video controls playsinline>
-				<source :src="post.secure_media?.reddit_video?.fallback_url">
-			</video>
-		</VuePlyr>
+		<media-player
+			ref="player"
+			:src="post.secure_media?.reddit_video?.fallback_url"
+			crossOrigin
+			playsInline
+			autoPlay
+			max-h="48rem"
+		>
+			<media-provider>
+				<media-poster src="https://via.placeholder.com/1280x720?text=Poster" />
+			</media-provider>
+		</media-player>
 	</div>
 
 	<div v-else-if="post.is_gallery">
@@ -46,7 +53,7 @@
 	const { openModal } = useModal();
 	const { activePost } = useReddit();
 
-	const player = ref<HTMLElement | null>(null);
+	const player = ref<MediaPlayerElement | null>(null);
 
 	if (props.post.crosspost_parent && props.post.crosspost_parent !== "") {
 		post.value = props.post.crosspost_parent_list[0];
@@ -71,6 +78,8 @@
 	}, {
 		threshold: 0.2
 	});
+
+	onBeforeUnmount(() => player.value.destroy());
 </script>
 
 <style>

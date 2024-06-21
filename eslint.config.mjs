@@ -1,5 +1,5 @@
-import { antfu as eslintConfig } from "@antfu/eslint-config";
-import format from "eslint-plugin-format";
+import eslintConfig from "@antfu/eslint-config";
+import nuxtConfig from "./.nuxt/eslint.config.mjs";
 
 export default eslintConfig(
 	// General
@@ -11,14 +11,10 @@ export default eslintConfig(
 			indent: "tab",
 			quotes: "double"
 		},
-		formatters: {
-			css: true
-		},
 		rules: {
 			curly: "off",
 			"no-console": "off",
 			"no-new-func": "off",
-			"new-cap": "off",
 			"style/semi": ["error", "always"],
 			"style/indent": ["error", "tab"],
 			"style/quote-props": ["warn", "as-needed"],
@@ -44,22 +40,5 @@ export default eslintConfig(
 		}
 	},
 
-	// Style
-	{
-		files: ["**/*.css"],
-		languageOptions: {
-			parser: format.parserPlain
-		},
-		plugins: {
-			format
-		},
-		rules: {
-			"style/indent": "off",
-			"format/prettier": ["error", {
-				parser: "scss",
-				useTabs: true,
-				vueIndentScriptAndStyle: true
-			}]
-		}
-	}
+	nuxtConfig()
 );
