@@ -49,7 +49,6 @@ export default defineNuxtConfig({
 	},
 	css: [
 		"@unocss/reset/tailwind.css",
-		"vidstack/bundle",
 		"vidstack/player/styles/default/theme.css",
 		"vidstack/player/styles/default/layouts/video.css"
 	],

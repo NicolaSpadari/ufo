@@ -7,14 +7,17 @@
 		<media-player
 			ref="player"
 			:src="post.secure_media?.reddit_video?.fallback_url"
-			crossOrigin
-			playsInline
-			autoPlay
-			max-h="48rem"
+			cross-origin auto-play plays-inline muted max-h="48rem"
+			@can-play="player?.play()"
 		>
 			<media-provider>
-				<media-poster src="https://via.placeholder.com/1280x720?text=Poster" />
+				<media-poster
+					src="https://via.placeholder.com/1280x720?text=Poster"
+					class="vds-poster"
+				/>
 			</media-provider>
+
+			<media-video-layout />
 		</media-player>
 	</div>
 
@@ -45,6 +48,10 @@
 </template>
 
 <script lang="ts" setup>
+	import "vidstack/player";
+	import "vidstack/player/ui";
+	import "vidstack/player/layouts";
+
 	const props = defineProps<{
 		post: Submission
 	}>();
@@ -68,28 +75,21 @@
 		activePost.value = props.post;
 		openModal("zoomModal");
 	};
-
-	useIntersectionObserver(player, ([{ isIntersecting }]) => {
-		if (isIntersecting) {
-			player.value.player.play();
-		} else {
-			player.value.player.pause();
-		}
-	}, {
-		threshold: 0.2
-	});
-
-	onBeforeUnmount(() => player.value.destroy());
 </script>
 
 <style>
-.video-wrapper > iframe {
-	@apply w-full h-full;
-}
-dialog img {
-	@apply max-h-full!;
-}
-dialog .expander {
-	@apply hidden;
-}
+	.video-wrapper > iframe {
+		@apply w-full h-full;
+	}
+	dialog img {
+		@apply max-h-full!;
+	}
+	dialog .expander {
+		@apply hidden;
+	}
+
+	.vds-google-cast-button,
+	.vds-menu-button{
+		@apply hidden;
+	}
 </style>
