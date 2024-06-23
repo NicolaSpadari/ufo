@@ -16,6 +16,9 @@ export default defineNuxtConfig({
 		"nuxt3-date-fns",
 		"nuxt-svgo"
 	],
+	extends: [
+		"github:NicolaSpadari/nuxt-layers"
+	],
 	runtimeConfig: {
 		public: {
 			redditApiKey: process.env.REDDIT_API_KEY,
