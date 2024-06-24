@@ -5,9 +5,12 @@
 				<template v-if="props.from === 'feed'">
 					<SubredditIcon :image="subredditIcon" size="medium" />
 					<div flex flex-col>
-						<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" text-light font-text>
-							{{ props.post.subreddit_name_prefixed }}
-						</NuxtLink>
+						<div flex-center gap-2>
+							<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" text-light font-text>
+								{{ props.post.subreddit_name_prefixed }}
+							</NuxtLink>
+							<span text-xs text-neutral-400>{{ getTimeAgo(props.post.created) }}</span>
+						</div>
 						<NuxtLink :to="`/u/${authorName}`" text-xs text-neutral-400 font-text hover="underline">
 							u/{{ authorName }}
 						</NuxtLink>
@@ -51,7 +54,8 @@
 		<div flex gap-3>
 			<Action>
 				<template #left>
-					<i-heroicons-solid-chevron-up h-4 w-4
+					<i-heroicons-solid-chevron-up
+						h-4 w-4
 						:class="{
 							'text-orange-500': upvoted,
 						}"
@@ -69,7 +73,8 @@
 					>{{ formatNumber(props.post.score) }}</span>
 				</template>
 				<template #right>
-					<i-heroicons-solid-chevron-down h-4 w-4
+					<i-heroicons-solid-chevron-down
+						h-4 w-4
 						:class="{
 							'text-blue-500': downvoted,
 						}"
@@ -127,6 +132,12 @@
 			|| props.post.post_hint === "image"
 			|| props.post.post_hint === "link";
 	});
+
+	const getTimeAgo = (timestamp: number) => {
+		return useFormatDistance(useFromUnixTime(timestamp), new Date(), {
+			addSuffix: true
+		}).replace("about", "");
+	};
 
 	const upvote = () => {
 		client.value!.getSubmission(props.post.id).upvote();

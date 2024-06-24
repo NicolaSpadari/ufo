@@ -3,6 +3,7 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"module": "ESNext",
+		"types": ["vidstack/vue"],
 		"strict": true
 	},
 	"include": [

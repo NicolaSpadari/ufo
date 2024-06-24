@@ -1,6 +1,6 @@
-import AutoImport from "unplugin-auto-import/vite";
 import { colors } from "@unocss/preset-mini";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
+import { vite as vidstack } from "vidstack/plugins";
 
 const dark800 = typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800];
 
@@ -9,9 +9,17 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 		"@unocss/nuxt",
 		"@nuxt/image",
+		"@nuxt/eslint",
+		"@nuxtjs/fontaine",
 		"@pinia/nuxt",
 		"@pinia-plugin-persistedstate/nuxt",
+		"nuxt3-date-fns",
 		"nuxt-svgo"
+	],
+	extends: [
+		"github:NicolaSpadari/nuxt-layers/layer-placeholders",
+		"github:NicolaSpadari/nuxt-layers/layer-details",
+		"github:NicolaSpadari/nuxt-layers/layer-cache",
 	],
 	runtimeConfig: {
 		public: {
@@ -26,7 +34,7 @@ export default defineNuxtConfig({
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
 			meta: [
-				{ name: "description", content: "A Reddit clone" },
+				{ name: "description", content: "A Reddit client made with Nuxt 3" },
 				{ name: "theme-color", content: dark800 },
 				{ name: "format-detection", content: "no" }
 			],
@@ -45,7 +53,9 @@ export default defineNuxtConfig({
 		typedPages: true
 	},
 	css: [
-		"@unocss/reset/tailwind.css"
+		"@unocss/reset/tailwind.css",
+		"vidstack/player/styles/default/theme.css",
+		"vidstack/player/styles/default/layouts/video.css"
 	],
 	svgo: {
 		autoImportPath: "./assets/"
@@ -53,36 +63,52 @@ export default defineNuxtConfig({
 	image: {
 		provider: "ipx"
 	},
-	vite: {
-		plugins: [
-			AutoImport({
+	imports: {
+		presets: [
+			{
+				from: "snoowrap",
 				imports: [
 					{
-						"@/utils/snoowrap": [["reddit", "reddit"]]
-					},
-					{
-						from: "snoowrap",
-						imports: ["RedditUser", "Subreddit", "Submission", "Multireddit"],
-						type: true
-					},
-					{
-						from: "@/utils/snoowrap",
-						imports: ["Snoowrap"],
-						type: true
+						name: "default",
+						as: "reddit"
 					}
 				]
-			}),
-			nodePolyfills()
+			},
+			{
+				from: "snoowrap",
+				imports: ["RedditUser", "Subreddit", "Submission", "Multireddit"],
+				type: true
+			},
+			{
+				from: "snoowrap",
+				imports: ["Snoowrap"],
+				type: true
+			},
+			{
+				from: "vidstack/elements",
+				imports: ["MediaPlayerElement"],
+				type: true
+			}
+		]
+	},
+	vite: {
+		plugins: [
+			nodePolyfills(),
+			vidstack()
 		]
 	},
 	vue: {
 		compilerOptions: {
-			isCustomElement: (tag: string) => tag.startsWith("i-")
+			isCustomElement: (tag: string) => {
+				const customPrefixes = ["i-", "media-"];
+				return customPrefixes.some((prefix) => tag.startsWith(prefix));
+			}
 		}
 	},
 	ssr: false,
-	sourcemap: {
-		server: true,
-		client: false
+	eslint: {
+		config: {
+			standalone: false
+		}
 	}
 });

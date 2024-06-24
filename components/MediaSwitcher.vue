@@ -4,11 +4,21 @@
 	</div>
 
 	<div v-else-if="post.post_hint === 'hosted:video'">
-		<VuePlyr ref="player" :options="{ loop: { active: true } }" max-h="48rem">
-			<video controls playsinline>
-				<source :src="post.secure_media?.reddit_video?.fallback_url">
-			</video>
-		</VuePlyr>
+		<media-player
+			ref="player"
+			:src="post.secure_media?.reddit_video?.fallback_url"
+			cross-origin auto-play plays-inline muted max-h="48rem"
+			@can-play="player?.play()"
+		>
+			<media-provider>
+				<media-poster
+					src="https://via.placeholder.com/1280x720?text=Poster"
+					class="vds-poster"
+				/>
+			</media-provider>
+
+			<media-video-layout />
+		</media-player>
 	</div>
 
 	<div v-else-if="post.is_gallery">
@@ -30,7 +40,7 @@
 			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto h-full object-contain />
 			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto h-full object-contain />
 
-			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="group-hover:opacity-100" @click="setActivePost()">
+			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="expander group-hover:opacity-100" @click="setActivePost()">
 				<i-heroicons-outline-arrows-pointing-out h-6 w-6 text-light />
 			</button>
 		</div>
@@ -38,6 +48,10 @@
 </template>
 
 <script lang="ts" setup>
+	import "vidstack/player";
+	import "vidstack/player/ui";
+	import "vidstack/player/layouts";
+
 	const props = defineProps<{
 		post: Submission
 	}>();
@@ -46,7 +60,7 @@
 	const { openModal } = useModal();
 	const { activePost } = useReddit();
 
-	const player = ref<HTMLElement | null>(null);
+	const player = ref<MediaPlayerElement | null>(null);
 
 	if (props.post.crosspost_parent && props.post.crosspost_parent !== "") {
 		post.value = props.post.crosspost_parent_list[0];
@@ -61,23 +75,21 @@
 		activePost.value = props.post;
 		openModal("zoomModal");
 	};
-
-	useIntersectionObserver(player, ([{ isIntersecting }]) => {
-		if (isIntersecting) {
-			player.value.player.play();
-		} else {
-			player.value.player.pause();
-		}
-	}, {
-		threshold: 0.2
-	});
 </script>
 
 <style>
-.video-wrapper > iframe {
-	@apply w-full h-full;
-}
-dialog img {
-	@apply max-h-full!;
-}
+	.video-wrapper > iframe {
+		@apply w-full h-full;
+	}
+	dialog img {
+		@apply max-h-full!;
+	}
+	dialog .expander {
+		@apply hidden;
+	}
+
+	.vds-google-cast-button,
+	.vds-menu-button{
+		@apply hidden;
+	}
 </style>
