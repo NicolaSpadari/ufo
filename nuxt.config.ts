@@ -17,7 +17,9 @@ export default defineNuxtConfig({
 		"nuxt-svgo"
 	],
 	extends: [
-		"github:NicolaSpadari/nuxt-layers"
+		"github:NicolaSpadari/nuxt-layers/layer-placeholders",
+		"github:NicolaSpadari/nuxt-layers/layer-details",
+		"github:NicolaSpadari/nuxt-layers/layer-cache",
 	],
 	runtimeConfig: {
 		public: {
