@@ -3,6 +3,9 @@
 		<div class="mx-auto max-w-7xl px-2 lg:px-8 sm:px-4 lg:divide-y lg:divide-gray-200">
 			<div class="relative h-16 flex justify-between">
 				<div class="relative z-10 flex px-2 lg:px-0">
+					<button lg="hidden" @click="open = !open">
+						<Icon name="heroicons-solid:bars-3" size-6 />
+					</button>
 					<div class="flex flex-shrink-0 items-center">
 						<img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
 					</div>
@@ -58,3 +61,7 @@
 		</div>
 	</header>
 </template>
+
+<script lang="ts" setup>
+	const { open } = useSidebar();
+</script>
