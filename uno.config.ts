@@ -50,6 +50,18 @@ export default defineConfig({
 			lg: "992px",
 			xl: "1200px",
 			xxl: "1400px"
+		},
+		animation: {
+			keyframes: {
+				slideDown: `{
+					from { height: 0; }
+  					to { height: var(--radix-accordion-content-height); }
+				}`,
+				slideUp: `{
+					from { height: var(--radix-accordion-content-height); }
+  					to { height: 0; }
+				}`
+			}
 		}
 	},
 	transformers: [
