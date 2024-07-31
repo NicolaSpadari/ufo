@@ -8,11 +8,11 @@
 			<Modal id="zoomModal">
 				<ZoomedPost />
 				<button absolute flex flex-center right-3 top-3 rounded-full bg="light/70" p-2 @click="closeModal('zoomModal')">
-					<i-heroicons-outline-x-mark w-8 h-8 text-main />
+					<Icon name="heroicons-outline:x-mark" size-8 text-main />
 				</button>
 			</Modal>
 		</Body>
-	</Html>	
+	</Html>
 </template>
 
 <script lang="ts" setup>

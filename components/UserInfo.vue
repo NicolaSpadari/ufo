@@ -12,7 +12,7 @@
 					</p>
 					<div flex items-center gap-1>
 						<div h-3 w-3 flex-center rounded-full bg-accent>
-							<i-heroicons-solid-star text-light />
+							<Icon name="heroicons-solid:star" text-light />
 						</div>
 						<p text-xs text-accent font-text>
 							Karma {{ formatNumber(user?.total_karma) }}

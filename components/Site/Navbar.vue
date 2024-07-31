@@ -1,7 +1,7 @@
 <template>
 	<div id="navbar" sticky top-0 z-5 bg-raised py-3 shadow-lg>
 		<button @click="emit('toggleSidebar')" absolute left-5 absolute-center-v>
-			<i-heroicons-solid-bars-3 h-8 w-8 text-light />
+			<Icon name="heroicons-solid:bars-3" size-8 text-light />
 		</button>
 		<div crate>
 			<div flex items-center justify-between>

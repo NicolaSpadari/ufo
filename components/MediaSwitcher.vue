@@ -41,7 +41,7 @@
 			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto h-full object-contain />
 
 			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="expander group-hover:opacity-100" @click="setActivePost()">
-				<i-heroicons-outline-arrows-pointing-out h-6 w-6 text-light />
+				<Icon name="heroicons-outline:arrows-pointing-out" size-6 text-light />
 			</button>
 		</div>
 	</div>

@@ -9,17 +9,19 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 		"@unocss/nuxt",
 		"@nuxt/image",
+		"@nuxt/icon",
 		"@nuxt/eslint",
 		"@nuxtjs/fontaine",
 		"@pinia/nuxt",
 		"@pinia-plugin-persistedstate/nuxt",
+		"radix-vue/nuxt",
 		"nuxt3-date-fns",
 		"nuxt-svgo"
 	],
 	extends: [
 		"github:NicolaSpadari/nuxt-layers/layer-placeholders",
 		"github:NicolaSpadari/nuxt-layers/layer-details",
-		"github:NicolaSpadari/nuxt-layers/layer-cache",
+		"github:NicolaSpadari/nuxt-layers/layer-cache"
 	],
 	runtimeConfig: {
 		public: {
@@ -63,6 +65,9 @@ export default defineNuxtConfig({
 	image: {
 		provider: "ipx"
 	},
+	icon: {
+		mode: "svg"
+	},
 	imports: {
 		presets: [
 			{
@@ -97,18 +102,11 @@ export default defineNuxtConfig({
 			vidstack()
 		]
 	},
-	vue: {
-		compilerOptions: {
-			isCustomElement: (tag: string) => {
-				const customPrefixes = ["i-", "media-"];
-				return customPrefixes.some((prefix) => tag.startsWith(prefix));
-			}
-		}
-	},
 	ssr: false,
 	eslint: {
 		config: {
 			standalone: false
 		}
-	}
+	},
+	compatibilityDate: "2024-07-31"
 });

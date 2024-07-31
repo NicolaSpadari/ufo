@@ -7,7 +7,7 @@
 				</span>
 
 				<span shrink-0 transition duration-300 class="group-open:-rotate-180">
-					<i-heroicons-solid-chevron-down h-4 w-4 text-light />
+					<Icon name="heroicons-solid:chevron-down" size-4 text-light />
 				</span>
 			</summary>
 

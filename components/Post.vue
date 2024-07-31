@@ -28,7 +28,7 @@
 			<Dropdown :id="`post-${post.id}`">
 				<template #button>
 					<div h-6 w-6 flex flex-center rounded-full hover="bg-elevated">
-						<i-heroicons-solid-ellipsis-horizontal text-light />
+						<Icon name="heroicons-solid:ellipsis-horizontal" text-light />
 					</div>
 				</template>
 				<template #content>
@@ -54,8 +54,7 @@
 		<div flex gap-3>
 			<Action>
 				<template #left>
-					<i-heroicons-solid-chevron-up
-						h-4 w-4
+					<Icon name="heroicons-solid:chevron-up" size-4
 						:class="{
 							'text-orange-500': upvoted,
 						}"
@@ -73,8 +72,7 @@
 					>{{ formatNumber(props.post.score) }}</span>
 				</template>
 				<template #right>
-					<i-heroicons-solid-chevron-down
-						h-4 w-4
+					<Icon name="heroicons-solid:chevron-down" size-4
 						:class="{
 							'text-blue-500': downvoted,
 						}"
@@ -85,7 +83,7 @@
 			</Action>
 			<Action :to="`/comment/${props.post.id}`">
 				<template #left>
-					<i-heroicons-outline-chat-bubble-oval-left h-4 w-4 />
+					<Icon name="heroicons-outline:chat-bubble-oval-left" size-4 />
 				</template>
 				<template #center>
 					{{ formatNumber(props.post.num_comments) }}
@@ -93,7 +91,7 @@
 			</Action>
 			<Action @click="share(postInfos)">
 				<template #left>
-					<i-heroicons-outline-share h-4 w-4 />
+					<Icon name="heroicons-outline:share" size-4 />
 				</template>
 				<template #center>
 					Share
