@@ -10,7 +10,7 @@
 	}>();
 
 	const dialog = ref<InstanceType<any> | undefined>(null);
-	const { isOpen, closeModal } = useModal();
+	const { open, closeModal } = useModal();
 
 	useEventListener(dialog, "click", (e) => {
 		const dialogItem = dialog.value.getBoundingClientRect();
@@ -21,13 +21,13 @@
 	});
 
 	useEventListener(document, "keydown", (e) => {
-		if (isOpen.value.get(props.id) && e.key === "Escape") {
+		if (open.value.get(props.id) && e.key === "Escape") {
 			closeModal(props.id);
 		}
 	});
 
-	watch(() => isOpen.value.get(props.id), (open) => {
-		open ? dialog.value.showModal() : dialog.value.close("dismiss");
+	watch(() => open.value.get(props.id), (isOpen) => {
+		isOpen ? dialog.value.showModal() : dialog.value.close("dismiss");
 	});
 </script>
 

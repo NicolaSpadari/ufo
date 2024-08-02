@@ -21,6 +21,7 @@
 	"dependencies": {
 		"@nuxt/image": "^1.7.0",
 		"@pinia/nuxt": "^0.5.2",
+		"@radix-ui/colors": "^3.0.0",
 		"radix-vue": "^1.9.2",
 		"snoowrap": "^1.23.0",
 		"vidstack": "^1.11.30"

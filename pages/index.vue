@@ -22,8 +22,7 @@
 	}
 
 	watchOnce(user, (val) => {
-		if (val)
-			loadFeed();
+		if (val) loadFeed();
 	});
 
 	const loadMore = () => {
@@ -39,3 +38,9 @@
 		});
 	};
 </script>
+
+<style>
+	body{
+		@apply bg-white!;
+	}
+</style>

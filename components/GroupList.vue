@@ -1,33 +1,49 @@
 <template>
-	<li>
-		<details open class="group [&_summary::-webkit-details-marker]:hidden" bg-neutral-900 rounded-lg>
-			<summary flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-light hover="bg-light/15">
-				<span text-sm font-medium font-text>
-					{{ props.title }}
-				</span>
-
-				<span shrink-0 transition duration-300 class="group-open:-rotate-180">
-					<Icon name="heroicons-solid:chevron-down" size-4 text-light />
-				</span>
-			</summary>
-
-			<ul mt-1 px-2 pb-2 space-y-1>
-				<li v-for="entry in props.list" :key="entry.name">
+	<AccordionItem
+		v-if="list?.length || multiList?.length"
+		:value="handle"
+		class="mt-px overflow-hidden focus-within:relative focus-within:z-10 first:mt-0 first:rounded-t last:rounded-b"
+	>
+		<AccordionHeader flex>
+			<AccordionTrigger class="text-grass11 shadow-mauve6 hover:bg-mauve2 group h-[45px] flex flex-1 items-center justify-between bg-white px-5 text-[15px] leading-none shadow-[0_1px_0] outline-none">
+				<span>{{ title }}</span>
+				<Icon
+					name="heroicons:chevron-down"
+					transition-transform duration-300 ease="[cubic-bezier(0.87,_0,_0.13,_1)]" class="group-data-[state='open']:rotate-180"
+				/>
+			</AccordionTrigger>
+		</AccordionHeader>
+		<AccordionContent class="text-mauve11 bg-mauve2 overflow-hidden text-[15px] data-[state=closed]:animate-slideUp data-[state=open]:animate-slideDown" animate-duration="300!">
+			<ul v-if="list" px-5 py-4 space-y-1>
+				<li v-for="entry in list" :key="entry.name">
 					<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
 						<SubredditIcon :image="entry.icon_img" size="small" />
-						<span font-text>
+						<span text-dark-800 font-text>
 							{{ entry.display_name_prefixed }}
 						</span>
 					</NuxtLink>
 				</li>
 			</ul>
-		</details>
-	</li>
+
+			<ul v-if="multiList" px-5 py-4 space-y-1>
+				<li v-for="entry in multiList" :key="entry.name">
+					<NuxtLink :to="`/m/${entry.name}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
+						<SubredditIcon :image="entry.icon_url" size="small" />
+						<span font-text>
+							{{ entry.display_name }}
+						</span>
+					</NuxtLink>
+				</li>
+			</ul>
+		</AccordionContent>
+	</AccordionItem>
 </template>
 
 <script lang="ts" setup>
-	const props = defineProps<{
+	defineProps<{
 		title: string
-		list: Subreddit[]
+		handle: string
+		list?: Subreddit[]
+		multiList?: Multireddit[]
 	}>();
 </script>

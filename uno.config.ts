@@ -12,6 +12,8 @@ import {
 import { presetScrollbar } from "unocss-preset-scrollbar";
 import { colors } from "@unocss/preset-mini";
 
+import { grass, green, mauve } from "@radix-ui/colors";
+
 export default defineConfig({
 	shortcuts: [
 		["crate", "mx-auto px-3 xxl:max-w-1320px"],
@@ -42,7 +44,10 @@ export default defineConfig({
 			main: typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800],
 			raised: typeof colors?.neutral === "string" ? colors?.neutral : colors?.neutral?.[800],
 			elevated: typeof colors?.neutral === "string" ? colors?.neutral : colors?.neutral?.[600],
-			light: typeof colors?.light === "string" ? colors?.light : colors?.light?.[100]
+			light: typeof colors?.light === "string" ? colors?.light : colors?.light?.[100],
+			...green,
+			...grass,
+			...mauve
 		},
 		breakpoints: {
 			sm: "576px",

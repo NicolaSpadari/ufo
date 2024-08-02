@@ -1,5 +1,5 @@
 <template>
-	<Html min-h-screen scroll-smooth>
+	<Html min-h-screen scroll-smooth antialiased>
 		<Body overflow-x-hidden bg-main custom-scrollbar>
 			<NuxtLayout>
 				<NuxtPage />

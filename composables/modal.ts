@@ -1,20 +1,17 @@
-const isOpen = ref(new Map());
+export const useModal = () => {
+	const open = useState("modal", () => new Map());
 
-const useModal = () => {
 	const openModal = (id: string) => {
-		isOpen.value.set(id, true);
+		open.value.set(id, true);
 	};
 
 	const closeModal = (id: string) => {
-		isOpen.value.set(id, false);
+		open.value.set(id, false);
 	};
 
 	return {
-		isOpen,
+		open,
 		openModal,
 		closeModal
 	};
 };
-
-export { useModal };
-export default useModal;

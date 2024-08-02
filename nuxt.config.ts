@@ -75,7 +75,7 @@ export default defineNuxtConfig({
 				imports: [
 					{
 						name: "default",
-						as: "reddit"
+						as: "Reddit"
 					}
 				]
 			},
