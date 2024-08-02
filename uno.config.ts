@@ -17,6 +17,7 @@ import { blackA, grass, green, mauve } from "@radix-ui/colors";
 export default defineConfig({
 	shortcuts: [
 		["crate", "mx-auto px-3 xxl:max-w-1320px"],
+		["pointer", "cursor-pointer"],
 		["flex-center", "flex justify-center items-center"],
 		["absolute-center-h", "transform translate-x-1/2 right-1/2"],
 		["absolute-center-v", "transform -translate-y-1/2 top-1/2"],

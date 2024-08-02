@@ -10,3 +10,7 @@ declare interface PostInfos {
 	text: string
 	url: string
 }
+
+declare type PostOrder = "hot" | "new" | "top" | "rising" | "controversial";
+
+declare type PostSort = "hour" | "day" | "week" | "month" | "year" | "all";

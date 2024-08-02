@@ -96,6 +96,13 @@ export default defineNuxtConfig({
 			}
 		]
 	},
+	vue: {
+		compilerOptions: {
+			isCustomElement: (tag: string) => {
+				return tag.startsWith("media-");
+			}
+		}
+	},
 	vite: {
 		plugins: [
 			nodePolyfills(),

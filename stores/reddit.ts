@@ -5,6 +5,8 @@ export const useRedditStore = defineStore("reddit", () => {
 	const favorites = ref<Subreddit[]>([]);
 	const subscriptions = ref<Subreddit[]>([]);
 	const multireddits = ref<Multireddit[]>([]);
+	const order = ref<PostOrder>("hot");
+	const sort = ref<PostSort>("day");
 
 	return {
 		accessToken,
@@ -12,7 +14,9 @@ export const useRedditStore = defineStore("reddit", () => {
 		user,
 		subscriptions,
 		favorites,
-		multireddits
+		multireddits,
+		order,
+		sort
 	};
 }, {
 	persist: {
