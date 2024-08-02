@@ -1,6 +1,6 @@
 <template>
 	<AccordionItem
-		v-if="list?.length || multiList?.length"
+		v-if="subredditList?.length || multiredditList?.length"
 		:value="handle"
 		class="mt-px overflow-hidden focus-within:relative focus-within:z-10 first:mt-0 first:rounded-t last:rounded-b"
 	>
@@ -14,8 +14,8 @@
 			</AccordionTrigger>
 		</AccordionHeader>
 		<AccordionContent class="text-mauve11 bg-mauve2 overflow-hidden text-[15px] data-[state=closed]:animate-slideUp data-[state=open]:animate-slideDown" animate-duration="300!">
-			<ul v-if="list" px-5 py-4 space-y-1>
-				<li v-for="entry in list" :key="entry.name">
+			<ul v-if="subredditList" px-5 py-4 space-y-1>
+				<li v-for="entry in subredditList" :key="entry.name">
 					<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
 						<SubredditIcon :image="entry.icon_img" size="small" />
 						<span text-dark-800 font-text>
@@ -25,8 +25,8 @@
 				</li>
 			</ul>
 
-			<ul v-if="multiList" px-5 py-4 space-y-1>
-				<li v-for="entry in multiList" :key="entry.name">
+			<ul v-if="multiredditList" px-5 py-4 space-y-1>
+				<li v-for="entry in multiredditList" :key="entry.name">
 					<NuxtLink :to="`/m/${entry.name}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
 						<SubredditIcon :image="entry.icon_url" size="small" />
 						<span font-text>
@@ -43,7 +43,7 @@
 	defineProps<{
 		title: string
 		handle: string
-		list?: Subreddit[]
-		multiList?: Multireddit[]
+		subredditList?: Subreddit[]
+		multiredditList?: Multireddit[]
 	}>();
 </script>

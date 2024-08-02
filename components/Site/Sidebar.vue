@@ -1,7 +1,7 @@
 <template>
 	<div h-full flex flex-col overflow-y-auto bg-white py-6 lg="shadow-none py-0" shadow-md>
 		<AccordionRoot
-			class="bg-mauve6 w-full rounded-md shadow-[0_2px_10px] shadow-black/5"
+			class="w-full rounded-md bg-mauve6 shadow-[0_2px_10px] shadow-black/5"
 			default-value="subscriptions"
 			type="single"
 			:collapsible="true"
@@ -11,8 +11,8 @@
 				:key="content.handle"
 				:title="content.title"
 				:handle="content.handle"
-				:list="content.list"
-				:multi-list="content.multiList"
+				:subreddit-list="content.subredditList"
+				:multireddit-list="content.multiredditList"
 			/>
 		</AccordionRoot>
 	</div>
@@ -25,17 +25,17 @@
 		{
 			title: "Multireddits",
 			handle: "multireddits",
-			multiList: multireddits.value
+			multiredditList: multireddits.value
 		},
 		{
 			title: "Favorites",
 			handle: "favorites",
-			list: favorites.value
+			subredditList: favorites.value
 		},
 		{
 			title: "Subscriptions",
 			handle: "subscriptions",
-			list: subscriptions.value
+			subredditList: subscriptions.value
 		}
 	];
 </script>
