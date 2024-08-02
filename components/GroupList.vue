@@ -2,10 +2,11 @@
 	<AccordionItem
 		v-if="subredditList?.length || multiredditList?.length"
 		:value="handle"
+		:open="true"
 		class="mt-px overflow-hidden focus-within:relative focus-within:z-10 first:mt-0 first:rounded-t last:rounded-b"
 	>
 		<AccordionHeader flex>
-			<AccordionTrigger class="text-grass11 shadow-mauve6 hover:bg-mauve2 group h-[45px] flex flex-1 items-center justify-between bg-white px-5 text-[15px] leading-none shadow-[0_1px_0] outline-none">
+			<AccordionTrigger class="group h-[45px] flex flex-1 items-center justify-between bg-white px-5 text-[15px] text-grass11 leading-none shadow-[0_1px_0] shadow-mauve6 outline-none hover:bg-mauve2">
 				<span>{{ title }}</span>
 				<Icon
 					name="heroicons:chevron-down"
@@ -13,9 +14,9 @@
 				/>
 			</AccordionTrigger>
 		</AccordionHeader>
-		<AccordionContent class="text-mauve11 bg-mauve2 overflow-hidden text-[15px] data-[state=closed]:animate-slideUp data-[state=open]:animate-slideDown" animate-duration="300!">
+		<AccordionContent class="overflow-hidden bg-mauve2 text-[15px] text-mauve11 data-[state=closed]:animate-slideUp data-[state=open]:animate-slideDown" animate-duration="300!">
 			<ul v-if="subredditList" px-5 py-4 space-y-1>
-				<li v-for="entry in subredditList" :key="entry.name">
+				<li v-for="entry in subredditList" :key="entry.name" rounded-md hover="bg-mauve4">
 					<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
 						<SubredditIcon :image="entry.icon_img" size="small" />
 						<span text-dark-800 font-text>
@@ -26,10 +27,10 @@
 			</ul>
 
 			<ul v-if="multiredditList" px-5 py-4 space-y-1>
-				<li v-for="entry in multiredditList" :key="entry.name">
+				<li v-for="entry in multiredditList" :key="entry.name" rounded-md hover="bg-mauve4">
 					<NuxtLink :to="`/m/${entry.name}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
 						<SubredditIcon :image="entry.icon_url" size="small" />
-						<span font-text>
+						<span text-dark-800 font-text>
 							{{ entry.display_name }}
 						</span>
 					</NuxtLink>
