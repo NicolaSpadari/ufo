@@ -1,7 +1,7 @@
 <template>
 	<div h-full flex flex-col overflow-y-auto bg-white py-6 lg="shadow-none py-0" shadow-md>
 		<AccordionRoot
-			class="w-full rounded-md bg-mauve6 shadow-[0_2px_10px] shadow-black/5"
+			class="w-full rounded-md bg-mauve6"
 			default-value="subscriptions"
 			type="single"
 			:collapsible="true"

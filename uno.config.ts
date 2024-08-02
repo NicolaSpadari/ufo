@@ -12,7 +12,7 @@ import {
 import { presetScrollbar } from "unocss-preset-scrollbar";
 import { colors } from "@unocss/preset-mini";
 
-import { grass, green, mauve } from "@radix-ui/colors";
+import { blackA, grass, green, mauve } from "@radix-ui/colors";
 
 export default defineConfig({
 	shortcuts: [
@@ -45,6 +45,7 @@ export default defineConfig({
 			raised: typeof colors?.neutral === "string" ? colors?.neutral : colors?.neutral?.[800],
 			elevated: typeof colors?.neutral === "string" ? colors?.neutral : colors?.neutral?.[600],
 			light: typeof colors?.light === "string" ? colors?.light : colors?.light?.[100],
+			...blackA,
 			...green,
 			...grass,
 			...mauve
@@ -59,12 +60,12 @@ export default defineConfig({
 		animation: {
 			keyframes: {
 				slideDown: `{
-					from { height: 0; }
-  					to { height: var(--radix-accordion-content-height); }
+					from { height: 0 }
+  					to { height: var(--radix-accordion-content-height) }
 				}`,
 				slideUp: `{
-					from { height: var(--radix-accordion-content-height); }
-  					to { height: 0; }
+					from { height: var(--radix-accordion-content-height) }
+  					to { height: 0 }
 				}`
 			}
 		}

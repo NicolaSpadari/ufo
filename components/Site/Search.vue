@@ -1,43 +1,64 @@
 <template>
-	<div class="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-		<div class="w-full sm:max-w-xs">
-			<div class="relative">
-				<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-					<Icon name="heroicons-outline:search" size-5 text-gray-400 />
-				</div>
-				<input v-model="term" @input="debouncedSearch()" id="search" name="search" class="block w-full border-0 rounded-full bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-gray-300 ring-inset sm:text-sm placeholder:text-gray-400 sm:leading-6 focus:ring-2 focus:ring-accent focus:ring-inset" placeholder="Search" type="search">
-			</div>
+	<div class="flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
+		<ComboboxRoot
+			class="relative"
+		>
+			<ComboboxAnchor class="h-[35px] min-w-[160px] inline-flex items-center justify-between gap-[5px] rounded bg-white px-[15px] text-[13px] text-grass11 leading-none shadow-[0_2px_10px] shadow-black/10 outline-none lg:min-w-[320px] md:min-w-[240px] hover:bg-mauve3 data-[placeholder]:text-grass9 focus:shadow-[0_0_0_2px] focus:shadow-black">
+				<ComboboxInput
+					class="h-full text-grass11 outline-none !bg-transparent selection:bg-grass5 placeholder-mauve8"
+					placeholder="Search"
+					@input="setValue($event);debouncedSearch()"
+				/>
+				<ComboboxTrigger pointer-events-none>
+					<Icon
+						name="heroicons-outline:search"
+						class="size-4 text-grass11"
+					/>
+				</ComboboxTrigger>
+			</ComboboxAnchor>
 
-			<Transition>
-				<div v-if="results.length" absolute absolute-center-h top="70%" z-10 mt-5 max-w-max w-screen flex px-4>
-					<div max-w-lg w-screen flex-auto rounded-lg bg-main text-sm leading-6 shadow-lg ring-1 ring-gray="900/5">
-						<div custom-scrollbar max-h-50vh p-4>
-							<NuxtLink v-for="subreddit in results" :key="subreddit" :to="`/r/${subreddit}`" class="group" relative flex gap-x-6 rounded-lg p-4 hover="bg-raised">
-								<div mt-1 h-11 w-11 flex flex-none items-center justify-center rounded-lg bg-main class="group-hover:bg-raised">
-									<div h-8 w-8 rounded-full bg-white />
-								</div>
-								<span text-light font-semibold>
-									{{ subreddit }}
-								</span>
-							</NuxtLink>
-						</div>
-					</div>
-				</div>
-			</Transition>
-		</div>
+			<ComboboxContent v-if="term !== ''" class="will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade absolute z-10 mt-2 min-w-[160px] w-full overflow-hidden rounded bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
+				<ComboboxViewport class="p-[5px]">
+					<ComboboxEmpty class="py-2 text-center text-xs text-mauve8 font-medium" />
+
+					<ComboboxGroup>
+						<ComboboxLabel class="px-[25px] text-xs text-mauve11 leading-[25px]">
+							Results
+						</ComboboxLabel>
+
+						<template v-if="results.length">
+							<ComboboxItem
+								v-for="(option, index) in results"
+								:key="index"
+								class="relative h-[25px] w-full flex select-none items-center rounded-[3px] pl-[25px] pr-[35px] text-[13px] text-grass11 leading-none data-[disabled]:pointer-events-none data-[highlighted]:bg-grass9 data-[disabled]:text-mauve8 data-[highlighted]:text-grass1 data-[highlighted]:outline-none"
+								:value="option"
+								as="button"
+								@click="navigateTo(option.url)"
+							>
+								{{ option.display_name }}
+							</ComboboxItem>
+						</template>
+					</ComboboxGroup>
+				</ComboboxViewport>
+			</ComboboxContent>
+		</ComboboxRoot>
 	</div>
 </template>
 
 <script lang="ts" setup>
 	const { client } = useReddit();
 	const term = ref("");
-	const results = ref<string[]>([]);
+	const results = ref<Subreddit[]>([]);
+
+	const setValue = (event: { target: HTMLInputElement }) => {
+		term.value = event.target.value;
+	};
 
 	const debouncedSearch = useDebounceFn(() => {
-		client.value?.searchSubredditNames({
+		client.value?.searchSubreddits({
 			query: term.value
-		}).then((res) => {
-			console.log(res);
+		}).then((res: Subreddit[]) => {
+			console.log("search res:", res);
 			results.value = res;
 		});
 	}, 1000);

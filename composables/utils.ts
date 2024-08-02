@@ -6,10 +6,15 @@ export const useUtils = () => {
 		}).format(num);
 	};
 
+	const getInitials = (name: string) => {
+		return name.split(" ").map((n) => n[0]).join(".").toUpperCase();
+	};
+
 	const share = async (infos: PostInfos) => {
 		try {
 			await navigator.share(infos);
 		} catch (err) {
+			console.error(err);
 			const { copy } = useClipboard();
 			copy(infos.url);
 		}
@@ -17,6 +22,7 @@ export const useUtils = () => {
 
 	return {
 		formatNumber,
+		getInitials,
 		share
 	};
 };
