@@ -1,7 +1,7 @@
 <template>
 	<div h-full flex flex-col overflow-y-auto bg-white py-6 lg="shadow-none py-0" shadow-md>
 		<AccordionRoot
-			class="w-full rounded-md bg-mauve6"
+			w-full rounded-md bg-mauve6
 			type="multiple"
 			:collapsible="true"
 		>

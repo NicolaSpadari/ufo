@@ -2,10 +2,11 @@
 	<AccordionItem
 		v-if="subredditList?.length || multiredditList?.length"
 		:value="handle"
-		class="mt-px overflow-hidden focus-within:relative focus-within:z-10 first:mt-0 first:rounded-t last:rounded-b"
+		overflow-hidden
+		focus-within="relative z-10"
 	>
 		<AccordionHeader flex>
-			<AccordionTrigger class="group h-[45px] flex flex-1 items-center justify-between bg-white px-5 text-[15px] text-grass11 leading-none shadow-[0_1px_0] shadow-mauve6 outline-none hover:bg-mauve2">
+			<AccordionTrigger h="45px" flex flex-1 items-center justify-between bg-white px-5 text-grass11 leading-none shadow="[0_1px_0] mauve6" outline-none hover="bg-mauve2">
 				<span>{{ title }}</span>
 				<Icon
 					name="heroicons:chevron-down"
@@ -15,7 +16,7 @@
 			</AccordionTrigger>
 		</AccordionHeader>
 		<AccordionContent
-			class="overflow-hidden bg-mauve2 text-[15px] text-mauve11 animate-duration-300! ease-[cubic-bezier(0.87,_0,_0.13,_1)]"
+			overflow-hidden bg-mauve2 text-mauve11 animate-duration="300!" ease="[cubic-bezier(0.87,_0,_0.13,_1)]"
 			ui-open="animate-slideDown"
 			ui-closed="animate-slideUp"
 		>
@@ -23,21 +24,9 @@
 				<template v-if="subredditList">
 					<li v-for="entry in subredditList" :key="entry.name" rounded-md hover="bg-mauve4">
 						<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" flex items-center gap-3 rounded-lg py-2 text-sm text-light font-medium hover="bg-light/15">
-							<AvatarRoot class="size-6 min-w-6 inline-flex select-none items-center justify-center overflow-hidden rounded-full bg-blackA3 align-middle">
-								<AvatarImage
-									class="size-6 rounded-[inherit] object-cover"
-									:src="entry.icon_img || ''"
-									:alt="entry.display_name_prefixed"
-								/>
-								<AvatarFallback
-									class="size-6 flex items-center justify-center bg-white text-sm text-main font-medium leading-1"
-									:delay-ms="600"
-								>
-									r/
-								</AvatarFallback>
-							</AvatarRoot>
+							<SubredditIcon size="small" :image="entry.icon_img" :name="entry.display_name_prefixed" />
 
-							<span text-dark-800 font-text>
+							<span text-main font-text>
 								{{ entry.display_name_prefixed }}
 							</span>
 						</NuxtLink>
@@ -46,21 +35,9 @@
 				<template v-if="multiredditList">
 					<li v-for="entry in multiredditList" :key="entry.name" rounded-md hover="bg-mauve4">
 						<NuxtLink :to="`/m/${entry.name}`" flex items-center gap-3 rounded-lg py-2 text-sm text-light font-medium hover="bg-light/15">
-							<AvatarRoot class="size-6 min-w-6 inline-flex select-none items-center justify-center overflow-hidden rounded-full bg-blackA3 align-middle">
-								<AvatarImage
-									class="size-6 rounded-[inherit] object-cover"
-									:src="entry.icon_url || ''"
-									:alt="entry.display_name"
-								/>
-								<AvatarFallback
-									class="size-6 flex items-center justify-center bg-white text-sm text-main font-medium leading-1"
-									:delay-ms="600"
-								>
-									r/
-								</AvatarFallback>
-							</AvatarRoot>
+							<SubredditIcon size="small" :image="entry.icon_url" :name="entry.display_name" />
 
-							<span text-dark-800 font-text>
+							<span text-main font-text>
 								{{ entry.display_name }}
 							</span>
 						</NuxtLink>

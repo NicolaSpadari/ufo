@@ -28,9 +28,13 @@
 			</div>
 
 			<div absolute absolute-center-h bottom-3 flex items-center gap-2 rounded-full bg-main p-2 text-sm text-gray-400 shadow-sm>
-				<button i-heroicons-solid-chevron-left h-4 w-4 @click="prev()" />
+				<button type="button" @click="prev()">
+					<Icon name="heroicons-solid:chevron-left" size-4 />
+				</button>
 				<span>{{ curIndex }} / {{ post.gallery_data?.items?.length }}</span>
-				<button i-heroicons-solid-chevron-right h-4 w-4 @click="next()" />
+				<button type="button" @click="next()">
+					<Icon name="heroicons-solid:chevron-right" size-4 />
+				</button>
 			</div>
 		</div>
 	</div>

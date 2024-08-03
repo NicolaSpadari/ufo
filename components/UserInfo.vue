@@ -16,7 +16,7 @@
 							{{ getInitials(user!.name) }}
 						</AvatarFallback>
 					</AvatarRoot>
-					<div class="flex flex-col items-start">
+					<div hidden lg="flex flex-col items-start">
 						<div class="text-sm text-mauve12 font-medium leading-[1.5]">
 							{{ user!.name }}
 						</div>
