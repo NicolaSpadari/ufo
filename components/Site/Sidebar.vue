@@ -5,13 +5,15 @@
 			type="multiple"
 			:collapsible="true"
 		>
-			<GroupList
+			<Accordion
 				v-for="content in sidebarContent"
 				:key="content.handle"
 				:title="content.title"
 				:handle="content.handle"
 				:subreddit-list="content.subredditList"
 				:multireddit-list="content.multiredditList"
+				:open="content.open"
+				@toggle="content.open = !content.open"
 			/>
 		</AccordionRoot>
 	</div>
@@ -20,21 +22,24 @@
 <script setup lang="ts">
 	const { subscriptions, favorites, multireddits } = storeToRefs(useRedditStore());
 
-	const sidebarContent = [
+	const sidebarContent = ref([
 		{
 			title: "Multireddits",
 			handle: "multireddits",
-			multiredditList: multireddits.value
+			multiredditList: multireddits,
+			open: true
 		},
 		{
 			title: "Favorites",
 			handle: "favorites",
-			subredditList: favorites.value
+			subredditList: favorites,
+			open: true
 		},
 		{
 			title: "Subscriptions",
 			handle: "subscriptions",
-			subredditList: subscriptions.value
+			subredditList: subscriptions,
+			open: true
 		}
-	];
+	]);
 </script>

@@ -15,6 +15,8 @@ import { colors } from "@unocss/preset-mini";
 
 import { blackA, grass, green, mauve } from "@radix-ui/colors";
 
+const cubic = "cubic-bezier(0.87, 0, 0.13, 1)";
+
 export default defineConfig({
 	shortcuts: [
 		["crate", "mx-auto px-3 xxl:max-w-1320px"],
@@ -63,14 +65,29 @@ export default defineConfig({
 		animation: {
 			keyframes: {
 				slideDown: `{
-					from: { height: 0; }
-					to: { height: "var(--radix-accordion-content-height)"; }
+					from { height: 0 }
+					to { height: var(--radix-accordion-content-height) }
 				}`,
 				slideUp: `{
-					from: { height: "var(--radix-accordion-content-height)"; }
-					to: { height: 0; }
+					from { height: var(--radix-accordion-content-height) }
+					to { height: 0 }
 				}`
+			},
+			durations: {
+				slideDown: "300ms",
+				slideUp: "300ms"
+			},
+			timingFns: {
+				slideDown: cubic,
+				slideUp: cubic
+			},
+			counts: {
+				slideDown: 1,
+				slideUp: 1
 			}
+		},
+		easing: {
+			cubic
 		}
 	},
 	transformers: [

@@ -3,20 +3,21 @@
 		v-if="subredditList?.length || multiredditList?.length"
 		:value="handle"
 		overflow-hidden
+		:open="open"
 		focus-within="relative z-10"
 	>
 		<AccordionHeader flex>
-			<AccordionTrigger h="45px" flex flex-1 items-center justify-between bg-white px-5 text-grass11 leading-none shadow="[0_1px_0] mauve6" outline-none hover="bg-mauve2">
+			<AccordionTrigger @click="emit('toggle')" h="45px" flex flex-1 items-center justify-between bg-white px-5 text-grass11 leading-none shadow="[0_1px_0] mauve6" outline-none hover="bg-mauve2">
 				<span>{{ title }}</span>
 				<Icon
 					name="heroicons:chevron-down"
-					transition-transform duration-300 ease="[cubic-bezier(0.87,_0,_0.13,_1)]"
+					ease-cubic transition-transform duration-300
 					ui-open="rotate-180"
 				/>
 			</AccordionTrigger>
 		</AccordionHeader>
 		<AccordionContent
-			overflow-hidden bg-mauve2 text-mauve11 animate-duration="300!" ease="[cubic-bezier(0.87,_0,_0.13,_1)]"
+			overflow-hidden bg-mauve2 text-mauve11
 			ui-open="animate-slideDown"
 			ui-closed="animate-slideUp"
 		>
@@ -54,5 +55,8 @@
 		handle: string
 		subredditList?: Subreddit[]
 		multiredditList?: Multireddit[]
+		open: boolean
 	}>();
+
+	const emit = defineEmits(["toggle"]);
 </script>
