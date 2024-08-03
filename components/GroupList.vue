@@ -19,7 +19,20 @@
 				<template v-if="subredditList">
 					<li v-for="entry in subredditList" :key="entry.name" rounded-md hover="bg-mauve4">
 						<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-light font-medium hover="bg-light/15">
-							<SubredditIcon :image="entry.icon_img" size="small" />
+							<AvatarRoot class="bg-blackA3 size-6 min-w-6 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle">
+								<AvatarImage
+									class="size-6 rounded-[inherit] object-cover"
+									:src="entry.icon_img || ''"
+									:alt="entry.display_name_prefixed"
+								/>
+								<AvatarFallback
+									class="size-6 flex items-center justify-center bg-white text-sm text-main font-medium leading-1"
+									:delay-ms="600"
+								>
+									r/
+								</AvatarFallback>
+							</AvatarRoot>
+
 							<span text-dark-800 font-text>
 								{{ entry.display_name_prefixed }}
 							</span>
