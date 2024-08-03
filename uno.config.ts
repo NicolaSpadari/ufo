@@ -15,7 +15,7 @@ import { colors } from "@unocss/preset-mini";
 
 import { blackA, grass, green, mauve } from "@radix-ui/colors";
 
-const cubic = "cubic-bezier(0.87, 0, 0.13, 1)";
+const cubicEasing = "cubic-bezier(0.87, 0, 0.13, 1)";
 
 export default defineConfig({
 	shortcuts: [
@@ -71,23 +71,37 @@ export default defineConfig({
 				slideUp: `{
 					from { height: var(--radix-accordion-content-height) }
 					to { height: 0 }
+				}`,
+				slideDownAndFade: `{
+					from { opacity: 0; transform: translateY(-2px) }
+					to { opacity: 1; transform: translateY(0) }
+				}`,
+				slideUpAndFade: `{
+					from { opacity: 1; transform: translateY(0) }
+					to { opacity: 0; transform: translateY(-2px) }
 				}`
 			},
 			durations: {
 				slideDown: "300ms",
-				slideUp: "300ms"
+				slideUp: "300ms",
+				slideDownAndFade: "300ms",
+				slideUpAndFade: "300ms"
 			},
 			timingFns: {
-				slideDown: cubic,
-				slideUp: cubic
+				slideDown: cubicEasing,
+				slideUp: cubicEasing,
+				slideDownAndFade: cubicEasing,
+				slideUpAndFade: cubicEasing
 			},
 			counts: {
 				slideDown: 1,
-				slideUp: 1
+				slideUp: 1,
+				slideDownAndFade: 1,
+				slideUpAndFade: 1
 			}
 		},
 		easing: {
-			cubic
+			cubic: cubicEasing
 		}
 	},
 	transformers: [
