@@ -9,6 +9,7 @@ import {
 	transformerVariantGroup
 } from "unocss";
 
+import { presetRadixUi } from "unocss-preset-primitives";
 import { presetScrollbar } from "unocss-preset-scrollbar";
 import { colors } from "@unocss/preset-mini";
 
@@ -37,6 +38,7 @@ export default defineConfig({
 				text: "Inter"
 			}
 		}),
+		presetRadixUi(),
 		presetScrollbar()
 	],
 	theme: {
@@ -58,19 +60,17 @@ export default defineConfig({
 			xl: "1200px",
 			xxl: "1400px"
 		},
-		keyframes: {
-			slideDown: {
-				from: { height: 0 },
-				to: { height: "var(--radix-accordion-content-height)" }
-			},
-			slideUp: {
-				from: { height: "var(--radix-accordion-content-height)" },
-				to: { height: 0 }
-			}
-		},
 		animation: {
-			slideDown: "slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)",
-			slideUp: "slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)"
+			keyframes: {
+				slideDown: `{
+					from: { height: 0; }
+					to: { height: "var(--radix-accordion-content-height)"; }
+				}`,
+				slideUp: `{
+					from: { height: "var(--radix-accordion-content-height)"; }
+					to: { height: 0; }
+				}`
+			}
 		}
 	},
 	transformers: [

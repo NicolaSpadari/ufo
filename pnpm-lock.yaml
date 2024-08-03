@@ -72,6 +72,9 @@ importers:
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
+      unocss-preset-primitives:
+        specifier: 0.0.2-beta.1
+        version: 0.0.2-beta.1
       unocss-preset-scrollbar:
         specifier: ^0.3.1
         version: 0.3.1(unocss@0.61.8(@unocss/webpack@0.61.8(rollup@4.18.0)(webpack@5.92.1(esbuild@0.21.5)))(postcss@8.4.40)(rollup@4.18.0)(vite@5.3.5(@types/node@20.14.7)(sass@1.77.8)(terser@5.31.1)))
@@ -5416,6 +5419,9 @@ packages:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
 
+  unocss-preset-primitives@0.0.2-beta.1:
+    resolution: {integrity: sha512-bGNUK8G1V720gPe0ToOKEeMQqgJsDIBz6IuSRDQNBVBvWVx/OzXtsn6hjkKlhw/TjROSawaxpwcULRoPAZ5Gvg==}
+
   unocss-preset-scrollbar@0.3.1:
     resolution: {integrity: sha512-LhvcQA1cfwq06sqAZY++1crrLsOf/IfOPdyCkMHVyywI9WCvMhxCJlCcrySlQI8/Y2VUjOpLBDWB0w3DXS5qRA==}
     peerDependencies:
@@ -5865,7 +5871,7 @@ snapshots:
       '@antfu/install-pkg': 0.3.3
       '@clack/prompts': 0.7.0
       '@stylistic/eslint-plugin': 2.6.0-beta.1(eslint@8.57.0)(typescript@5.5.4)
-      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
+      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
       '@typescript-eslint/parser': 8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4)
       eslint: 8.57.0
       eslint-config-flat-gitignore: 0.1.8
@@ -7774,10 +7780,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/eslint-plugin@8.0.0-alpha.40(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)':
+  '@typescript-eslint/eslint-plugin@8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)':
     dependencies:
       '@eslint-community/regexpp': 4.10.1
-      '@typescript-eslint/parser': 7.18.0(eslint@8.57.0)(typescript@5.5.4)
+      '@typescript-eslint/parser': 8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4)
       '@typescript-eslint/scope-manager': 8.0.0-alpha.40
       '@typescript-eslint/type-utils': 8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4)
       '@typescript-eslint/utils': 8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4)
@@ -9676,14 +9682,14 @@ snapshots:
       eslint: 8.57.0
       eslint-rule-composer: 0.3.0
     optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
+      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
 
   eslint-plugin-vitest@0.5.4(@typescript-eslint/eslint-plugin@8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4):
     dependencies:
       '@typescript-eslint/utils': 7.13.1(eslint@8.57.0)(typescript@5.5.4)
       eslint: 8.57.0
     optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
+      '@typescript-eslint/eslint-plugin': 8.0.0-alpha.40(@typescript-eslint/parser@8.0.0-alpha.40(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -12458,6 +12464,10 @@ snapshots:
       '@types/unist': 2.0.10
 
   universalify@2.0.1: {}
+
+  unocss-preset-primitives@0.0.2-beta.1:
+    dependencies:
+      '@unocss/core': 0.61.8
 
   unocss-preset-scrollbar@0.3.1(unocss@0.61.8(@unocss/webpack@0.61.8(rollup@4.18.0)(webpack@5.92.1(esbuild@0.21.5)))(postcss@8.4.40)(rollup@4.18.0)(vite@5.3.5(@types/node@20.14.7)(sass@1.77.8)(terser@5.31.1))):
     dependencies:
