@@ -1,4 +1,19 @@
 export const useUtils = () => {
+	const socialNetworks = [
+		"facebook",
+		"twitter",
+		"linkedin",
+		"pinterest",
+		"reddit",
+		"bluesky",
+		"pocket",
+		"whatsapp",
+		"telegram",
+		"skype",
+		"line",
+		"email"
+	];
+
 	const formatNumber = (num: number) => {
 		return Intl.NumberFormat("en-US", {
 			notation: "compact",
@@ -10,19 +25,9 @@ export const useUtils = () => {
 		return name.split(" ").map((n) => n[0]).join(".").toUpperCase();
 	};
 
-	const share = async (infos: PostInfos) => {
-		try {
-			await navigator.share(infos);
-		} catch (err) {
-			console.error(err);
-			const { copy } = useClipboard();
-			copy(infos.url);
-		}
-	};
-
 	return {
 		formatNumber,
 		getInitials,
-		share
+		socialNetworks
 	};
 };

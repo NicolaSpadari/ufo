@@ -7,7 +7,7 @@
 
 			<Modal id="zoomModal">
 				<ZoomedPost />
-				<button absolute flex flex-center right-3 top-3 rounded-full bg="light/70" p-2 @click="closeModal('zoomModal')">
+				<button bg="light/70" absolute right-3 top-3 flex flex-center rounded-full p-2 @click="closeModal('zoomModal')">
 					<Icon name="heroicons-outline:x-mark" size-8 text-main />
 				</button>
 			</Modal>
@@ -32,6 +32,10 @@
 	img {
 		-webkit-user-drag: none;
 		@apply select-none;
+	}
+
+	[data-radix-popper-content-wrapper]{
+		@apply z-12;
 	}
 
 	// Transitions

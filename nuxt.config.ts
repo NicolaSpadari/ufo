@@ -1,8 +1,10 @@
 import { colors } from "@unocss/preset-mini";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { vite as vidstack } from "vidstack/plugins";
+import { useConstants } from "./composables/constants";
 
 const dark800 = typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800];
+const { productionUrl } = useConstants();
 
 export default defineNuxtConfig({
 	modules: [
@@ -14,6 +16,7 @@ export default defineNuxtConfig({
 		"@nuxtjs/fontaine",
 		"@pinia/nuxt",
 		"@pinia-plugin-persistedstate/nuxt",
+		"@stefanobartoletti/nuxt-social-share",
 		"radix-vue/nuxt",
 		"nuxt3-date-fns",
 		"nuxt-svgo"
@@ -67,6 +70,9 @@ export default defineNuxtConfig({
 	},
 	icon: {
 		mode: "svg"
+	},
+	socialShare: {
+		baseUrl: productionUrl
 	},
 	imports: {
 		presets: [

@@ -44,7 +44,7 @@
 			{{ props.post.title }}
 		</p>
 		<div v-if="props.post.selftext !== ''" my-3 max-h="48rem">
-			<p class="limit-lines" text-sm text-light font-text>
+			<p line-clamp-3 text-sm text-light font-text>
 				{{ props.post.selftext }}
 			</p>
 		</div>
@@ -54,7 +54,8 @@
 		<div flex gap-3>
 			<Action>
 				<template #left>
-					<Icon name="heroicons-solid:chevron-up" size-4
+					<Icon
+						name="heroicons-solid:chevron-up" size-4
 						:class="{
 							'text-orange-500': upvoted,
 						}"
@@ -72,7 +73,8 @@
 					>{{ formatNumber(props.post.score) }}</span>
 				</template>
 				<template #right>
-					<Icon name="heroicons-solid:chevron-down" size-4
+					<Icon
+						name="heroicons-solid:chevron-down" size-4
 						:class="{
 							'text-blue-500': downvoted,
 						}"
@@ -89,14 +91,48 @@
 					{{ formatNumber(props.post.num_comments) }}
 				</template>
 			</Action>
-			<Action @click="share(postInfos)">
-				<template #left>
-					<Icon name="heroicons-outline:share" size-4 />
-				</template>
-				<template #center>
-					Share
-				</template>
-			</Action>
+			<DropdownMenuRoot>
+				<DropdownMenuTrigger>
+					<Action>
+						<template #left>
+							<Icon name="heroicons-outline:share" size-4 />
+						</template>
+						<template #center>
+							Share
+						</template>
+					</Action>
+				</DropdownMenuTrigger>
+
+				<DropdownMenuPortal>
+					<DropdownMenuContent
+						min-w="220px" rounded-md bg-white p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" outline-none
+						ui-open="animate-slideDownAndFade"
+						ui-closed="animate-slideUpAndFade"
+						:side-offset="13"
+					>
+						<DropdownMenuArrow fill-white />
+						<DropdownMenuItem
+							v-for="network in socialNetworks"
+							:key="network"
+							as-child
+							relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-main leading-none outline-none class="data-[disabled]:pointer-events-none data-[highlighted]:bg-green9 data-[disabled]:text-mauve8 data-[highlighted]:text-green1"
+						>
+							<SocialShare
+								:network="network"
+								:styled="false"
+								:label="true"
+								:title="postInfos.title"
+								:url="postInfos.url"
+								w-full
+							>
+								<template #label>
+									<span capitalize>{{ network }}</span>
+								</template>
+							</SocialShare>
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenuPortal>
+			</DropdownMenuRoot>
 		</div>
 	</div>
 </template>
@@ -108,7 +144,7 @@
 	}>();
 
 	const { productionUrl } = useConstants();
-	const { formatNumber, share } = useUtils();
+	const { formatNumber, socialNetworks } = useUtils();
 	const { client } = useReddit();
 
 	const subredditIcon = await props.post.subreddit?.icon_img;
@@ -119,7 +155,6 @@
 
 	const postInfos = {
 		title: props.post.title,
-		text: props.post.selftext || "",
 		url: `${productionUrl}/comment/${props.post.id}`
 	};
 
@@ -149,12 +184,3 @@
 		downvoted.value = true;
 	};
 </script>
-
-<style scoped>
-.limit-lines {
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
-	display: -webkit-box;
-	overflow: hidden;
-}
-</style>
