@@ -1,6 +1,6 @@
 <template>
 	<div flex flex-col gap-2 rounded-xl bg-raised p-3>
-		<div flex justify-between>
+		<div flex justify-between items-start>
 			<div flex items-center gap-3>
 				<template v-if="props.from === 'feed'">
 					<SubredditIcon :image="subredditIcon" size="medium" />
@@ -25,20 +25,32 @@
 					</div>
 				</template>
 			</div>
-			<Dropdown :id="`post-${post.id}`">
-				<template #button>
-					<div h-6 w-6 flex flex-center rounded-full hover="bg-elevated">
+			<DropdownMenuRoot>
+				<DropdownMenuTrigger>
+					<div size-6 flex-center rounded-full hover="bg-elevated">
 						<Icon name="heroicons-solid:ellipsis-horizontal" text-light />
 					</div>
-				</template>
-				<template #content>
-					<div flex flex-col p-2>
-						<DropdownEntry @click="console.log(post)">
-							Debug
-						</DropdownEntry>
-					</div>
-				</template>
-			</Dropdown>
+				</DropdownMenuTrigger>
+
+				<DropdownMenuPortal>
+					<DropdownMenuContent
+						min-w="160px" rounded-md bg-white p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" outline-none
+						ui-open="animate-slideDownAndFade"
+						ui-closed="animate-slideUpAndFade"
+						:side-offset="13"
+					>
+						<DropdownMenuArrow fill-white />
+						<DropdownMenuItem
+							as-child
+							relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-grass11 leading-none outline-none class="data-[disabled]:pointer-events-none data-[highlighted]:bg-green9 data-[disabled]:text-mauve8 data-[highlighted]:text-green1"
+						>
+							<button type="button" w-full @click="console.log(post)">
+								Debug
+							</button>
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenuPortal>
+			</DropdownMenuRoot>
 		</div>
 		<p text-lg text-light font-text>
 			{{ props.post.title }}
