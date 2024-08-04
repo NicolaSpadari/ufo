@@ -44,9 +44,11 @@
 			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto h-full object-contain />
 			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto h-full object-contain />
 
-			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="expander group-hover:opacity-100" @click="setActivePost()">
-				<Icon name="heroicons-outline:arrows-pointing-out" size-6 text-light />
-			</button>
+			<DialogTrigger as-child>
+				<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="expander group-hover:opacity-100" @click="activePost = props.post">
+					<Icon name="heroicons-outline:arrows-pointing-out" size-6 text-light />
+				</button>
+			</DialogTrigger>
 		</div>
 	</div>
 </template>
@@ -61,7 +63,6 @@
 	}>();
 
 	const post = toRef(props.post);
-	const { openModal } = useModal();
 	const { activePost } = useReddit();
 
 	const player = ref<MediaPlayerElement | null>(null);
@@ -73,12 +74,6 @@
 	const previewImage = post.value.preview?.images[0].resolutions[post.value.preview.images[0].resolutions.length - 1].url;
 	const { state, index, next, prev } = useCycleList(post.value.gallery_data?.items || []);
 	const curIndex = computed(() => index.value + 1);
-
-	const setActivePost = () => {
-		console.log("setting", props.post);
-		activePost.value = props.post;
-		openModal("zoomModal");
-	};
 </script>
 
 <style>

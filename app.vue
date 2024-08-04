@@ -1,16 +1,15 @@
 <template>
 	<Html min-h-screen scroll-smooth antialiased>
 		<Body overflow-x-hidden>
-			<NuxtLayout>
-				<NuxtPage />
-			</NuxtLayout>
+			<DialogRoot>
+				<NuxtLayout>
+					<NuxtPage />
+				</NuxtLayout>
 
-			<Modal id="zoomModal">
-				<ZoomedPost />
-				<button bg="light/70" absolute right-3 top-3 flex flex-center rounded-full p-2 @click="closeModal('zoomModal')">
-					<Icon name="heroicons-outline:x-mark" size-8 text-main />
-				</button>
-			</Modal>
+				<Modal>
+					<ZoomedPost />
+				</Modal>
+			</DialogRoot>
 		</Body>
 	</Html>
 </template>
@@ -18,7 +17,6 @@
 <script lang="ts" setup>
 	const { initializeClient } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
-	const { closeModal } = useModal();
 
 	if (user.value) {
 		initializeClient();

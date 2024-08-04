@@ -79,25 +79,39 @@ export default defineConfig({
 				slideUpAndFade: `{
 					from { opacity: 1; transform: translateY(0) }
 					to { opacity: 0; transform: translateY(-2px) }
+				}`,
+				overlayShow: `{
+					from { opacity: 0 }
+					to { opacity: 1 }
+				}`,
+				contentShow: `{
+					from { opacity: 0; transform: translate(-50%, -48%) scale(0.96) }
+					to { opacity: 1; transform: translate(-50%, -50%) scale(1) }
 				}`
 			},
 			durations: {
 				slideDown: "300ms",
 				slideUp: "300ms",
 				slideDownAndFade: "300ms",
-				slideUpAndFade: "300ms"
+				slideUpAndFade: "300ms",
+				overlayShow: "150ms",
+				contentShow: "150ms"
 			},
 			timingFns: {
 				slideDown: cubicEasing,
 				slideUp: cubicEasing,
 				slideDownAndFade: cubicEasing,
-				slideUpAndFade: cubicEasing
+				slideUpAndFade: cubicEasing,
+				overlayShow: cubicEasing,
+				contentShow: cubicEasing
 			},
 			counts: {
 				slideDown: 1,
 				slideUp: 1,
 				slideDownAndFade: 1,
-				slideUpAndFade: 1
+				slideUpAndFade: 1,
+				overlayShow: 1,
+				contentShow: 1
 			}
 		},
 		easing: {

@@ -1,49 +1,32 @@
 <template>
-	<dialog ref="dialog" w-screen h-screen overflow-hidden>
-		<slot />
-	</dialog>
+	<DialogPortal>
+		<DialogOverlay
+			fixed inset-0 z-30 bg-blackA9
+			ui-open="animate-overlayShow"
+		/>
+		<DialogContent
+			ui-open="animate-contentShow"
+			absolute-center-h
+			absolute-center-v
+			h="100dvh"
+			w="100dvw"
+			z-35
+			fixed rounded-sm bg-white p-6 shadow="[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]" focus="outline-none"
+		>
+			<VisuallyHidden>
+				<DialogTitle>
+					Post
+				</DialogTitle>
+				<DialogDescription>
+					Reddit post
+				</DialogDescription>
+			</VisuallyHidden>
+			<slot />
+			<DialogClose
+				absolute right-3 top-3 size-8 flex-center appearance-none rounded-full text-grass11 hover="bg-green4"
+			>
+				<Icon name="lucide:x" size-6 />
+			</DialogClose>
+		</DialogContent>
+	</DialogPortal>
 </template>
-
-<script lang="ts" setup>
-	const props = defineProps<{
-		id: string
-	}>();
-
-	const dialog = ref<InstanceType<any> | undefined>(null);
-	const { open, closeModal } = useModal();
-
-	useEventListener(dialog, "click", (e) => {
-		const dialogItem = dialog.value.getBoundingClientRect();
-
-		if (e.clientX < dialogItem.left || e.clientX > dialogItem.right || e.clientY < dialogItem.top || e.clientY > dialogItem.bottom) {
-			closeModal(props.id);
-		}
-	});
-
-	useEventListener(document, "keydown", (e) => {
-		if (open.value.get(props.id) && e.key === "Escape") {
-			closeModal(props.id);
-		}
-	});
-
-	watch(() => open.value.get(props.id), (isOpen) => {
-		isOpen ? dialog.value.showModal() : dialog.value.close("dismiss");
-	});
-</script>
-
-<style lang="scss">
-	html:has(dialog[open]) {
-	@apply overflow-hidden;
-}
-
-dialog {
-	@apply fixed inset-0 block invisible rounded-lg ease-in duration-300 opacity-0 transition-opacity;
-	&::backdrop {
-		@apply backdrop-filter backdrop-blur-5;
-	}
-
-	&[open] {
-		@apply visible opacity-100;
-	}
-}
-</style>
