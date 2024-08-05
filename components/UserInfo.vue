@@ -10,7 +10,7 @@
 							:alt="user!.name"
 						/>
 						<AvatarFallback
-							size-full flex-center bg-white text-[15px] text-grass11 font-medium leading-1
+							size-full flex-center bg-white text="15px" text-grass11 font-medium leading-1
 							:delay-ms="600"
 						>
 							{{ getInitials(user!.name) }}

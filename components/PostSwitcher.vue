@@ -6,7 +6,7 @@
 				ui-open="bg-green4"
 			>
 				<span>Order by: </span>
-				<span font-semibold>{{ order }}</span>
+				<span font-semibold capitalize>{{ order }}</span>
 			</MenubarTrigger>
 			<MenubarPortal>
 				<MenubarContent
@@ -37,7 +37,7 @@
 				ui-open="bg-green4"
 			>
 				<span>Sort by: </span>
-				<span font-semibold>{{ sort }}</span>
+				<span font-semibold capitalize>{{ sort }}</span>
 			</MenubarTrigger>
 			<MenubarPortal>
 				<MenubarContent
