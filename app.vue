@@ -1,5 +1,5 @@
 <template>
-	<Html min-h-screen scroll-smooth antialiased>
+	<Html min-h-screen scroll-smooth antialiased bg-zinc-900>
 		<Body overflow-x-hidden>
 			<DialogRoot>
 				<NuxtLayout>

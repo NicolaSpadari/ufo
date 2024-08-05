@@ -45,11 +45,6 @@ export default defineConfig({
 	],
 	theme: {
 		colors: {
-			accent: typeof colors?.green === "string" ? colors?.green : colors?.green?.[500],
-			main: typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800],
-			raised: typeof colors?.neutral === "string" ? colors?.neutral : colors?.neutral?.[800],
-			elevated: typeof colors?.neutral === "string" ? colors?.neutral : colors?.neutral?.[600],
-			light: typeof colors?.light === "string" ? colors?.light : colors?.light?.[100],
 			...blackA,
 			...green,
 			...grass,

@@ -1,26 +1,31 @@
 <template>
 	<div flex-center flex-1 px-2 sm="absolute inset-0">
 		<ComboboxRoot relative>
-			<ComboboxAnchor h="35px" min-w="160px" inline-flex items-center justify-between gap-1 rounded bg-white px-4 text-sm text-grass11 leading-none shadow="[0_2px_10px] blackA2" outline-none lg="min-w-[320px]" md="min-w-[240px]">
+			<ComboboxAnchor h="35px" min-w="160px" inline-flex items-center justify-between gap-1 rounded bg-zinc-800 px-4 text-sm text-green-600 leading-none shadow="[0_2px_10px] blackA2" outline-none lg="min-w-[320px]" md="min-w-[240px]">
 				<ComboboxInput
-					h-full text-grass11 outline-none selection="bg-grass5" placeholder-mauve8
+					h-full text-zinc-400 bg-zinc-800 outline-none selection="bg-green-500" placeholder-zinc-400
 					placeholder="Search"
 					@input="setValue($event);debouncedSearch()"
 				/>
 				<ComboboxTrigger pointer-events-none>
 					<Icon
 						name="heroicons-outline:search"
-						size-4 text-grass11
+						size-4 text-green-600
 					/>
 				</ComboboxTrigger>
 			</ComboboxAnchor>
 
-			<ComboboxContent v-if="term !== ''" will-change="opacity,transform" class="data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade" absolute z-10 mt-2 min-w="160px" w-full overflow-hidden rounded bg-white shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
+			<ComboboxContent
+				v-if="term !== ''"
+				ui-open="animate-slideDownAndFade"
+				ui-closed="animate-slideUpAndFade"
+				absolute z-10 mt-2 min-w="160px" w-full overflow-hidden rounded bg-zinc-800 shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]"
+			>
 				<ComboboxViewport p-1>
 					<ComboboxEmpty py-2 text-center text-xs text-mauve8 font-medium />
 
 					<ComboboxGroup>
-						<ComboboxLabel px-6 text-xs text-mauve11 leading-6>
+						<ComboboxLabel px-6 text-xs text-zinc-400 leading-6>
 							Results
 						</ComboboxLabel>
 
@@ -28,7 +33,7 @@
 							<ComboboxItem
 								v-for="(option, index) in results"
 								:key="index"
-								relative h="25px" w-full flex select-none items-center rounded="3px" pl="25px" pr="35px" text-sm text-grass11 leading-none class="data-[disabled]:pointer-events-none data-[highlighted]:bg-grass9 data-[disabled]:text-mauve8 data-[highlighted]:text-grass1 data-[highlighted]:outline-none"
+								relative h="30px" w-full flex select-none items-center rounded="3px" px="25px" text-sm text-green-600 leading-none class="data-[highlighted]:bg-green-600 data-[highlighted]:text-zinc-100"
 								:value="option"
 								as="button"
 								@click="navigateTo(option.url)"
