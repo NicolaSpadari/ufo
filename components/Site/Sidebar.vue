@@ -1,7 +1,7 @@
 <template>
-	<div h-full flex flex-col overflow-y-auto bg-white py-6 lg="shadow-none py-0" shadow-md>
+	<div h-full flex flex-col overflow-y-auto py-6 lg="shadow-none py-3" shadow-md custom-scrollbar>
 		<AccordionRoot
-			w-full rounded-md bg-mauve6
+			w-full rounded-md
 			type="multiple"
 			:collapsible="true"
 		>
@@ -13,6 +13,7 @@
 				:subreddit-list="content.subredditList"
 				:multireddit-list="content.multiredditList"
 				:open="content.open"
+				first="rounded-t-md" last="rounded-b-md"
 				@toggle="content.open = !content.open"
 			/>
 		</AccordionRoot>

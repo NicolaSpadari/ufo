@@ -23,7 +23,7 @@
 				'size-8': size === 'medium',
 				'size-20': size === 'big',
 			}"
-			flex-center bg-white text-sm text-main font-medium leading-1
+			flex-center bg-zinc-900 text-sm text-zinc-100 font-medium leading-1
 			:delay-ms="600"
 		>
 			r/

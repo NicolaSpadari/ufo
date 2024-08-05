@@ -11,7 +11,6 @@ import {
 
 import { presetRadixUi } from "unocss-preset-primitives";
 import { presetScrollbar } from "unocss-preset-scrollbar";
-import { colors } from "@unocss/preset-mini";
 
 import { blackA, grass, green, mauve } from "@radix-ui/colors";
 
@@ -24,7 +23,7 @@ export default defineConfig({
 		["flex-center", "flex justify-center items-center"],
 		["absolute-center-h", "transform translate-x-1/2 right-1/2"],
 		["absolute-center-v", "transform -translate-y-1/2 top-1/2"],
-		["custom-scrollbar", "scrollbar scrollbar-track-color-raised scrollbar-thumb-color-neutral-700 scrollbar-rounded"]
+		["custom-scrollbar", "scrollbar scrollbar-track-color-neutral-900 scrollbar-thumb-color-neutral-700 scrollbar-rounded"]
 	],
 	presets: [
 		presetUno(),
