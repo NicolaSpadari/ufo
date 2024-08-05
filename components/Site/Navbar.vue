@@ -3,7 +3,7 @@
 		<div mx-auto max-w-7xl px-2 sm="px-4" lg="px-8 divide-y divide-gray-200">
 			<div relative h-16 flex justify-between>
 				<div relative z-10 flex gap-3 px-2 lg="px-0">
-					<button type="button" lg="hidden" relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover="text-gray-500" focus="outline-none ring-2 ring-offset-2 ring-accent" @click="open = !open">
+					<button type="button" lg="hidden" relative flex-shrink-0 rounded-full p-1 text-gray-400 hover="text-gray-500" focus="outline-none ring-2 ring-offset-2 ring-accent" @click="open = !open">
 						<Icon name="heroicons-solid:bars-3" size-5 />
 					</button>
 					<NuxtLink to="/" flex flex-shrink-0 items-center :title="appName">

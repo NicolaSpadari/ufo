@@ -1,5 +1,5 @@
 <template>
-	<div h-full flex flex-col overflow-y-auto py-6 lg="shadow-none py-3" shadow-md custom-scrollbar>
+	<div lg="shadow-none py-3" h-full flex flex-col overflow-y-auto bg-zinc-800 p-2 shadow-md custom-scrollbar>
 		<AccordionRoot
 			w-full rounded-md
 			type="multiple"
