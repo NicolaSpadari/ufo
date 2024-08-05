@@ -1,5 +1,5 @@
 <template>
-	<div flex flex-col gap-2 rounded-xl bg-raised p-3>
+	<div flex flex-col gap-2 rounded-xl bg-zinc-900 p-3>
 		<div flex justify-between items-start>
 			<div flex items-center gap-3>
 				<template v-if="props.from === 'feed'">
@@ -27,22 +27,23 @@
 			</div>
 			<DropdownMenuRoot>
 				<DropdownMenuTrigger>
-					<div size-6 flex-center rounded-full hover="bg-elevated">
-						<Icon name="heroicons-solid:ellipsis-horizontal" text-light />
+					<div size-6 flex-center rounded-full hover="bg-zinc-800">
+						<Icon name="heroicons-solid:ellipsis-horizontal" text-zinc-100 />
 					</div>
 				</DropdownMenuTrigger>
 
 				<DropdownMenuPortal>
 					<DropdownMenuContent
-						min-w="160px" rounded-md bg-white p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" outline-none
+						min-w="160px" rounded-md bg-zinc-900 border border-zinc-700 p="5px" shadow-xl outline-none
 						ui-open="animate-slideDownAndFade"
 						ui-closed="animate-slideUpAndFade"
 						:side-offset="13"
 					>
-						<DropdownMenuArrow fill-white />
+						<DropdownMenuArrow fill-zinc-700 />
 						<DropdownMenuItem
 							as-child
-							relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-grass11 leading-none outline-none class="data-[disabled]:pointer-events-none data-[highlighted]:bg-green9 data-[disabled]:text-mauve8 data-[highlighted]:text-green1"
+							relative h-8 flex select-none items-center rounded-md px-3 text-sm text-green-600 leading-none outline-none
+							class="data-[highlighted]:(bg-green-600 text-zinc-100)"
 						>
 							<button type="button" w-full @click="console.log(post)">
 								Debug
@@ -72,12 +73,13 @@
 							'text-orange-500': upvoted,
 						}"
 						hover="text-orange-500"
+						transition-colors
 						@click="upvote()"
 					/>
 				</template>
 				<template #center>
 					<span
-						cursor-text
+						pointer-events-none
 						:class="{
 							'text-orange-500': upvoted,
 							'text-blue-500': downvoted,
@@ -91,6 +93,7 @@
 							'text-blue-500': downvoted,
 						}"
 						hover="text-blue-500"
+						transition-colors
 						@click="downvote()"
 					/>
 				</template>
@@ -117,17 +120,18 @@
 
 				<DropdownMenuPortal>
 					<DropdownMenuContent
-						min-w="220px" rounded-md bg-white p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" outline-none
+						min-w="220px" rounded-md bg-zinc-900 border border-zinc-700 p="5px" shadow-xl outline-none
 						ui-open="animate-slideDownAndFade"
 						ui-closed="animate-slideUpAndFade"
 						:side-offset="13"
 					>
-						<DropdownMenuArrow fill-white />
+						<DropdownMenuArrow fill-zinc-700 />
 						<DropdownMenuItem
 							v-for="network in socialNetworks"
 							:key="network"
 							as-child
-							relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-main leading-none outline-none class="data-[disabled]:pointer-events-none data-[highlighted]:bg-green9 data-[disabled]:text-mauve8 data-[highlighted]:text-green1"
+							relative h-8 flex select-none items-center rounded-md px-2 text-sm text-main leading-none outline-none
+							class="data-[highlighted]:(bg-green-600 text-zinc-100)"
 						>
 							<SocialShare
 								:network="network"
@@ -135,10 +139,10 @@
 								:label="true"
 								:title="postInfos.title"
 								:url="postInfos.url"
-								w-full
+								w-full text-green-600 space-x-2
 							>
 								<template #label>
-									<span capitalize>{{ network }}</span>
+									<span capitalize text-zinc-100>{{ network }}</span>
 								</template>
 							</SocialShare>
 						</DropdownMenuItem>

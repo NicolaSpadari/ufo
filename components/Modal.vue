@@ -1,32 +1,32 @@
 <template>
 	<DialogPortal>
 		<DialogOverlay
-			fixed inset-0 z-30 bg-blackA9
+			fixed inset-0 z-30 bg="zinc-800/80" backdrop-blur-sm
 			ui-open="animate-overlayShow"
 		/>
 		<DialogContent
 			ui-open="animate-contentShow"
-			absolute-center-h
-			absolute-center-v
-			h="100dvh"
-			w="100dvw"
-			z-35
-			fixed rounded-sm bg-white p-6 shadow="[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]" focus="outline-none"
+			h="100dvh" w="100dvw"
+			fixed absolute-center-h z-35 p-6 absolute-center-v focus="outline-none"
 		>
 			<VisuallyHidden>
 				<DialogTitle>
-					Post
+					{{ activePost?.subreddit_name_prefixed }}
 				</DialogTitle>
 				<DialogDescription>
-					Reddit post
+					{{ activePost?.title }}
 				</DialogDescription>
 			</VisuallyHidden>
 			<slot />
 			<DialogClose
-				absolute right-3 top-3 size-8 flex-center appearance-none rounded-full text-grass11 hover="bg-green4"
+				absolute right-3 top-3 bg-zinc-800 rounded-full size-8 flex-center appearance-none text-zinc-100
 			>
-				<Icon name="lucide:x" size-6 />
+				<Icon name="heroicons-outline:x-mark" size-5 />
 			</DialogClose>
 		</DialogContent>
 	</DialogPortal>
 </template>
+
+<script lang="ts" setup>
+	const { activePost } = useReddit();
+</script>

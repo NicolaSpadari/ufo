@@ -45,8 +45,13 @@
 			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto h-full object-contain />
 
 			<DialogTrigger as-child>
-				<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="expander group-hover:opacity-100" @click="activePost = props.post">
-					<Icon name="heroicons-outline:arrows-pointing-out" size-6 text-light />
+				<button
+					type="button"
+					absolute bottom-2 right-2 size-8 flex-center rounded-full bg-zinc-800 opacity-0 shadow-xl transition-opacity
+					class="expander group-hover:opacity-100"
+					@click="activePost = props.post"
+				>
+					<Icon name="heroicons-outline:arrows-pointing-out" size-5 text-zinc-100 />
 				</button>
 			</DialogTrigger>
 		</div>

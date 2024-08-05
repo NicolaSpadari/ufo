@@ -29,12 +29,12 @@
 
 			<DropdownMenuPortal>
 				<DropdownMenuContent
-					min-w="220px" rounded-md bg-zinc-800 p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" outline-none
+					min-w="220px" rounded-md bg-zinc-900 border border-zinc-700 p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" outline-none
 					ui-open="animate-slideDownAndFade"
 					ui-closed="animate-slideUpAndFade"
-					:side-offset="13"
+					:side-offset="15"
 				>
-					<DropdownMenuArrow fill-zinc-800 />
+					<DropdownMenuArrow fill-zinc-700 />
 					<DropdownMenuItem
 						as-child
 						relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-green-600 leading-none outline-none
