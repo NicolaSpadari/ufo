@@ -17,7 +17,6 @@
 				@toggle="loadMoreReplies(index)"
 				my-1 flex flex-col rounded px-2 py-1 outline-none
 				text-zinc-100
-				class="data-[expanded]:bg-zinc-800"
 			>
 				<div flex>
 					<template v-if="item.hasChildren">
