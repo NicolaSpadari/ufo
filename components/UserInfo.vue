@@ -5,7 +5,7 @@
 				<div flex gap-x-2>
 					<AvatarRoot bg-blacka3 size-11 flex-center select-none overflow-hidden rounded-full>
 						<AvatarImage
-							size-full rounded-inherit object-cover bg-zinc-800
+							size-full rounded-inherit bg-zinc-800 object-cover
 							:src="user?.icon_img || ''"
 							:alt="user!.name"
 						/>
@@ -29,12 +29,22 @@
 
 			<DropdownMenuPortal>
 				<DropdownMenuContent
-					min-w="220px" rounded-md bg-zinc-900 border border-zinc-700 p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" outline-none
+					min-w="220px" p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" border border-zinc-700 rounded-md bg-zinc-900 outline-none
 					ui-open="animate-slideDownAndFade"
 					ui-closed="animate-slideUpAndFade"
 					:side-offset="15"
 				>
 					<DropdownMenuArrow fill-zinc-700 />
+					<DropdownMenuItem
+						relative flex flex-col select-none px-1 text-sm text-green-600 leading-none outline-none lg:hidden
+					>
+						<div text-sm text-zinc-100 font-medium leading="[1.5]">
+							{{ user!.name }}
+						</div>
+						<div text-sm text-zinc-400 leading="[1.5]">
+							Karma {{ formatNumber(user!.total_karma) }}
+						</div>
+					</DropdownMenuItem>
 					<DropdownMenuItem
 						as-child
 						relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-green-600 leading-none outline-none
