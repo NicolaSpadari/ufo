@@ -12,7 +12,7 @@
 		>
 			<media-provider>
 				<media-poster
-					src="https://pix.nicolaspadari.dev/1280x720"
+					:src="previewImage"
 					class="vds-poster"
 				/>
 			</media-provider>
