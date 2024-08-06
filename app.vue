@@ -31,7 +31,7 @@
 	}
 
 	[data-radix-popper-content-wrapper]{
-		@apply z-13;
+		@apply z-13!;
 	}
 
 	// Transitions
