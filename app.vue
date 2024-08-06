@@ -18,9 +18,7 @@
 	const { initializeClient } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
 
-	if (user.value) {
-		initializeClient();
-	}
+	if (user.value) initializeClient();
 </script>
 
 <style lang="scss">
