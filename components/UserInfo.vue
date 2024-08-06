@@ -29,7 +29,7 @@
 
 			<DropdownMenuPortal>
 				<DropdownMenuContent
-					min-w="220px" p="5px" shadow="[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]" border border-zinc-700 rounded-md bg-zinc-900 outline-none
+					min-w="220px" p="5px" border border-zinc-700 rounded-md bg-zinc-900 shadow-xl outline-none
 					ui-open="animate-slideDownAndFade"
 					ui-closed="animate-slideUpAndFade"
 					:side-offset="15"
