@@ -1,5 +1,5 @@
 <template>
-	<Html min-h-screen scroll-smooth antialiased bg-zinc-900>
+	<Html min-h-screen scroll-smooth bg-zinc-900 antialiased>
 		<Body overflow-x-hidden>
 			<DialogRoot>
 				<NuxtLayout>
@@ -33,7 +33,7 @@
 	}
 
 	[data-radix-popper-content-wrapper]{
-		@apply z-12;
+		@apply z-13;
 	}
 
 	// Transitions

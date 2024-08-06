@@ -12,7 +12,7 @@
 				<MenubarContent
 					ui-open="animate-slideDownAndFade"
 					ui-closed="animate-slideUpAndFade"
-					will-change="transform,opacity" min-w="220px" rounded-md bg-zinc-900 p-1 shadow-xl outline-none
+					min-w="220px" rounded-md bg-zinc-900 p-1 shadow-xl outline-none
 					align="start"
 					:side-offset="5"
 					:align-offset="-3"
@@ -48,7 +48,7 @@
 				<MenubarContent
 					ui-open="animate-slideDownAndFade"
 					ui-closed="animate-slideUpAndFade"
-					will-change="transform,opacity" min-w="220px" rounded-md bg-zinc-900 p-1 shadow-xl outline-none
+					min-w="220px" rounded-md bg-zinc-900 p-1 shadow-xl outline-none
 					align="start"
 					:side-offset="5"
 					:align-offset="-3"
