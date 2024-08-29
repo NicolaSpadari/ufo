@@ -36,7 +36,7 @@
 				>
 					<DropdownMenuArrow fill-zinc-700 />
 					<DropdownMenuItem
-						relative flex flex-col select-none px-1 text-sm text-green-600 leading-none outline-none lg:hidden
+						relative mb-2 flex flex-col select-none px-1 text-sm text-green-600 leading-none outline-none lg:hidden
 					>
 						<div text-sm text-zinc-100 font-medium leading="[1.5]">
 							{{ user!.name }}
@@ -47,7 +47,7 @@
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						as-child
-						relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-green-600 leading-none outline-none
+						relative h-8 flex select-none items-center rounded="3px" px-2 text-sm text-green-600 leading-none outline-none
 						class="data-[highlighted]:(bg-green-600 text-zinc-100)"
 					>
 						<NuxtLink :to="`/${user?.subreddit?.display_name_prefixed}`">
@@ -56,7 +56,7 @@
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						as-child
-						relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-green-600 leading-none outline-none
+						relative h-8 flex select-none items-center rounded="3px" px-2 text-sm text-green-600 leading-none outline-none
 						class="data-[highlighted]:(bg-green-600 text-zinc-100)"
 					>
 						<NuxtLink to="/settings">
@@ -65,7 +65,7 @@
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						as-child
-						relative h-8 flex select-none items-center rounded="3px" px-1 text-sm text-red-600 leading-none outline-none
+						relative h-8 flex select-none items-center rounded="3px" px-2 text-sm text-red-600 leading-none outline-none
 						class="data-[highlighted]:(bg-red-600 text-zinc-100)"
 					>
 						<button type="button" w-full @click="logout()">
