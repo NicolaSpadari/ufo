@@ -54,7 +54,7 @@
 		title: string
 		handle: string
 		subredditList?: Subreddit[]
-		multiredditList?: Multireddit[]
+		multiredditList?: MultiReddit[]
 		open: boolean
 	}>();
 
