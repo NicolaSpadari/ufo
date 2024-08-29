@@ -21,6 +21,10 @@ export const useReddit = () => {
 			clientSecret: config.public.redditSecretKey,
 			refreshToken: refreshToken.value
 		});
+		client.value.config({
+			requestDelay: 1000,
+			maxRetryAttempts: 2
+		});
 	};
 
 	const setSubscriptions = () => {
