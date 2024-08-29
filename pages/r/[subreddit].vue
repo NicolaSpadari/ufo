@@ -14,16 +14,18 @@
 	const subreddit = ref<Subreddit | null>(null);
 	const loading = ref(true);
 
-	const loadFeed = () => {
-		console.log("call subreddit");
+	console.log("call subreddit");
 
-		client.value!.getSubreddit((route.params as RouteParams).subreddit).fetch().then((res) => {
-			subreddit.value = res;
+	client.value!.getSubreddit((route.params as RouteParams).subreddit).fetch().then((res) => {
+		subreddit.value = res;
 
-			useSeoMeta({
-				title: `${subreddit.value!.display_name} | ${appName}`
-			});
+		useSeoMeta({
+			title: `${subreddit.value!.display_name} | ${appName}`
 		});
+	});
+
+	const loadFeed = () => {
+		console.log("call subreddit feed");
 
 		const methodName = methodNameMap[order.value];
 		const methodArgs = (order.value === "top")
