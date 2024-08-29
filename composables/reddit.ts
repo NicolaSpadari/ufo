@@ -22,7 +22,6 @@ export const useReddit = () => {
 			refreshToken: refreshToken.value
 		});
 		client.value.config({
-			requestDelay: 1000,
 			maxRetryAttempts: 2
 		});
 	};
