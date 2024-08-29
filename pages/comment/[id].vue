@@ -3,7 +3,7 @@
 		<Loader v-if="loading" />
 
 		<template v-else>
-			<Post from="feed" :post="submission" />
+			<Post from="feed" :post="submission" type="full" />
 			<Comments :comments="submission?.comments" />
 		</template>
 	</div>

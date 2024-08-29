@@ -1,6 +1,6 @@
 <template>
 	<div flex flex-col gap-2 rounded-xl bg-zinc-900 p-3>
-		<div flex justify-between items-start>
+		<div flex items-start justify-between>
 			<div flex items-center gap-3>
 				<template v-if="props.from === 'feed'">
 					<SubredditIcon :image="getPostIcon()" size="medium" />
@@ -34,7 +34,7 @@
 
 				<DropdownMenuPortal>
 					<DropdownMenuContent
-						min-w="160px" rounded-md bg-zinc-900 border border-zinc-700 p="5px" shadow-xl outline-none
+						min-w="160px" p="5px" border border-zinc-700 rounded-md bg-zinc-900 shadow-xl outline-none
 						ui-open="animate-slideDownAndFade"
 						ui-closed="animate-slideUpAndFade"
 						:side-offset="13"
@@ -57,9 +57,7 @@
 			{{ props.post.title }}
 		</p>
 		<div v-if="props.post.selftext !== ''" my-3 max-h="48rem">
-			<p line-clamp-3 text-sm text-light font-text>
-				{{ props.post.selftext }}
-			</p>
+			<p :class="{ 'line-clamp-3': props.type !== 'full' }" text-sm text-light font-text v-html="props.post.selftext_html" />
 		</div>
 		<div v-if="hasMedia" my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
 			<MediaSwitcher :post="props.post" />
@@ -120,7 +118,7 @@
 
 				<DropdownMenuPortal>
 					<DropdownMenuContent
-						min-w="220px" rounded-md bg-zinc-900 border border-zinc-700 p="5px" shadow-xl outline-none
+						min-w="220px" p="5px" border border-zinc-700 rounded-md bg-zinc-900 shadow-xl outline-none
 						ui-open="animate-slideDownAndFade"
 						ui-closed="animate-slideUpAndFade"
 						:side-offset="13"
@@ -129,8 +127,8 @@
 						<DropdownMenuItem
 							v-for="network in socialNetworks"
 							:key="network"
-							as-child
-							relative h-8 flex select-none items-center rounded-md px-2 text-sm text-main leading-none outline-none
+
+							as-child text-main relative h-8 flex select-none items-center rounded-md px-2 text-sm leading-none outline-none
 							class="data-[highlighted]:(bg-green-600 text-zinc-100)"
 						>
 							<SocialShare
@@ -142,7 +140,7 @@
 								w-full text-green-600 space-x-2
 							>
 								<template #label>
-									<span capitalize text-zinc-100>{{ network }}</span>
+									<span text-zinc-100 capitalize>{{ network }}</span>
 								</template>
 							</SocialShare>
 						</DropdownMenuItem>
@@ -157,6 +155,7 @@
 	const props = defineProps<{
 		post: Submission
 		from: "feed" | "subreddit"
+		type?: string
 	}>();
 
 	const { productionUrl } = useConstants();
