@@ -12,7 +12,7 @@
 	const posts = ref<Submission[]>([]);
 	const loading = ref(true);
 
-	const loadFeed = () => {
+	const loadFeed = async () => {
 		console.log("call multireddit feed");
 
 		const currentMultireddit = multireddits.value.find((mr) => mr.name === (route.params as RouteParams).name);
@@ -21,28 +21,34 @@
 		const methodName = methodNameMap[order.value];
 
 		if (subredditList) {
-			const orderedPosts = [] as Submission[];
+			try {
+				loading.value = true;
 
-			// TODO: fix with promise
-			for (const subredditName of subredditList) {
-				const methodArgs = (order.value === "top")
-					? [subredditName, { time: sort.value, limit: multiredditBatchSize }]
-					: [subredditName, { limit: multiredditBatchSize }];
+				const fetchPromises = subredditList.map((subredditName) => {
+					const methodArgs = (order.value === "top")
+						? [subredditName, { time: sort.value, limit: multiredditBatchSize }]
+						: [subredditName, { limit: multiredditBatchSize }];
 
-				client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
-					orderedPosts.push(...res);
+					return client.value[methodName](...methodArgs);
 				});
-			}
 
-			for (let i = orderedPosts.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1));
-				[orderedPosts[i], orderedPosts[j]] = [orderedPosts[j], orderedPosts[i]];
-			}
+				const results = await Promise.all(fetchPromises);
+				const orderedPosts = results.flat();
 
-			posts.value.push(...orderedPosts);
+				for (let i = orderedPosts.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[orderedPosts[i], orderedPosts[j]] = [orderedPosts[j], orderedPosts[i]];
+				}
+
+				posts.value.push(...orderedPosts);
+			} catch (error) {
+				console.error("Error fetching posts:", error);
+			} finally {
+				loading.value = false;
+			}
+		} else {
+			loading.value = false;
 		}
-
-		loading.value = false;
 	};
 
 	if (user.value) loadFeed();
