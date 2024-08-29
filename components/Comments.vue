@@ -1,11 +1,12 @@
 <template>
 	<div rounded-xl>
-		<TreeRoot v-if="props.comments.length"
+		<TreeRoot
+			v-if="props.comments.length"
 			v-slot="{ flattenItems }"
 			v-model="selectedComments"
-			select-none list-none rounded-lg bg-zinc-900 p-2 flex-col space-y-3
+
 			:items="commentList"
-			multiple
+			multiple flex-col select-none list-none rounded-lg bg-zinc-900 p-2 space-y-3
 			:get-key="(item) => item.id"
 		>
 			<TreeItem
@@ -14,36 +15,38 @@
 				:key="item._id"
 				:style="{ 'padding-left': `${item.level - 0.5}rem` }"
 				v-bind="item.bind"
-				@toggle="loadMoreReplies(index)"
-				my-1 flex flex-col rounded px-2 py-1 outline-none
-				text-zinc-100
+				my-1
+
+				flex flex-col rounded px-2 py-1 text-zinc-100 outline-none @toggle="loadMoreReplies(index)"
 			>
 				<div flex>
 					<template v-if="item.hasChildren">
 						<Icon
 							v-if="!isExpanded"
 							name="heroicons-outline:plus-circle"
-							class="size-4 min-w-4 mt-1"
+							class="mt-1 size-4 min-w-4"
 						/>
 						<Icon
 							v-else
 							name="heroicons-outline:minus-circle"
-							class="size-4 min-w-4 mt-1"
+							class="mt-1 size-4 min-w-4"
 						/>
 					</template>
-					<div class="rich-text text-sm pl-2" v-html="item.value.body_html" />
+					<div class="rich-text pl-2 text-sm" v-html="item.value.body_html" />
 				</div>
 			</TreeItem>
 
-			<div v-if="commentList.length < processedComments.length" pb-5 flex-center>
-				<button type="button" bg-green-600 hover="bg-green-600/90" py="2.5" text-sm flex-center rounded-md px-4 text-zinc-100 leading-none shadow-md outline-none transition-colors @click="loadMoreComments()">
+			<div v-if="commentList.length < processedComments.length" flex-center pb-5>
+				<button type="button" hover="bg-green-600/90" py="2.5" flex-center rounded-md bg-green-600 px-4 text-sm text-zinc-100 leading-none shadow-md outline-none transition-colors @click="loadMoreComments()">
 					Load more
 				</button>
 			</div>
 		</TreeRoot>
 
-		<div v-else rounded-lg bg-zinc-900 p-2 flex-center h-24>
-			<p text-sm text-zinc-400 font-medium>No comments yet</p>
+		<div v-else h-24 flex-center rounded-lg bg-zinc-900 p-2>
+			<p text-sm text-zinc-400 font-medium>
+				No comments yet
+			</p>
 		</div>
 	</div>
 </template>

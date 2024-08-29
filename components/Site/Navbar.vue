@@ -13,7 +13,7 @@
 				<SiteSearch />
 				<div relative z-10 flex items-center>
 					<UserInfo v-if="user" id="userProfile" />
-					<NuxtLink v-else :to="authUrl" hover="bg-green-600" py="2.5" flex-center rounded-md bg-accent px-4 text-white leading-none shadow-md outline-none transition-colors>
+					<NuxtLink v-else :to="authUrl" hover="bg-green-600" py="2.5" bg-accent flex-center rounded-md px-4 text-white leading-none shadow-md outline-none transition-colors>
 						Login
 					</NuxtLink>
 				</div>

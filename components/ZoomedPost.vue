@@ -5,7 +5,7 @@
 				<NuxtImg :src="activePost.media_metadata[state.media_id].p[activePost.media_metadata[state.media_id].p.length - 1].u" max-h="32rem" mx-auto />
 			</div>
 
-			<div absolute absolute-center-h bottom-3 flex items-center gap-2 rounded-full bg-main p-2 text-sm text-gray-400 shadow-sm>
+			<div bg-main absolute absolute-center-h bottom-3 flex items-center gap-2 rounded-full p-2 text-sm text-gray-400 shadow-sm>
 				<button type="button" @click="prev()">
 					<Icon name="heroicons-solid:chevron-left" size-4 />
 				</button>

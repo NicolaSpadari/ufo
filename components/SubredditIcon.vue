@@ -5,7 +5,7 @@
 			'size-8 min-w-8': size === 'medium',
 			'size-20 min-w-20': size === 'big',
 		}"
-		flex-center select-none overflow-hidden rounded-full bg-blackA3 align-middle
+		bg-blacka3 flex-center select-none overflow-hidden rounded-full align-middle
 	>
 		<AvatarImage
 			:class="{

@@ -7,7 +7,7 @@
 		<media-player
 			ref="player"
 			:src="post.secure_media?.reddit_video?.fallback_url"
-			cross-origin auto-play plays-inline muted max-h="48rem"
+			cross-origin auto-play muted plays-inline max-h="48rem"
 			@can-play="player?.play()"
 		>
 			<media-provider>

@@ -19,7 +19,7 @@
 			</VisuallyHidden>
 			<slot />
 			<DialogClose
-				absolute right-3 top-3 bg-zinc-800 rounded-full size-8 flex-center appearance-none text-zinc-100
+				absolute right-3 top-3 size-8 flex-center appearance-none rounded-full bg-zinc-800 text-zinc-100
 			>
 				<Icon name="heroicons-outline:x-mark" size-5 />
 			</DialogClose>
