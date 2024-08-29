@@ -87,7 +87,7 @@ export default defineNuxtConfig({
 			},
 			{
 				from: "snoowrap",
-				imports: ["RedditUser", "Subreddit", "Submission", "Multireddit"],
+				imports: ["RedditUser", "Subreddit", "Submission", "MultiReddit"],
 				type: true
 			},
 			{
