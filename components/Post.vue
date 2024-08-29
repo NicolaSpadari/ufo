@@ -3,7 +3,7 @@
 		<div flex justify-between items-start>
 			<div flex items-center gap-3>
 				<template v-if="props.from === 'feed'">
-					<SubredditIcon :image="subredditIcon" size="medium" />
+					<SubredditIcon :image="getPostIcon()" size="medium" />
 					<div flex flex-col>
 						<div flex-center gap-2>
 							<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" text-light font-text>
@@ -164,10 +164,17 @@
 	const { client } = useReddit();
 
 	const subredditIcon = await props.post.subreddit?.icon_img;
+	const subredditCommunityIcon = await props.post.subreddit?.community_icon;
 	const authorImage = await props.post.author.icon_img;
 	const authorName = await props.post.author.name;
 	const upvoted = ref(false);
 	const downvoted = ref(false);
+
+	const getPostIcon = () => {
+		if (subredditIcon !== "") return subredditIcon;
+		if (subredditCommunityIcon !== "") return subredditCommunityIcon;
+		return "";
+	};
 
 	const postInfos = {
 		title: props.post.title,
