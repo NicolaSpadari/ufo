@@ -57,7 +57,7 @@
 			{{ props.post.title }}
 		</p>
 		<div v-if="props.post.selftext !== ''" my-3 max-h="48rem">
-			<p :class="{ 'line-clamp-3': props.type !== 'full' }" text-sm text-light font-text v-html="props.post.selftext_html" />
+			<div :class="{ 'line-clamp-3': props.type !== 'full' }" text-sm text-light font-text v-html="props.post.selftext_html" />
 		</div>
 		<div v-if="hasMedia" my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
 			<MediaSwitcher :post="props.post" />
