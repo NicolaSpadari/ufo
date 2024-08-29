@@ -16,7 +16,7 @@
 
 	console.log("call subreddit");
 
-	client.value!.getSubreddit((route.params as RouteParams).subreddit).fetch().then((res) => {
+	client.value!.getSubreddit((route.params as RouteParams).subreddit).fetch().then((res: Subreddit) => {
 		subreddit.value = res;
 
 		useSeoMeta({
