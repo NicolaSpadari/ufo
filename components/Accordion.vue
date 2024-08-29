@@ -7,11 +7,11 @@
 		focus-within="relative z-10"
 	>
 		<AccordionHeader flex>
-			<AccordionTrigger @click="emit('toggle')" h="45px" flex flex-1 items-center justify-between bg-zinc-900 px-5 text-green-600 leading-none outline-none>
+			<AccordionTrigger h="45px" flex flex-1 items-center justify-between bg-zinc-900 px-5 text-green-600 leading-none outline-none @click="emit('toggle')">
 				<span>{{ title }}</span>
 				<Icon
 					name="heroicons-solid:chevron-down"
-					ease-cubic transition-transform duration-300
+					transition-transform duration-300 ease-cubic
 					ui-open="rotate-180"
 				/>
 			</AccordionTrigger>
@@ -21,11 +21,11 @@
 			ui-open="animate-slideDown"
 			ui-closed="animate-slideUp"
 		>
-			<ul px-3 pt-1 pb-3 space-y-1>
+			<ul px-3 pb-3 pt-1 space-y-1>
 				<template v-if="subredditList">
 					<li v-for="entry in subredditList" :key="entry.name" rounded-md px-2 hover="bg-zinc-900" transition-colors>
 						<NuxtLink :to="`/${entry.display_name_prefixed.toLowerCase()}`" flex items-center gap-3 rounded-lg py-2 text-sm text-zinc-100 font-medium>
-							<SubredditIcon size="small" :image="entry.icon_img" :name="entry.display_name_prefixed" />
+							<SubredditIcon size="small" :image="getIcon(entry)" :name="entry.display_name_prefixed" />
 
 							<span text-main font-text>
 								{{ entry.display_name_prefixed }}
@@ -59,4 +59,6 @@
 	}>();
 
 	const emit = defineEmits(["toggle"]);
+
+	const { getIcon } = useUtils();
 </script>

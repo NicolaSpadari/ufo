@@ -25,9 +25,16 @@ export const useUtils = () => {
 		return name.split(" ").map((n) => n[0]).join(".").toUpperCase();
 	};
 
+	const getIcon = (entry: Subreddit) => {
+		if (entry.icon_img !== "") return entry.icon_img;
+		if (entry.community_icon !== "") return entry.community_icon;
+		return "";
+	};
+
 	return {
 		formatNumber,
 		getInitials,
+		getIcon,
 		socialNetworks
 	};
 };

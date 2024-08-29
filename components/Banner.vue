@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div mt="-15" flex items-end gap-4 p-3>
-			<SubredditIcon :image="props.type === 'subreddit' ? props.subreddit?.icon_img : props.redditor.snoovatar_img" size="big" />
+			<SubredditIcon :image="props.type === 'subreddit' ? getIcon(props.subreddit) : props.redditor?.snoovatar_img" size="big" />
 			<h1 text-3xl text-light font-bold font-heading>
 				{{ props.type === "subreddit" ? props.subreddit?.display_name_prefixed : `u/${props.redditor?.name}` }}
 			</h1>
@@ -25,4 +25,6 @@
 		subreddit?: Subreddit
 		redditor?: RedditUser
 	}>();
+
+	const { getIcon } = useUtils();
 </script>
