@@ -7,17 +7,9 @@
 <script lang="ts" setup>
 	const { client } = useReddit();
 	const { user, order, sort } = storeToRefs(useRedditStore());
-	const { batchSize } = useConstants();
+	const { batchSize, methodNameMap } = useConstants();
 	const posts = ref<Submission[]>([]);
 	const loading = ref(true);
-
-	const methodNameMap = {
-		hot: "getHot",
-		new: "getNew",
-		top: "getTop",
-		rising: "getRising",
-		controversial: "getControversial"
-	};
 
 	const loadFeed = () => {
 		const methodName = methodNameMap[order.value];
