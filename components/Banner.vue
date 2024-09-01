@@ -2,7 +2,7 @@
 	<div mb-4 flex flex-col>
 		<div overflow-hidden rounded-lg>
 			<div v-if="props.subreddit?.banner_background_image" h-36 overflow-hidden>
-				<NuxtImg :src="props.subreddit.banner_background_image" w-full object-cover object-cc />
+				<NuxtImg :src="props.subreddit.banner_background_image" size-full object-cover object-cc />
 			</div>
 			<div v-else h-36 w-full flex flex-center bg="accent/50">
 				<h1 text="light/60" text-5xl font-bold font-heading>
