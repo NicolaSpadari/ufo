@@ -4,6 +4,7 @@ export const useReddit = () => {
 	const { allScopes, randomString, userAgent } = useConstants();
 	const client = useState<Snoowrap | null>("client", () => null);
 	const activePost = useState<Submission | null>("activePost", () => null);
+	const activeSubreddit = useState<Subreddit | null>("activeSubreddit", () => null);
 
 	const authUrl = Reddit.getAuthUrl({
 		clientId: config.public.redditApiKey,
@@ -85,6 +86,7 @@ export const useReddit = () => {
 		initializeClient,
 		setSubscriptions,
 		setMultireddits,
-		activePost
+		activePost,
+		activeSubreddit
 	};
 };

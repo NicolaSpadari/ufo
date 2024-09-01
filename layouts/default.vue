@@ -25,7 +25,7 @@
 							height: `calc(100dvh - ${height}px)`,
 						}"
 					>
-						col
+						<LazySubredditInfo />
 					</div>
 				</div>
 			</div>
