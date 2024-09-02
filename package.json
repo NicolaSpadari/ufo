@@ -19,7 +19,7 @@
 		"lint": "eslint . --fix"
 	},
 	"dependencies": {
-		"@nuxt/image": "^1.7.1",
+		"@nuxt/image": "^1.8.0",
 		"@pinia/nuxt": "^0.5.4",
 		"@radix-ui/colors": "^3.0.0",
 		"radix-vue": "^1.9.5",
@@ -27,8 +27,8 @@
 		"vidstack": "^1.12.9"
 	},
 	"devDependencies": {
-		"@antfu/eslint-config": "^2.27.3",
-		"@nuxt/eslint": "^0.5.3",
+		"@antfu/eslint-config": "^3.0.0",
+		"@nuxt/eslint": "^0.5.5",
 		"@nuxt/icon": "^1.5.0",
 		"@nuxtjs/fontaine": "^0.4.3",
 		"@pinia-plugin-persistedstate/nuxt": "^1.2.1",
