@@ -20,6 +20,7 @@
 				</div>
 				<div lg="col-span-3">
 					<div
+						v-if="activeSubreddit"
 						sticky :style="{
 							top: `${height}px`,
 							height: `calc(100dvh - ${height}px)`,
@@ -36,4 +37,5 @@
 <script lang="ts" setup>
 	const { open } = useSidebar();
 	const { height } = useNavbar();
+	const { activeSubreddit } = useReddit();
 </script>

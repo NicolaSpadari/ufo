@@ -45,9 +45,3 @@
 		});
 	};
 </script>
-
-<style>
-	body{
-		@apply bg-white!;
-	}
-</style>
