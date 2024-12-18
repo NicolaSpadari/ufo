@@ -1,13 +1,11 @@
 <template>
-	<div v-if="post.post_hint === 'rich:video'">
-		<div class="video-wrapper" h="42rem" v-html="post.secure_media_embed?.content?.replace('position:absolute;', '')" />
-	</div>
+	<div v-if="post.post_hint === 'rich:video'" class="video-wrapper w-full" h="42rem" v-html="post.secure_media_embed?.content?.replace('position:absolute;', '')" />
 
 	<div v-else-if="post.post_hint === 'hosted:video'">
 		<media-player
 			ref="player"
 			:src="post.secure_media?.reddit_video?.fallback_url"
-			cross-origin auto-play muted plays-inline max-h="48rem"
+			cross-origin auto-play muted plays-inline h="42rem"
 			@can-play="player?.play()"
 		>
 			<media-provider>
@@ -24,7 +22,7 @@
 	<div v-else-if="post.is_gallery">
 		<div relative>
 			<div w-full bg-neutral-700>
-				<NuxtImg :src="post.media_metadata[state.media_id].p[post.media_metadata[state.media_id].p.length - 1].u" max-h="32rem" mx-auto />
+				<NuxtImg :src="post.media_metadata[state.media_id].p[post.media_metadata[state.media_id].p.length - 1].u" mx-auto />
 			</div>
 
 			<div bg-main absolute absolute-center-h bottom-3 flex items-center gap-2 rounded-full p-2 text-sm text-gray-400 shadow-sm>
@@ -41,8 +39,8 @@
 
 	<div v-else-if="post.post_hint === 'image' || post.post_hint === 'link'" h-full>
 		<div class="group" relative h-full w-full bg-neutral-700>
-			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto h-full object-contain />
-			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto h-full object-contain />
+			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" h="42rem" mx-auto object-contain />
+			<NuxtImg v-else :src="previewImage" h="42rem" mx-auto object-contain />
 
 			<DialogTrigger as-child>
 				<button
