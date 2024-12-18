@@ -1,28 +1,24 @@
 <template>
-	<Html min-h-screen scroll-smooth>
-		<Body overflow-x-hidden bg-main custom-scrollbar>
-			<NuxtLayout>
-				<NuxtPage />
-			</NuxtLayout>
+	<Html min-h-screen scroll-smooth bg-zinc-900 antialiased>
+		<Body overflow-x-hidden>
+			<DialogRoot>
+				<NuxtLayout>
+					<NuxtPage />
+				</NuxtLayout>
 
-			<Modal id="zoomModal">
-				<ZoomedPost />
-				<button absolute flex flex-center right-3 top-3 rounded-full bg="light/70" p-2 @click="closeModal('zoomModal')">
-					<i-heroicons-outline-x-mark w-8 h-8 text-main />
-				</button>
-			</Modal>
+				<Modal>
+					<ZoomedPost />
+				</Modal>
+			</DialogRoot>
 		</Body>
-	</Html>	
+	</Html>
 </template>
 
 <script lang="ts" setup>
 	const { initializeClient } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
-	const { closeModal } = useModal();
 
-	if (user.value) {
-		initializeClient();
-	}
+	if (user.value) initializeClient();
 </script>
 
 <style lang="scss">
@@ -32,6 +28,10 @@
 	img {
 		-webkit-user-drag: none;
 		@apply select-none;
+	}
+
+	[data-radix-popper-content-wrapper]{
+		@apply z-13!;
 	}
 
 	// Transitions

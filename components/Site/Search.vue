@@ -1,43 +1,71 @@
 <template>
-	<div relative w-full flex flex-center>
-		<div flex flex-col gap-4>
-			<input
-				v-model="term" placeholder-font="text" placeholder-text="center sm light/60" min-w-sm w-full border-gray-200 rounded-full bg-elevated px-6 py-3 text-neutral-300 outline-none type="text"
-				placeholder="Find a community or post"
-				@input="debouncedSearch()"
-			>
-		</div>
+	<div flex-center flex-1 px-2 sm="absolute inset-0">
+		<ComboboxRoot relative>
+			<ComboboxAnchor h="35px" min-w="160px" inline-flex items-center justify-between gap-1 rounded bg-zinc-800 px-4 text-sm text-green-600 leading-none shadow-xl outline-none lg="min-w-[320px]" md="min-w-[240px]">
+				<ComboboxInput
+					selection="bg-green-500" size-full bg-zinc-800 text-zinc-400 outline-none placeholder-zinc-400
+					placeholder="Search"
+					@input="setValue($event);debouncedSearch()"
+				/>
+				<ComboboxTrigger pointer-events-none>
+					<Icon
+						name="heroicons-outline:search"
+						size-4 text-green-600
+					/>
+				</ComboboxTrigger>
+			</ComboboxAnchor>
 
-		<Transition>
-			<div v-if="results.length" absolute absolute-center-h top="70%" z-10 mt-5 max-w-max w-screen flex px-4>
-				<div max-w-lg w-screen flex-auto rounded-lg bg-main text-sm leading-6 shadow-lg ring-1 ring-gray="900/5">
-					<div custom-scrollbar max-h-50vh p-4>
-						<NuxtLink v-for="subreddit in results" :key="subreddit" :to="`/r/${subreddit}`" class="group" relative flex gap-x-6 rounded-lg p-4 hover="bg-raised">
-							<div mt-1 h-11 w-11 flex flex-none items-center justify-center rounded-lg bg-main class="group-hover:bg-raised">
-								<div h-8 w-8 rounded-full bg-white />
-							</div>
-							<span text-light font-semibold>
-								{{ subreddit }}
-							</span>
-						</NuxtLink>
-					</div>
-				</div>
-			</div>
-		</Transition>
+			<ComboboxContent
+				v-if="term !== ''"
+				ui-open="animate-slideDownAndFade"
+				ui-closed="animate-slideUpAndFade"
+				absolute z-10 mt-2 min-w="160px" w-full overflow-hidden rounded bg-zinc-800 shadow-xl
+			>
+				<ComboboxViewport p-1>
+					<Loader v-show="loading" my-3 />
+					<ComboboxEmpty v-show="!loading" py-2 text-center text-xs text-mauve8 font-medium />
+
+					<ComboboxGroup>
+						<ComboboxLabel px-6 text-xs text-zinc-400 leading-6>
+							Results
+						</ComboboxLabel>
+
+						<template v-if="results.length && !loading">
+							<ComboboxItem
+								v-for="(option, index) in results"
+								:key="index"
+								relative h="30px" w-full flex select-none items-center rounded="3px" px="25px" text-sm text-green-600 leading-none class="data-[highlighted]:bg-green-600 data-[highlighted]:text-zinc-100"
+								:value="option"
+								as="button"
+								@click="navigateTo(option.url)"
+							>
+								{{ option.display_name }}
+							</ComboboxItem>
+						</template>
+					</ComboboxGroup>
+				</ComboboxViewport>
+			</ComboboxContent>
+		</ComboboxRoot>
 	</div>
 </template>
 
 <script lang="ts" setup>
 	const { client } = useReddit();
 	const term = ref("");
-	const results = ref<string[]>([]);
+	const loading = ref(false);
+	const results = ref<Subreddit[]>([]);
+
+	const setValue = (event: { target: HTMLInputElement }) => {
+		term.value = event.target.value;
+	};
 
 	const debouncedSearch = useDebounceFn(() => {
-		client.value!.searchSubredditNames({
+		loading.value = true;
+		client.value?.searchSubreddits({
 			query: term.value
-		}).then((res) => {
-			console.log(res);
+		}).then((res: Subreddit[]) => {
 			results.value = res;
+			loading.value = false;
 		});
 	}, 1000);
 </script>

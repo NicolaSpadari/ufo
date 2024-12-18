@@ -1,25 +1,30 @@
 import { colors } from "@unocss/preset-mini";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { vite as vidstack } from "vidstack/plugins";
+import { useConstants } from "./composables/constants";
 
 const dark800 = typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800];
+const { productionUrl } = useConstants();
 
 export default defineNuxtConfig({
 	modules: [
 		"@vueuse/nuxt",
 		"@unocss/nuxt",
 		"@nuxt/image",
+		"@nuxt/icon",
 		"@nuxt/eslint",
 		"@nuxtjs/fontaine",
 		"@pinia/nuxt",
 		"@pinia-plugin-persistedstate/nuxt",
+		"@stefanobartoletti/nuxt-social-share",
+		"radix-vue/nuxt",
 		"nuxt3-date-fns",
 		"nuxt-svgo"
 	],
 	extends: [
 		"github:NicolaSpadari/nuxt-layers/layer-placeholders",
 		"github:NicolaSpadari/nuxt-layers/layer-details",
-		"github:NicolaSpadari/nuxt-layers/layer-cache",
+		"github:NicolaSpadari/nuxt-layers/layer-cache"
 	],
 	runtimeConfig: {
 		public: {
@@ -63,6 +68,12 @@ export default defineNuxtConfig({
 	image: {
 		provider: "ipx"
 	},
+	icon: {
+		mode: "svg"
+	},
+	socialShare: {
+		baseUrl: productionUrl
+	},
 	imports: {
 		presets: [
 			{
@@ -70,13 +81,13 @@ export default defineNuxtConfig({
 				imports: [
 					{
 						name: "default",
-						as: "reddit"
+						as: "Reddit"
 					}
 				]
 			},
 			{
 				from: "snoowrap",
-				imports: ["RedditUser", "Subreddit", "Submission", "Multireddit"],
+				imports: ["RedditUser", "Subreddit", "Submission", "MultiReddit"],
 				type: true
 			},
 			{
@@ -91,24 +102,24 @@ export default defineNuxtConfig({
 			}
 		]
 	},
+	vue: {
+		compilerOptions: {
+			isCustomElement: (tag: string) => {
+				return tag.startsWith("media-");
+			}
+		}
+	},
 	vite: {
 		plugins: [
 			nodePolyfills(),
 			vidstack()
 		]
 	},
-	vue: {
-		compilerOptions: {
-			isCustomElement: (tag: string) => {
-				const customPrefixes = ["i-", "media-"];
-				return customPrefixes.some((prefix) => tag.startsWith(prefix));
-			}
-		}
-	},
 	ssr: false,
 	eslint: {
 		config: {
 			standalone: false
 		}
-	}
+	},
+	compatibilityDate: "2024-08-01"
 });

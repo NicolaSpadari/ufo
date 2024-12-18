@@ -1,34 +1,29 @@
 <template>
-	<div id="navbar" sticky top-0 z-5 bg-raised py-3 shadow-lg>
-		<button @click="emit('toggleSidebar')" absolute left-5 absolute-center-v>
-			<i-heroicons-solid-bars-3 h-8 w-8 text-light />
-		</button>
-		<div crate>
-			<div flex items-center justify-between>
-				<div flex flex-grow>
-					<NuxtLink to="/">
-						<div flex items-center gap-2>
-							<SvgoLogo w="16!" h="16!" text-accent />
-							<span md="flex" text-2xl text-light tracking-wider font-heading uppercase hidden>
-								{{ appName }}
-							</span>
-						</div>
+	<header id="navbar" sticky top-0 z-15 bg-zinc-900 shadow>
+		<div mx-auto max-w-7xl px-2 sm="px-4" lg="px-8 divide-y divide-gray-200">
+			<div relative h-16 flex justify-between>
+				<div relative z-10 flex gap-3 px-2 lg="px-0">
+					<button type="button" lg="hidden" relative flex-shrink-0 rounded-full p-1 text-gray-400 hover="text-gray-500" focus="outline-none ring-2 ring-offset-2 ring-accent" @click="open = !open">
+						<Icon name="heroicons-solid:bars-3" size-5 />
+					</button>
+					<NuxtLink to="/" flex flex-shrink-0 items-center :title="appName">
+						<SvgoLogo size-8 text-green-600 :font-controlled="false" />
 					</NuxtLink>
-
-					<SiteSearch />
 				</div>
-				<UserInfo v-if="user" id="userProfile" />
-				<NuxtLink v-else :to="authUrl" inline-block border border-accent rounded bg-accent px-12 py-3 text-sm text-light font-medium hover="bg-transparent text-accent" focus="outline-none ring text-accent">
-					Login
-				</NuxtLink>
+				<SiteSearch />
+				<div relative z-10 flex items-center>
+					<UserInfo v-if="user" id="userProfile" />
+					<NuxtLink v-else :to="authUrl" hover="bg-green-600" py="2.5" flex-center border border-green-600 rounded-md px-4 text-white leading-none shadow-md outline-none transition-colors>
+						Login
+					</NuxtLink>
+				</div>
 			</div>
 		</div>
-	</div>
+	</header>
 </template>
 
 <script lang="ts" setup>
-	const emit = defineEmits(["toggleSidebar"]);
-
+	const { open } = useSidebar();
 	const { authUrl } = useReddit();
 	const { user } = storeToRefs(useRedditStore());
 	const { appName } = useConstants();

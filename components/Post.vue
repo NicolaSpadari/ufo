@@ -1,9 +1,9 @@
 <template>
-	<div flex flex-col gap-2 rounded-xl bg-raised p-3>
-		<div flex justify-between>
+	<div flex flex-col gap-2 rounded-xl bg-zinc-900 p-3>
+		<div flex items-start justify-between>
 			<div flex items-center gap-3>
 				<template v-if="props.from === 'feed'">
-					<SubredditIcon :image="subredditIcon" size="medium" />
+					<SubredditIcon :image="getPostIcon()" size="medium" />
 					<div flex flex-col>
 						<div flex-center gap-2>
 							<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" text-light font-text>
@@ -25,28 +25,39 @@
 					</div>
 				</template>
 			</div>
-			<Dropdown :id="`post-${post.id}`">
-				<template #button>
-					<div h-6 w-6 flex flex-center rounded-full hover="bg-elevated">
-						<i-heroicons-solid-ellipsis-horizontal text-light />
+			<DropdownMenuRoot>
+				<DropdownMenuTrigger>
+					<div size-6 flex-center rounded-full hover="bg-zinc-800">
+						<Icon name="heroicons-solid:ellipsis-horizontal" text-zinc-100 />
 					</div>
-				</template>
-				<template #content>
-					<div flex flex-col p-2>
-						<DropdownEntry @click="console.log(post)">
-							Debug
-						</DropdownEntry>
-					</div>
-				</template>
-			</Dropdown>
+				</DropdownMenuTrigger>
+
+				<DropdownMenuPortal>
+					<DropdownMenuContent
+						min-w="160px" p="5px" border border-zinc-700 rounded-md bg-zinc-900 shadow-xl outline-none
+						ui-open="animate-slideDownAndFade"
+						ui-closed="animate-slideUpAndFade"
+						:side-offset="13"
+					>
+						<DropdownMenuArrow fill-zinc-700 />
+						<DropdownMenuItem
+							as-child
+							relative h-8 flex select-none items-center rounded-md px-3 text-sm text-green-600 leading-none outline-none
+							class="data-[highlighted]:(bg-green-600 text-zinc-100)"
+						>
+							<button type="button" w-full @click="console.log(post)">
+								Debug
+							</button>
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenuPortal>
+			</DropdownMenuRoot>
 		</div>
 		<p text-lg text-light font-text>
 			{{ props.post.title }}
 		</p>
 		<div v-if="props.post.selftext !== ''" my-3 max-h="48rem">
-			<p class="limit-lines" text-sm text-light font-text>
-				{{ props.post.selftext }}
-			</p>
+			<div :class="{ 'line-clamp-3': props.type !== 'full' }" text-sm text-light font-text v-html="props.post.selftext_html" />
 		</div>
 		<div v-if="hasMedia" my-3 overflow-hidden rounded-xl shadow-lg max-h="48rem">
 			<MediaSwitcher :post="props.post" />
@@ -54,18 +65,19 @@
 		<div flex gap-3>
 			<Action>
 				<template #left>
-					<i-heroicons-solid-chevron-up
-						h-4 w-4
+					<Icon
+						name="heroicons-solid:chevron-up" size-4
 						:class="{
 							'text-orange-500': upvoted,
 						}"
 						hover="text-orange-500"
+						transition-colors
 						@click="upvote()"
 					/>
 				</template>
 				<template #center>
 					<span
-						cursor-text
+						pointer-events-none
 						:class="{
 							'text-orange-500': upvoted,
 							'text-blue-500': downvoted,
@@ -73,32 +85,68 @@
 					>{{ formatNumber(props.post.score) }}</span>
 				</template>
 				<template #right>
-					<i-heroicons-solid-chevron-down
-						h-4 w-4
+					<Icon
+						name="heroicons-solid:chevron-down" size-4
 						:class="{
 							'text-blue-500': downvoted,
 						}"
 						hover="text-blue-500"
+						transition-colors
 						@click="downvote()"
 					/>
 				</template>
 			</Action>
 			<Action :to="`/comment/${props.post.id}`">
 				<template #left>
-					<i-heroicons-outline-chat-bubble-oval-left h-4 w-4 />
+					<Icon name="heroicons-outline:chat-bubble-oval-left" size-4 />
 				</template>
 				<template #center>
 					{{ formatNumber(props.post.num_comments) }}
 				</template>
 			</Action>
-			<Action @click="share(postInfos)">
-				<template #left>
-					<i-heroicons-outline-share h-4 w-4 />
-				</template>
-				<template #center>
-					Share
-				</template>
-			</Action>
+			<DropdownMenuRoot>
+				<DropdownMenuTrigger>
+					<Action>
+						<template #left>
+							<Icon name="heroicons-outline:share" size-4 />
+						</template>
+						<template #center>
+							Share
+						</template>
+					</Action>
+				</DropdownMenuTrigger>
+
+				<DropdownMenuPortal>
+					<DropdownMenuContent
+						min-w="220px" p="5px" border border-zinc-700 rounded-md bg-zinc-900 shadow-xl outline-none
+						ui-open="animate-slideDownAndFade"
+						ui-closed="animate-slideUpAndFade"
+						:side-offset="13"
+					>
+						<DropdownMenuArrow fill-zinc-700 />
+						<DropdownMenuItem
+							v-for="network in socialNetworks"
+							:key="network"
+
+							as-child text-main relative h-8 flex select-none items-center rounded-md px-2 text-sm leading-none outline-none
+							class="data-[highlighted]:(bg-green-600 text-zinc-100)"
+						>
+							<SocialShare
+								:network="network"
+								:styled="false"
+								:label="true"
+								:title="postInfos.title"
+								:url="postInfos.url"
+								w-full text-green-600 space-x-2
+							>
+								<template #label>
+									<span text-zinc-100 capitalize>{{ network }}</span>
+								</template>
+							</SocialShare>
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenuPortal>
+			</DropdownMenuRoot>
 		</div>
 	</div>
 </template>
@@ -107,21 +155,28 @@
 	const props = defineProps<{
 		post: Submission
 		from: "feed" | "subreddit"
+		type?: string
 	}>();
 
 	const { productionUrl } = useConstants();
-	const { formatNumber, share } = useUtils();
+	const { formatNumber, socialNetworks } = useUtils();
 	const { client } = useReddit();
 
 	const subredditIcon = await props.post.subreddit?.icon_img;
+	const subredditCommunityIcon = await props.post.subreddit?.community_icon;
 	const authorImage = await props.post.author.icon_img;
 	const authorName = await props.post.author.name;
 	const upvoted = ref(false);
 	const downvoted = ref(false);
 
+	const getPostIcon = () => {
+		if (subredditIcon !== "") return subredditIcon;
+		if (subredditCommunityIcon !== "") return subredditCommunityIcon;
+		return "";
+	};
+
 	const postInfos = {
 		title: props.post.title,
-		text: props.post.selftext || "",
 		url: `${productionUrl}/comment/${props.post.id}`
 	};
 
@@ -151,12 +206,3 @@
 		downvoted.value = true;
 	};
 </script>
-
-<style scoped>
-.limit-lines {
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
-	display: -webkit-box;
-	overflow: hidden;
-}
-</style>

@@ -1,8 +1,12 @@
 <template>
-	<div py-5 space-y-7>
-		<Post v-for="post in props.posts" :key="post.name" :post="post" :from="props.type" />
+	<div>
+		<PostSwitcher />
 
-		<Loader ref="loader" />
+		<div pb-5 pt-3 space-y-7>
+			<Post v-for="post in props.posts" :key="post.name" :post="post" :from="props.type" />
+
+			<Loader ref="loader" />
+		</div>
 	</div>
 </template>
 

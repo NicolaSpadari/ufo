@@ -7,12 +7,12 @@
 		<media-player
 			ref="player"
 			:src="post.secure_media?.reddit_video?.fallback_url"
-			cross-origin auto-play plays-inline muted max-h="48rem"
+			cross-origin auto-play muted plays-inline max-h="48rem"
 			@can-play="player?.play()"
 		>
 			<media-provider>
 				<media-poster
-					src="https://via.placeholder.com/1280x720?text=Poster"
+					:src="previewImage"
 					class="vds-poster"
 				/>
 			</media-provider>
@@ -27,10 +27,14 @@
 				<NuxtImg :src="post.media_metadata[state.media_id].p[post.media_metadata[state.media_id].p.length - 1].u" max-h="32rem" mx-auto />
 			</div>
 
-			<div absolute absolute-center-h bottom-3 flex items-center gap-2 rounded-full bg-main p-2 text-sm text-gray-400 shadow-sm>
-				<button i-heroicons-solid-chevron-left h-4 w-4 @click="prev()" />
+			<div bg-main absolute absolute-center-h bottom-3 flex items-center gap-2 rounded-full p-2 text-sm text-gray-400 shadow-sm>
+				<button type="button" @click="prev()">
+					<Icon name="heroicons-solid:chevron-left" size-4 />
+				</button>
 				<span>{{ curIndex }} / {{ post.gallery_data?.items?.length }}</span>
-				<button i-heroicons-solid-chevron-right h-4 w-4 @click="next()" />
+				<button type="button" @click="next()">
+					<Icon name="heroicons-solid:chevron-right" size-4 />
+				</button>
 			</div>
 		</div>
 	</div>
@@ -40,9 +44,16 @@
 			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" max-h="40rem" mx-auto h-full object-contain />
 			<NuxtImg v-else :src="previewImage" max-h="40rem" mx-auto h-full object-contain />
 
-			<button type="button" absolute bottom-2 right-2 opacity-0 transition-opacity class="expander group-hover:opacity-100" @click="setActivePost()">
-				<i-heroicons-outline-arrows-pointing-out h-6 w-6 text-light />
-			</button>
+			<DialogTrigger as-child>
+				<button
+					type="button"
+					absolute bottom-2 right-2 size-8 flex-center rounded-full bg-zinc-800 opacity-0 shadow-xl transition-opacity
+					class="expander group-hover:opacity-100"
+					@click="activePost = props.post"
+				>
+					<Icon name="heroicons-outline:arrows-pointing-out" size-5 text-zinc-100 />
+				</button>
+			</DialogTrigger>
 		</div>
 	</div>
 </template>
@@ -57,7 +68,6 @@
 	}>();
 
 	const post = toRef(props.post);
-	const { openModal } = useModal();
 	const { activePost } = useReddit();
 
 	const player = ref<MediaPlayerElement | null>(null);
@@ -69,25 +79,12 @@
 	const previewImage = post.value.preview?.images[0].resolutions[post.value.preview.images[0].resolutions.length - 1].url;
 	const { state, index, next, prev } = useCycleList(post.value.gallery_data?.items || []);
 	const curIndex = computed(() => index.value + 1);
-
-	const setActivePost = () => {
-		console.log("setting", props.post);
-		activePost.value = props.post;
-		openModal("zoomModal");
-	};
 </script>
 
 <style>
 	.video-wrapper > iframe {
-		@apply w-full h-full;
+		@apply size-full;
 	}
-	dialog img {
-		@apply max-h-full!;
-	}
-	dialog .expander {
-		@apply hidden;
-	}
-
 	.vds-google-cast-button,
 	.vds-menu-button{
 		@apply hidden;
