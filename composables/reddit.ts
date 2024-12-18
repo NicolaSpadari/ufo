@@ -1,6 +1,6 @@
 export const useReddit = () => {
 	const config = useRuntimeConfig();
-	const { accessToken, refreshToken, user, subscriptions, favorites, multireddits } = storeToRefs(useRedditStore());
+	const { accessToken, refreshToken, user, subscriptions, following, favorites, multireddits } = storeToRefs(useRedditStore());
 	const { allScopes, randomString, userAgent } = useConstants();
 	const client = useState<Snoowrap | null>("client", () => null);
 	const activePost = useState<Submission | null>("activePost", () => null);
@@ -30,8 +30,10 @@ export const useReddit = () => {
 	const setSubscriptions = () => {
 		console.log("call set subscriptions");
 		client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
+			console.log(subreddits.map((subreddit) => subreddit.url));
 			favorites.value = subreddits.filter((subreddit) => subreddit.user_has_favorited).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
-			subscriptions.value = subreddits.filter((subreddit) => !subreddit.user_has_favorited).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
+			subscriptions.value = subreddits.filter((subreddit) => !subreddit.user_has_favorited && subreddit.url.includes("/r/")).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
+			following.value = subreddits.filter((subreddit) => subreddit.url.includes("/user/")).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
 		});
 	};
 
@@ -73,6 +75,7 @@ export const useReddit = () => {
 		accessToken.value = "";
 		refreshToken.value = "";
 		subscriptions.value = [];
+		following.value = [];
 		favorites.value = [];
 		multireddits.value = [];
 		navigateTo("/");

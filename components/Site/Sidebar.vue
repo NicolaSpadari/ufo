@@ -21,7 +21,9 @@
 </template>
 
 <script setup lang="ts">
-	const { subscriptions, favorites, multireddits } = storeToRefs(useRedditStore());
+	const { subscriptions, favorites, following, multireddits } = storeToRefs(useRedditStore());
+
+	console.log("following", following.value)
 
 	const sidebarContent = ref([
 		{
@@ -34,6 +36,12 @@
 			title: "Favorites",
 			handle: "favorites",
 			subredditList: favorites,
+			open: true
+		},
+		{
+			title: "Following",
+			handle: "following",
+			subredditList: following,
 			open: true
 		},
 		{

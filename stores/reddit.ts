@@ -3,6 +3,7 @@ export const useRedditStore = defineStore("reddit", () => {
 	const refreshToken = ref("");
 	const user = ref<RedditUser | null>(null);
 	const favorites = ref<Subreddit[]>([]);
+	const following = ref<Subreddit[]>([]);
 	const subscriptions = ref<Subreddit[]>([]);
 	const multireddits = ref<MultiReddit[]>([]);
 	const order = ref<PostOrder>("hot");
@@ -14,6 +15,7 @@ export const useRedditStore = defineStore("reddit", () => {
 		user,
 		subscriptions,
 		favorites,
+		following,
 		multireddits,
 		order,
 		sort
