@@ -7,8 +7,7 @@
 
 <script lang="ts" setup>
 	const route = useRoute();
-	const { client } = useReddit();
-	const { user, order, sort } = storeToRefs(useRedditStore());
+	const { client, user, order, sort } = useReddit();
 	const { appName, batchSize } = useConstants();
 	const posts = ref<Submission[]>([]);
 	const redditor = ref<RedditUser | null>(null);

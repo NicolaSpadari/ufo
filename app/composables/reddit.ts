@@ -1,7 +1,16 @@
+import { allScopes, randomString, userAgent } from "@@/constants";
+
 export const useReddit = () => {
 	const config = useRuntimeConfig();
-	const { accessToken, refreshToken, user, subscriptions, following, favorites, multireddits } = storeToRefs(useRedditStore());
-	const { allScopes, randomString, userAgent } = useConstants();
+	const accessToken = useState<string>("accessToken", () => "");
+	const refreshToken = useState<string>("refreshToken", () => "");
+	const user = useState<RedditUser | null>("user", () => null);
+	const favorites = useState<Subreddit[]>("favorites", () => []);
+	const following = useState<Subreddit[]>("following", () => []);
+	const subscriptions = useState<Subreddit[]>("subscriptions", () => []);
+	const multireddits = useState<MultiReddit[]>("multireddits", () => []);
+	const order = useState<PostOrder>("order", () => "hot");
+	const sort = useState<PostSort>("sort", () => "day");
 	const client = useState<Snoowrap | null>("client", () => null);
 	const activePost = useState<Submission | null>("activePost", () => null);
 	const activeSubreddit = useState<Subreddit | null>("activeSubreddit", () => null);
@@ -90,6 +99,8 @@ export const useReddit = () => {
 		setSubscriptions,
 		setMultireddits,
 		activePost,
-		activeSubreddit
+		activeSubreddit,
+		order,
+		sort
 	};
 };

@@ -21,9 +21,7 @@
 </template>
 
 <script setup lang="ts">
-	const { subscriptions, favorites, following, multireddits } = storeToRefs(useRedditStore());
-
-	console.log("following", following.value)
+	const { subscriptions, favorites, following, multireddits } = useReddit();
 
 	const sidebarContent = ref([
 		{

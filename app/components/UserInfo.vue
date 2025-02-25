@@ -79,7 +79,6 @@
 </template>
 
 <script lang="ts" setup>
-	const { logout } = useReddit();
-	const { user } = storeToRefs(useRedditStore());
+	const { user, logout } = useReddit();
 	const { formatNumber, getInitials } = useUtils();
 </script>

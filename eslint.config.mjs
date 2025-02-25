@@ -6,7 +6,6 @@ export default eslintConfig(
 	{
 		typescript: true,
 		vue: true,
-		unocss: true,
 		stylistic: {
 			indent: "tab",
 			quotes: "double"
@@ -27,6 +26,7 @@ export default eslintConfig(
 			"vue/script-indent": ["error", "tab", {
 				baseIndent: 1
 			}],
+			"vue/comma-dangle": ["warn", "never"],
 			"antfu/top-level-function": "off",
 			"antfu/if-newline": "off",
 			"node/prefer-global/process": ["off"]

@@ -11,8 +11,7 @@
 
 <script lang="ts" setup>
 	const route = useRoute();
-	const { client } = useReddit();
-	const { user } = storeToRefs(useRedditStore());
+	const { client, user } = useReddit();
 	const submission = ref<Submission | null>(null);
 	const loading = ref(true);
 

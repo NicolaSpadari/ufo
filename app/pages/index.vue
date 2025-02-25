@@ -5,8 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-	const { client } = useReddit();
-	const { user, order, sort } = storeToRefs(useRedditStore());
+	const { client, user, order, sort } = useReddit();
 	const { batchSize, methodNameMap } = useConstants();
 	const posts = ref<Submission[]>([]);
 	const loading = ref(true);
@@ -21,7 +20,7 @@
 		});
 	};
 
-	if (user.value) loadFeed();
+	if (user?.value) loadFeed();
 
 	watchOnce(user, (val) => {
 		if (val) loadFeed();

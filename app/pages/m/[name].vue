@@ -6,9 +6,8 @@
 
 <script lang="ts" setup>
 	const route = useRoute();
-	const { client } = useReddit();
+	const { client, user, multireddits, order, sort } = useReddit();
 	const { multiredditBatchSize, methodNameMap } = useConstants();
-	const { user, multireddits, order, sort } = storeToRefs(useRedditStore());
 	const posts = ref<Submission[]>([]);
 	const loading = ref(true);
 

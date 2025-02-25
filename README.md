@@ -1,7 +1,7 @@
 <h1 align="center">UFO</h1>
 <hr />
 
-A lightweight Reddit client made with Nuxt
+An alternative Reddit client made with Nuxt 3 and NuxtUI
 
 ## Usage
 

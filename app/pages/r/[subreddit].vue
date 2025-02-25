@@ -19,8 +19,7 @@
 
 <script lang="ts" setup>
 	const route = useRoute();
-	const { client, activeSubreddit } = useReddit();
-	const { user, order, sort } = storeToRefs(useRedditStore());
+	const { client, activeSubreddit, user, order, sort } = useReddit();
 	const { appName, batchSize, methodNameMap } = useConstants();
 	const posts = ref<Submission[]>([]);
 	const loading = ref(true);

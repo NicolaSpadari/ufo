@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts" setup>
-	const { order, sort } = storeToRefs(useRedditStore());
+	const { order, sort } = useReddit();
 
 	const availableOrders = ["hot", "new", "top", "rising", "controversial"] as PostOrder[];
 	const availableSorts = ["hour", "day", "week", "month", "year", "all"] as PostSort[];

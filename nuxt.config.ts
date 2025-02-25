@@ -1,33 +1,24 @@
-import { colors } from "@unocss/preset-mini";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { vite as vidstack } from "vidstack/plugins";
-import { useConstants } from "./composables/constants";
-
-const dark800 = typeof colors?.dark === "string" ? colors?.dark : colors?.dark?.[800];
-const { productionUrl } = useConstants();
+import { nodePolyfills } from "vite-plugin-node-polyfills";
+import { appDescription, appName, productionUrl } from "./constants";
 
 export default defineNuxtConfig({
 	modules: [
 		"@vueuse/nuxt",
-		"@unocss/nuxt",
 		"@nuxt/image",
-		"@nuxt/icon",
+		"@nuxt/ui-pro",
 		"@nuxt/eslint",
-		"@nuxtjs/fontaine",
 		"@pinia/nuxt",
 		"@pinia-plugin-persistedstate/nuxt",
 		"@stefanobartoletti/nuxt-social-share",
-		"radix-vue/nuxt",
+		"reka-ui/nuxt",
 		"nuxt3-date-fns",
 		"nuxt-svgo"
 	],
-	extends: [
-		"github:NicolaSpadari/nuxt-layers/layer-placeholders",
-		"github:NicolaSpadari/nuxt-layers/layer-details",
-		"github:NicolaSpadari/nuxt-layers/layer-cache"
-	],
+	ssr: false,
 	runtimeConfig: {
 		public: {
+			mdc: {},
 			redditApiKey: process.env.REDDIT_API_KEY,
 			redditSecretKey: process.env.REDDIT_SECRET_KEY,
 			authRedirectUrl: process.env.AUTH_REDIRECT_URL
@@ -35,38 +26,46 @@ export default defineNuxtConfig({
 	},
 	app: {
 		head: {
-			title: "Ufo",
+			title: appName,
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
 			meta: [
-				{ name: "description", content: "A Reddit client made with Nuxt 3" },
-				{ name: "theme-color", content: dark800 },
+				{ name: "description", content: appDescription },
 				{ name: "format-detection", content: "no" }
-			],
-			bodyAttrs: {
-				class: "font-text"
-			},
-			link: [
-				{ rel: "shortcut-icon", href: "/favicon.svg" }
 			],
 			noscript: [
 				{ children: "JavaScript is required to run this project" }
 			]
+		},
+		pageTransition: {
+			name: "page",
+			mode: "out-in"
+		},
+		layoutTransition: {
+			name: "layout",
+			mode: "out-in"
 		}
 	},
-	experimental: {
-		typedPages: true
+	uiPro: {
+		mdc: true,
+		content: true
 	},
 	css: [
-		"@unocss/reset/tailwind.css",
+		"@/assets/css/main.css",
 		"vidstack/player/styles/default/theme.css",
 		"vidstack/player/styles/default/layouts/video.css"
 	],
 	svgo: {
-		autoImportPath: "./assets/"
+		autoImportPath: "@/assets/"
 	},
 	image: {
-		provider: "ipx"
+		domains: [
+			"reddit.com",
+			"reddit.it",
+			"redditmedia.com",
+			"i.redd.it",
+			"preview.redd.it"
+		]
 	},
 	icon: {
 		mode: "svg"
@@ -76,6 +75,11 @@ export default defineNuxtConfig({
 	},
 	imports: {
 		presets: [
+			{
+				from: "vue-router",
+				imports: ["RouteParams"],
+				type: true
+			},
 			{
 				from: "snoowrap",
 				imports: [
@@ -115,11 +119,26 @@ export default defineNuxtConfig({
 			vidstack()
 		]
 	},
-	ssr: false,
+	router: {
+		options: {
+			scrollBehaviorType: "smooth"
+		}
+	},
+	$development: {
+		devtools: {
+			enabled: true
+		}
+	},
+	experimental: {
+		typedPages: true
+	},
 	eslint: {
 		config: {
 			standalone: false
 		}
 	},
-	compatibilityDate: "2024-08-01"
+	future: {
+		compatibilityVersion: 4
+	},
+	compatibilityDate: "2025-02-01"
 });
