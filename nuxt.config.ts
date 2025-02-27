@@ -15,14 +15,17 @@ export default defineNuxtConfig({
 		"nuxt3-date-fns",
 		"nuxt-svgo"
 	],
-	ssr: false,
+	// ssr: false,
 	runtimeConfig: {
 		public: {
 			mdc: {},
 			redditApiKey: process.env.REDDIT_API_KEY,
 			redditSecretKey: process.env.REDDIT_SECRET_KEY,
 			authRedirectUrl: process.env.AUTH_REDIRECT_URL
-		}
+		},
+		redditClientId: process.env.REDDIT_API_KEY,
+		redditSecretKey: process.env.REDDIT_SECRET_KEY,
+		authRedirectUrl: process.env.AUTH_REDIRECT_URL
 	},
 	app: {
 		head: {
