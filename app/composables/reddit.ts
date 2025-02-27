@@ -79,7 +79,9 @@ export const useReddit = () => {
 		});
 	};
 
-	const logout = () => {
+	const logout = async () => {
+		const response = await $fetch("/api/auth/logout");
+		console.log("logout:", response);
 		user.value = null;
 		accessToken.value = "";
 		refreshToken.value = "";
