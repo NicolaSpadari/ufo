@@ -37,28 +37,25 @@ export const useReddit = () => {
 				bearerToken
 			}
 		});
+
 		user.value = profile.value;
 	};
 
 	const setSubscriptions = async (bearerToken: string) => {
 		console.log("call set subscriptions");
 
-		const { favorites: serverFavorites, subscriptions: serverSubscriptions, following: serverFollowing } = await $fetch<Subscriptions>("/api/subreddits", {
+		const data = await $fetch<Subscriptions>("/api/subreddits", {
 			query: {
-				bearerToken
+				bearerToken,
+				limit: 999
 			}
 		});
 
-		favorites.value = serverFavorites;
-		subscriptions.value = serverSubscriptions;
-		following.value = serverFollowing;
+		favorites.value = data.favorites;
+		subscriptions.value = data.subscriptions;
+		following.value = data.following;
 
-		// client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
-		// 	console.log(subreddits.map((subreddit) => subreddit.url));
-		// 	favorites.value = subreddits.filter((subreddit) => subreddit.user_has_favorited).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
-		// 	subscriptions.value = subreddits.filter((subreddit) => !subreddit.user_has_favorited && subreddit.url.includes("/r/")).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
-		// 	following.value = subreddits.filter((subreddit) => subreddit.url.includes("/user/")).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
-		// });
+		console.log("done");
 	};
 
 	const setMultireddits = () => {
@@ -68,6 +65,8 @@ export const useReddit = () => {
 		// 	console.log("got", multis);
 		// 	multireddits.value = multis;
 		// });
+
+		console.log("done");
 	};
 
 	const authorize = async (bearerToken: string) => {
@@ -75,7 +74,7 @@ export const useReddit = () => {
 
 		await setUser(bearerToken);
 		await setSubscriptions(bearerToken);
-		// await setMultireddits();
+		// await setMultireddits(bearerToken);
 	};
 
 	const logout = async () => {

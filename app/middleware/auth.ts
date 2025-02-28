@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(() => {
-	const accessToken = useCookie("ufo_access_token");
+	const { isAuthenticated } = useReddit();
 
-	if (!accessToken.value) return navigateTo("/");
+	if (!isAuthenticated.value) return navigateTo("/");
 });
