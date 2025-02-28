@@ -4,12 +4,10 @@
 			<SvgoLogo class="h-6 w-auto" />
 		</template>
 
-		<template #default>
-			<SiteSearch />
-		</template>
+		<SiteSearch />
 
 		<template #right>
-			<UserInfo v-if="user" id="userProfile" />
+			<UserInfo v-if="isAuthenticated" />
 			<UButton v-else :to="authUrl">
 				Login
 			</UButton>
@@ -18,5 +16,5 @@
 </template>
 
 <script lang="ts" setup>
-	const { authUrl, user } = useReddit();
+	const { authUrl, isAuthenticated } = useReddit();
 </script>

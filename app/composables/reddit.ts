@@ -1,90 +1,87 @@
-import { allScopes, randomString, userAgent } from "@@/constants";
-
 export const useReddit = () => {
 	const config = useRuntimeConfig();
-	const accessToken = useState<string>("accessToken", () => "");
-	const refreshToken = useState<string>("refreshToken", () => "");
-	const user = useState<RedditUser | null>("user", () => null);
-	const favorites = useState<Subreddit[]>("favorites", () => []);
-	const following = useState<Subreddit[]>("following", () => []);
-	const subscriptions = useState<Subreddit[]>("subscriptions", () => []);
-	const multireddits = useState<MultiReddit[]>("multireddits", () => []);
+	const { randomString, allScopes } = useConstants();
+	const { isEmpty } = useUtils();
+	const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+
+	const user = useSessionStorage<RedditUser | object>("user", {});
+	const favorites = useSessionStorage<Subreddit[]>("favorites", []);
+	const following = useSessionStorage<Subreddit[]>("following", []);
+	const subscriptions = useSessionStorage<Subreddit[]>("subscriptions", []);
+	const multireddits = useSessionStorage<MultiReddit[]>("multireddits", []);
 	const order = useState<PostOrder>("order", () => "hot");
 	const sort = useState<PostSort>("sort", () => "day");
 	const client = useState<Snoowrap | null>("client", () => null);
 	const activePost = useState<Submission | null>("activePost", () => null);
 	const activeSubreddit = useState<Subreddit | null>("activeSubreddit", () => null);
+	const authUrl = computed(() => {
+		const url = new URL(`https://www.reddit.com/api/v1/${isLargeScreen.value ? "authorize" : "authorize.compact"}`);
+		url.searchParams.append("client_id", config.public.redditApiKey);
+		url.searchParams.append("response_type", "code");
+		url.searchParams.append("state", randomString);
+		url.searchParams.append("redirect_uri", config.public.authRedirectUrl);
+		url.searchParams.append("duration", "permanent");
+		url.searchParams.append("scope", allScopes.join(" "));
 
-	const authUrl = Reddit.getAuthUrl({
-		clientId: config.public.redditApiKey,
-		scope: allScopes,
-		redirectUri: config.public.authRedirectUrl,
-		permanent: true,
-		state: randomString
+		return url.toString();
+	});
+	const isAuthenticated = computed(() => {
+		const userValue = user.value || {};
+		const userExists = isEmpty(userValue);
+		return userExists && useCookie("ufo_access_token").value !== undefined;
 	});
 
-	const initializeClient = () => {
-		console.log("call init client");
-		client.value = new Reddit({
-			userAgent,
-			clientId: config.public.redditApiKey,
-			clientSecret: config.public.redditSecretKey,
-			refreshToken: refreshToken.value
+	const setUser = async (bearerToken: string) => {
+		const { data: profile } = await useFetch<RedditUser>("/api/me", {
+			query: {
+				bearerToken
+			}
 		});
-		client.value.config({
-			maxRetryAttempts: 2
-		});
+		user.value = profile.value;
 	};
 
-	const setSubscriptions = () => {
+	const setSubscriptions = async (bearerToken: string) => {
 		console.log("call set subscriptions");
-		client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
-			console.log(subreddits.map((subreddit) => subreddit.url));
-			favorites.value = subreddits.filter((subreddit) => subreddit.user_has_favorited).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
-			subscriptions.value = subreddits.filter((subreddit) => !subreddit.user_has_favorited && subreddit.url.includes("/r/")).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
-			following.value = subreddits.filter((subreddit) => subreddit.url.includes("/user/")).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
+
+		const { favorites: serverFavorites, subscriptions: serverSubscriptions, following: serverFollowing } = await $fetch<Subscriptions>("/api/subreddits", {
+			query: {
+				bearerToken
+			}
 		});
+
+		favorites.value = serverFavorites;
+		subscriptions.value = serverSubscriptions;
+		following.value = serverFollowing;
+
+		// client.value!.getSubscriptions({ limit: 999 }).then((subreddits: Subreddit[]) => {
+		// 	console.log(subreddits.map((subreddit) => subreddit.url));
+		// 	favorites.value = subreddits.filter((subreddit) => subreddit.user_has_favorited).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
+		// 	subscriptions.value = subreddits.filter((subreddit) => !subreddit.user_has_favorited && subreddit.url.includes("/r/")).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
+		// 	following.value = subreddits.filter((subreddit) => subreddit.url.includes("/user/")).sort((a, b) => a.display_name_prefixed.localeCompare(b.display_name_prefixed));
+		// });
 	};
 
 	const setMultireddits = () => {
 		console.log("call set multireddits");
-		// @ts-expect-error: "then" exists in getMultireddits() function
-		client.value!.getUser(user.value.name).getMultireddits().then((multis: MultiReddit[]) => {
-			console.log("got", multis);
-			multireddits.value = multis;
-		});
+
+		// client.value!.getUser(user.value.name).getMultireddits().then((multis: MultiReddit[]) => {
+		// 	console.log("got", multis);
+		// 	multireddits.value = multis;
+		// });
 	};
 
-	const authorize = (authCode: string) => {
+	const authorize = async (bearerToken: string) => {
 		console.log("call authorize");
-		Reddit.fromAuthCode({
-			code: authCode,
-			userAgent,
-			clientId: config.public.redditApiKey,
-			clientSecret: config.public.redditSecretKey,
-			redirectUri: config.public.authRedirectUrl
-		}).then((res: any) => {
-			accessToken.value = res.accessToken;
-			refreshToken.value = res.refreshToken;
 
-			initializeClient();
-
-			console.log("call get me");
-			client.value!.getMe().then((me: any) => {
-				user.value = me;
-
-				setSubscriptions();
-				setMultireddits();
-			});
-		});
+		await setUser(bearerToken);
+		await setSubscriptions(bearerToken);
+		// await setMultireddits();
 	};
 
 	const logout = async () => {
 		const response = await $fetch("/api/auth/logout");
 		console.log("logout:", response);
 		user.value = null;
-		accessToken.value = "";
-		refreshToken.value = "";
 		subscriptions.value = [];
 		following.value = [];
 		favorites.value = [];
@@ -97,12 +94,18 @@ export const useReddit = () => {
 		authorize,
 		logout,
 		client,
-		initializeClient,
+		subscriptions,
+		favorites,
+		following,
+		multireddits,
 		setSubscriptions,
 		setMultireddits,
 		activePost,
 		activeSubreddit,
 		order,
-		sort
+		sort,
+		user,
+		isAuthenticated,
+		setUser
 	};
 };

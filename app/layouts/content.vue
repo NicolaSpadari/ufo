@@ -13,7 +13,15 @@
 				<UPageBody>
 					<slot />
 				</UPageBody>
+
+				<template #right>
+					<LazySubredditInfo v-if="isAuthenticated && activeSubreddit" />
+				</template>
 			</UPage>
 		</UContainer>
 	</div>
 </template>
+
+<script lang="ts" setup>
+	const { isAuthenticated, activeSubreddit } = useReddit();
+</script>

@@ -1,28 +1,43 @@
 <template>
 	<div mt-3>
-		<Feed v-if="user" :posts="posts" type="feed" :loading="loading" @more="loadMore()" />
+		<!-- <Feed v-if="isAuthenticated" :posts="posts" type="feed" :loading="loading" @more="loadMore()" /> -->
+
+		<pre v-if="feed">{{ feed }}</pre>
+		<pre v-if="error">{{ error }}</pre>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { client, user, order, sort } = useReddit();
-	const { batchSize, methodNameMap } = useConstants();
+	const { client, isAuthenticated, order, sort } = useReddit();
+	// const { batchSize, methodNameMap } = useConstants();
 	const posts = ref<Submission[]>([]);
 	const loading = ref(true);
+	const after = ref<string | undefined>(undefined);
 
-	const loadFeed = () => {
-		const methodName = methodNameMap[order.value];
-		const methodArgs = (order.value === "top") ? [{ time: sort.value, limit: batchSize }] : [undefined, { limit: batchSize }];
+	const { data: feed, error, execute: loadFeed } = await useFetch("/api/feed", {
+		immediate: false,
+		query: {
+			sort: "hot",
+			after: after.value
+		}
+	});
 
-		client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
-			posts.value = res;
-			loading.value = false;
-		});
-	};
+	// const loadFeed = () => {
+	// 	console.log("attempt to load home feed");
+	// 	const methodName = methodNameMap[order.value];
+	// 	const methodArgs = (order.value === "top") ? [{ time: sort.value, limit: batchSize }] : [undefined, { limit: batchSize }];
 
-	if (user?.value) loadFeed();
+	// 	client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
+	// 		posts.value = res;
+	// 		loading.value = false;
+	// 	});
+	// };
 
-	watchOnce(user, (val) => {
+	onMounted(() => {
+		if (isAuthenticated?.value) loadFeed();
+	});
+
+	watchOnce(isAuthenticated, (val) => {
 		if (val) loadFeed();
 	});
 
@@ -31,16 +46,17 @@
 	});
 
 	const loadMore = () => {
-		loading.value = true;
+		console.log("loadmore")
+		// loading.value = true;
 
-		const methodName = methodNameMap[order.value];
-		const methodArgs = (order.value === "top")
-			? [{ time: sort.value }, { limit: batchSize, after: posts.value[posts.value.length - 1].name }]
-			: [undefined, { limit: batchSize, after: posts.value[posts.value.length - 1].name }];
+		// const methodName = methodNameMap[order.value];
+		// const methodArgs = (order.value === "top")
+		// 	? [{ time: sort.value }, { limit: batchSize, after: posts.value[posts.value.length - 1].name }]
+		// 	: [undefined, { limit: batchSize, after: posts.value[posts.value.length - 1].name }];
 
-		client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
-			posts.value.push(...res);
-			loading.value = false;
-		});
+		// client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
+		// 	posts.value.push(...res);
+		// 	loading.value = false;
+		// });
 	};
 </script>

@@ -31,10 +31,15 @@ export const useUtils = () => {
 		return "";
 	};
 
+	const isEmpty = (obj: object) => {
+		return (typeof obj === "object" && obj !== null) && Object.keys(obj).length > 0;
+	};
+
 	return {
 		formatNumber,
 		getInitials,
 		getIcon,
-		socialNetworks
+		socialNetworks,
+		isEmpty
 	};
 };

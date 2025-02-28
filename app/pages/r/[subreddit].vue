@@ -18,6 +18,10 @@
 </template>
 
 <script lang="ts" setup>
+	definePageMeta({
+		layout: "content"
+	});
+
 	const route = useRoute();
 	const { client, activeSubreddit, user, order, sort } = useReddit();
 	const { appName, batchSize, methodNameMap } = useConstants();

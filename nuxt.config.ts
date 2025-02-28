@@ -8,8 +8,6 @@ export default defineNuxtConfig({
 		"@nuxt/image",
 		"@nuxt/ui-pro",
 		"@nuxt/eslint",
-		"@pinia/nuxt",
-		"@pinia-plugin-persistedstate/nuxt",
 		"@stefanobartoletti/nuxt-social-share",
 		"reka-ui/nuxt",
 		"nuxt3-date-fns",

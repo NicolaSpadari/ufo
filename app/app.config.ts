@@ -1,5 +1,3 @@
-import { appDescription, appName } from "@@/constants";
-
 export default defineAppConfig({
 	ui: {
 		colors: {
@@ -28,9 +26,5 @@ export default defineAppConfig({
 		kbd: {
 			base: "hidden lg:inline-flex"
 		}
-	},
-	app: {
-		name: appName,
-		description: appDescription
 	}
 });

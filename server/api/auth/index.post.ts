@@ -6,12 +6,13 @@ export default defineEventHandler(async (event) => {
 
 	const auth = Buffer.from(`${redditClientId}:${redditSecretKey}`).toString("base64");
 
-	const params = new URLSearchParams();
-	params.append("grant_type", "authorization_code");
-	params.append("code", code);
-	params.append("redirect_uri", authRedirectUrl);
+	const params = new URLSearchParams({
+		grant_type: "authorization_code",
+		code,
+		redirect_uri: authRedirectUrl
+	});
 
-	const response = await redditFetch("/access_token", {
+	const authorization = await reddit<AuthResponse>("/access_token", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
@@ -20,5 +21,5 @@ export default defineEventHandler(async (event) => {
 		body: params.toString()
 	});
 
-	return response;
+	return authorization;
 });

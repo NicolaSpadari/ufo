@@ -1,9 +1,9 @@
 export default defineEventHandler(async (event) => {
-	const bearerToken = getCookie(event, "ufo_access_token");
+	const { bearerToken } = getQuery(event);
 
-	const profile = await authFetch("/me", {
+	const profile = await client("/api/v1/me", {
 		headers: {
-			"Authorization": `Bearer ${bearerToken}`
+			Authorization: `Bearer ${bearerToken}`
 		}
 	});
 

@@ -3,6 +3,7 @@
 		<Body class="antialiased font-sans">
 			<UApp>
 				<UMain>
+					<NuxtLoadingIndicator />
 					<NuxtLayout>
 						<NuxtPage />
 					</NuxtLayout>

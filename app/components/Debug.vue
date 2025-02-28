@@ -1,17 +1,21 @@
 <template>
-	<div flex flex-col bg-gray-200 space-y-3>
-		<button @click="initializeClient()">
-			initializeClient
-		</button>
-		<button @click="setSubscriptions()">
-			setSubscriptions
-		</button>
-		<button @click="setMultireddits()">
-			setMultireddits
-		</button>
+	<div>
+		<div class="flex gap-3 p-10">
+			<UButton @click="authorize()">
+				initializeClient
+			</UButton>
+			<UButton @click="setSubscriptions()">
+				setSubscriptions
+			</UButton>
+			<UButton @click="setMultireddits()">
+				setMultireddits
+			</UButton>
+		</div>
+
+		<pre v-if="subscriptions">{{ subscriptions }}</pre>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { initializeClient, setSubscriptions, setMultireddits } = useReddit();
+	const { authorize, setSubscriptions, setMultireddits, subscriptions } = useReddit();
 </script>

@@ -19,6 +19,25 @@ declare interface PostInfos {
 	url: string
 }
 
+declare interface SubredditsResponse {
+	data: {
+		after: string
+		before: string
+		children: {
+			data: Subreddit
+			kind: string
+		}[]
+		[key: string]: unknown
+	}
+	kind: string
+}
+
+declare interface Subscriptions {
+	favorites: Subreddit[]
+	subscriptions: Subreddit[]
+	following: Subreddit[]
+}
+
 declare type PostOrder = "hot" | "new" | "top" | "rising" | "controversial";
 
 declare type PostSort = "hour" | "day" | "week" | "month" | "year" | "all";
