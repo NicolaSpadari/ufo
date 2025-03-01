@@ -39,6 +39,7 @@ export const useReddit = () => {
 		});
 
 		user.value = profile.value;
+		console.log("user set");
 	};
 
 	const setSubscriptions = async (bearerToken: string) => {

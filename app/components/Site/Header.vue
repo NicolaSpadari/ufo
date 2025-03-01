@@ -1,7 +1,7 @@
 <template>
 	<UHeader>
 		<template #title>
-			<SvgoLogo class="h-6 w-auto" />
+			<SvgoLogo class="size-6" :filled="true" :font-controlled="false" />
 		</template>
 
 		<SiteSearch />
