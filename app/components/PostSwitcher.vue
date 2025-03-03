@@ -1,83 +1,120 @@
 <template>
-	<MenubarRoot flex rounded-md bg-zinc-900 p-1 shadow-lg>
-		<MenubarMenu value="order">
-			<MenubarTrigger
-				flex-center select-none gap-1 rounded px-3 py-2 text-sm text-green-600 leading-none outline-none hover="bg-zinc-800" transition-colors
-				ui-open="bg-zinc-800"
+	<UCard
+		variant="subtle"
+		:ui="{
+			body: 'p-1 sm:p-2'
+		}"
+	>
+		<div class="flex gap-x-2 items-center">
+			<UDropdownMenu
+				:items="availableOrders"
+				:ui="{
+					content: 'w-48'
+				}"
 			>
-				<span>Order by: </span>
-				<span font-semibold capitalize>{{ order }}</span>
-			</MenubarTrigger>
-			<MenubarPortal>
-				<MenubarContent
-					ui-open="animate-slideDownAndFade"
-					ui-closed="animate-slideUpAndFade"
-					min-w="220px" rounded-md bg-zinc-900 p-1 shadow-xl outline-none
-					align="start"
-					:side-offset="5"
-					:align-offset="-3"
-				>
-					<MenubarRadioGroup v-model="order">
-						<MenubarRadioItem
-							v-for="mode in availableOrders"
-							:key="mode"
-							relative h="30px" flex pointer select-none items-center rounded="3px" pl="25px" text-sm text-green-600 leading-none outline-none class="data-[highlighted]:(bg-green-600 text-zinc-100)"
-							:value="mode"
-						>
-							<MenubarItemIndicator
-								v-if="mode === order"
-								absolute left="3px" w="20px" flex-center
-							>
-								<Icon name="heroicons-solid:check" />
-							</MenubarItemIndicator>
-							<span capitalize>{{ mode }}</span>
-						</MenubarRadioItem>
-					</MenubarRadioGroup>
-				</MenubarContent>
-			</MenubarPortal>
-		</MenubarMenu>
-		<MenubarMenu v-if="order === 'top'" value="sort">
-			<MenubarTrigger
-				flex-center select-none gap-1 rounded px-3 py-2 text-sm text-green-600 leading-none outline-none hover="bg-zinc-800" transition-colors
-				ui-open="bg-zinc-800"
+				<UButton variant="outline">
+					Order by: <strong class="capitalize">{{ order }}</strong>
+				</UButton>
+			</UDropdownMenu>
+			<UDropdownMenu
+				v-if="order === 'top'"
+				:items="availableSorts"
+				:ui="{
+					content: 'w-48'
+				}"
 			>
-				<span>Sort by: </span>
-				<span font-semibold capitalize>{{ sort }}</span>
-			</MenubarTrigger>
-			<MenubarPortal>
-				<MenubarContent
-					ui-open="animate-slideDownAndFade"
-					ui-closed="animate-slideUpAndFade"
-					min-w="220px" rounded-md bg-zinc-900 p-1 shadow-xl outline-none
-					align="start"
-					:side-offset="5"
-					:align-offset="-3"
-				>
-					<MenubarRadioGroup v-model="sort">
-						<MenubarRadioItem
-							v-for="mode in availableSorts"
-							:key="mode"
-							relative h="30px" flex pointer select-none items-center rounded="3px" pl="25px" text-sm text-green-600 leading-none outline-none class="data-[highlighted]:(bg-green-600 text-zinc-100)"
-							:value="mode"
-						>
-							<MenubarItemIndicator
-								v-if="mode === sort"
-								absolute left="3px" w="20px" flex-center
-							>
-								<Icon name="heroicons-solid:check" />
-							</MenubarItemIndicator>
-							<span capitalize>{{ mode }}</span>
-						</MenubarRadioItem>
-					</MenubarRadioGroup>
-				</MenubarContent>
-			</MenubarPortal>
-		</MenubarMenu>
-	</MenubarRoot>
+				<UButton variant="outline">
+					Sort by: <strong class="capitalize">{{ sort }}</strong>
+				</UButton>
+			</UDropdownMenu>
+		</div>
+	</UCard>
 </template>
 
 <script lang="ts" setup>
 	const { order, sort } = useReddit();
 
-	const availableOrders = ["hot", "new", "top", "rising", "controversial"] as PostOrder[];
-	const availableSorts = ["hour", "day", "week", "month", "year", "all"] as PostSort[];
+	const availableOrders = [{
+		label: "Hot",
+		value: "hot",
+		icon: "lucide:flame",
+		checked: order.value === "hot",
+		onSelect() {
+			order.value = "hot";
+		}
+	}, {
+		label: "New",
+		value: "new",
+		icon: "lucide:badge",
+		checked: order.value === "new",
+		onSelect() {
+			order.value = "new";
+		}
+	}, {
+		label: "Top",
+		value: "top",
+		icon: "lucide:arrow-up",
+		checked: order.value === "top",
+		onSelect() {
+			order.value = "top";
+		}
+	}, {
+		label: "Rising",
+		value: "rising",
+		icon: "lucide:trending-up",
+		checked: order.value === "rising",
+		onSelect() {
+			order.value = "rising";
+		}
+	}, {
+		label: "Controversial",
+		value: "controversial",
+		icon: "lucide:shield-question",
+		checked: order.value === "controversial",
+		onSelect() {
+			order.value = "controversial";
+		}
+	}];
+
+	const availableSorts = [{
+		label: "Hour",
+		value: "hour",
+		icon: "lucide:calendar-clock",
+		checked: sort.value === "hour",
+		onSelect() {
+			sort.value = "hour";
+		}
+	}, {
+		label: "Day",
+		value: "day",
+		icon: "lucide:calendar-1",
+		checked: sort.value === "day",
+		onSelect() {
+			sort.value = "day";
+		}
+	}, {
+		label: "Week",
+		value: "week",
+		icon: "lucide:calendar-days",
+		checked: sort.value === "week",
+		onSelect() {
+			sort.value = "week";
+		}
+	}, {
+		label: "Month",
+		value: "month",
+		icon: "lucide:calendar-range",
+		checked: sort.value === "month",
+		onSelect() {
+			sort.value = "month";
+		}
+	}, {
+		label: "Year",
+		value: "year",
+		icon: "lucide:calendar",
+		checked: sort.value === "year",
+		onSelect() {
+			sort.value = "year";
+		}
+	}];
 </script>

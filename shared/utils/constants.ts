@@ -5,13 +5,8 @@ export default function () {
 	const batchSize = 15;
 	const multiredditBatchSize = 5;
 	const productionUrl = "https://ufo.nicolaspadari.dev";
-	const methodNameMap = {
-		hot: "getHot",
-		new: "getNew",
-		top: "getTop",
-		rising: "getRising",
-		controversial: "getControversial"
-	};
+	const availableOrders = ["hot", "new", "top", "rising", "controversial"] as PostOrder[];
+	const availableSorts = ["hour", "day", "week", "month", "year", "all"] as PostSort[];
 
 	return {
 		appName,
@@ -20,6 +15,7 @@ export default function () {
 		batchSize,
 		multiredditBatchSize,
 		productionUrl,
-		methodNameMap
+		availableOrders,
+		availableSorts
 	};
 }

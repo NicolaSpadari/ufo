@@ -2,7 +2,6 @@ export const useReddit = () => {
 	const config = useRuntimeConfig();
 	const { randomString, allScopes } = useConstants();
 	const { isEmpty } = useUtils();
-	const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 
 	const user = useSessionStorage<RedditUser | object>("user", {});
 	const favorites = useSessionStorage<Subreddit[]>("favorites", []);
@@ -15,7 +14,7 @@ export const useReddit = () => {
 	const activePost = useState<Submission | null>("activePost", () => null);
 	const activeSubreddit = useState<Subreddit | null>("activeSubreddit", () => null);
 	const authUrl = computed(() => {
-		const url = new URL(`https://www.reddit.com/api/v1/${isLargeScreen.value ? "authorize" : "authorize.compact"}`);
+		const url = new URL("https://www.reddit.com/api/v1/authorize");
 		url.searchParams.append("client_id", config.public.redditApiKey);
 		url.searchParams.append("response_type", "code");
 		url.searchParams.append("state", randomString);
@@ -91,7 +90,9 @@ export const useReddit = () => {
 
 	const logout = async () => {
 		const response = await $fetch("/api/auth/logout");
-		console.log("logout:", response);
+
+		if (!response.success) return;
+
 		user.value = null;
 		subscriptions.value = [];
 		following.value = [];

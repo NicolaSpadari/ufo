@@ -90,14 +90,3 @@
 		comment.children.push(...nextChunk);
 	};
 </script>
-
-<style lang="scss">
-	.rich-text {
-		h1 {
-			@apply text-lg;
-		}
-		a {
-			@apply underline text-accent;
-		}
-	}
-</style>

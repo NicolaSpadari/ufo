@@ -1,24 +1,24 @@
 <template>
 	<div mt-3>
-		<!-- <Feed v-if="isAuthenticated" :posts="posts" type="feed" :loading="loading" @more="loadMore()" /> -->
+		<Feed v-if="isAuthenticated" :posts="posts" type="feed" :loading="status === 'pending'" @more="loadMore()" />
 
-		<pre v-if="feed">{{ feed }}</pre>
 		<pre v-if="error">{{ error }}</pre>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { client, isAuthenticated, order, sort } = useReddit();
-	// const { batchSize, methodNameMap } = useConstants();
-	const posts = ref<Submission[]>([]);
-	const loading = ref(true);
-	const after = ref<string | undefined>(undefined);
+	const { isAuthenticated, order, sort } = useReddit();
+	const after = ref<string | undefined>();
 
-	const { data: feed, error, execute: loadFeed } = await useFetch("/api/feed", {
+	const { data: posts, error, status, execute: loadFeed } = await useFetch("/api/feed", {
 		immediate: false,
 		query: {
-			sort: "hot",
+			order,
+			sort,
 			after: after.value
+		},
+		transform: (data) => {
+			return data.data.children.map((child) => child.data);
 		}
 	});
 
@@ -33,16 +33,12 @@
 	// 	});
 	// };
 
-	onMounted(() => {
-		if (isAuthenticated?.value) loadFeed();
+	onMounted(async () => {
+		if (isAuthenticated?.value) await loadFeed();
 	});
 
-	watchOnce(isAuthenticated, (val) => {
-		if (val) loadFeed();
-	});
-
-	watch([order, sort], () => {
-		loadFeed();
+	watchOnce(isAuthenticated, async (val) => {
+		if (val) await loadFeed();
 	});
 
 	const loadMore = () => {

@@ -67,16 +67,3 @@
 	const { formatNumber } = useUtils();
 	const isOpen = ref(false);
 </script>
-
-<style lang="scss" scoped>
-	.subreddit-description {
-		::v-deep {
-			h1, h2, h3, h4, h5, h6 {
-				@apply text-green-600;
-			}
-			ul {
-				@apply mb-3
-			}
-		}
-	}
-</style>
