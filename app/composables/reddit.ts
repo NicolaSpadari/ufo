@@ -56,7 +56,7 @@ export const useReddit = () => {
 		subscriptions.value = data.subscriptions;
 		following.value = data.following;
 
-		console.log("done");
+		console.log("set subscriptions done");
 	};
 
 	const setMultireddits = () => {
@@ -67,15 +67,26 @@ export const useReddit = () => {
 		// 	multireddits.value = multis;
 		// });
 
-		console.log("done");
+		console.log("set multireddits done");
 	};
 
-	const authorize = async (bearerToken: string) => {
+	const authorize = async (bearerToken?: string) => {
 		console.log("call authorize");
+
+		if (!bearerToken) return;
 
 		await setUser(bearerToken);
 		await setSubscriptions(bearerToken);
 		// await setMultireddits(bearerToken);
+
+		console.log("authorized done");
+
+		setTimeout(() => {
+			navigateTo({
+				path: "/",
+				hash: ""
+			});
+		}, 1000);
 	};
 
 	const logout = async () => {

@@ -2,7 +2,7 @@
 	<div>
 		<SiteHeader />
 
-		<UContainer>
+		<UContainer v-if="isAuthenticated">
 			<UPage>
 				<template #left>
 					<UPageAside>
@@ -17,3 +17,7 @@
 		</UContainer>
 	</div>
 </template>
+
+<script lang="ts" setup>
+	const { isAuthenticated } = useReddit();
+</script>

@@ -35,11 +35,16 @@ export const useUtils = () => {
 		return (typeof obj === "object" && obj !== null) && Object.keys(obj).length > 0;
 	};
 
+	const stripParams = (url: string) => {
+		return url.split("?")[0];
+	};
+
 	return {
 		formatNumber,
 		getInitials,
 		getIcon,
 		socialNetworks,
-		isEmpty
+		isEmpty,
+		stripParams
 	};
 };

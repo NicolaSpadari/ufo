@@ -11,7 +11,7 @@
 
 	const route = useRoute();
 	const { randomString } = useConstants();
-	const { isAuthenticated, authorize } = useReddit();
+	const { authorize } = useReddit();
 	const message = ref("Loading...");
 
 	if (route.query.state !== randomString) {
@@ -21,17 +21,6 @@
 			statusMessage: "Code mismatch"
 		});
 	}
-
-	watchOnce(isAuthenticated, (val) => {
-		if (val) {
-			setTimeout(() => {
-				navigateTo({
-					path: "/",
-					hash: ""
-				});
-			}, 1000);
-		}
-	});
 
 	const { data } = await useFetch<AuthResponse>("/api/auth", {
 		method: "POST",
@@ -47,5 +36,5 @@
 		expires: new Date(Date.now() + (data.value?.expires_in ?? 0) * 1000)
 	}).value = data.value?.refresh_token;
 
-	await authorize(data.value!.access_token);
+	await authorize(data.value?.access_token);
 </script>
