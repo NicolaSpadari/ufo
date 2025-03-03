@@ -1,71 +1,52 @@
 <template>
-	<div flex-center flex-1 px-2 sm="absolute inset-0">
-		<ComboboxRoot relative>
-			<ComboboxAnchor h="35px" min-w="160px" inline-flex items-center justify-between gap-1 rounded bg-zinc-800 px-4 text-sm text-green-600 leading-none shadow-xl outline-none lg="min-w-[320px]" md="min-w-[240px]">
-				<ComboboxInput
-					selection="bg-green-500" size-full bg-zinc-800 text-zinc-400 outline-none placeholder-zinc-400
-					placeholder="Search"
-					@input="setValue($event);debouncedSearch()"
+	<div>
+		<UInputMenu
+			v-model="searchTerm"
+			:items="results"
+			:loading="status === 'pending'"
+			icon="i-lucide-search"
+			placeholder="Search for a subreddit"
+			@update:search-term="updateQuery"
+			@update:model-value="(val) => navigateTo(val!.to)"
+		>
+			<template #leading="{ modelValue, ui }">
+				<UAvatar
+					v-if="modelValue"
+					v-bind="modelValue.icon"
+					:size="ui.leadingAvatarSize()"
+					:class="ui.leadingAvatar()"
 				/>
-				<ComboboxTrigger pointer-events-none>
-					<Icon
-						name="heroicons-outline:search"
-						size-4 text-green-600
-					/>
-				</ComboboxTrigger>
-			</ComboboxAnchor>
-
-			<ComboboxContent
-				v-if="term !== ''"
-				ui-open="animate-slideDownAndFade"
-				ui-closed="animate-slideUpAndFade"
-				absolute z-10 mt-2 min-w="160px" w-full overflow-hidden rounded bg-zinc-800 shadow-xl
-			>
-				<ComboboxViewport p-1>
-					<Loader v-show="loading" my-3 />
-					<ComboboxEmpty v-show="!loading" py-2 text-center text-xs text-mauve8 font-medium />
-
-					<ComboboxGroup>
-						<ComboboxLabel px-6 text-xs text-zinc-400 leading-6>
-							Results
-						</ComboboxLabel>
-
-						<template v-if="results.length && !loading">
-							<ComboboxItem
-								v-for="(option, index) in results"
-								:key="index"
-								relative h="30px" w-full flex select-none items-center rounded="3px" px="25px" text-sm text-green-600 leading-none class="data-[highlighted]:bg-green-600 data-[highlighted]:text-zinc-100"
-								:value="option"
-								as="button"
-								@click="navigateTo(option.url)"
-							>
-								{{ option.display_name }}
-							</ComboboxItem>
-						</template>
-					</ComboboxGroup>
-				</ComboboxViewport>
-			</ComboboxContent>
-		</ComboboxRoot>
+			</template>
+		</UInputMenu>
 	</div>
 </template>
 
 <script lang="ts" setup>
-	const { client } = useReddit();
-	const term = ref("");
-	const loading = ref(false);
-	const results = ref<Subreddit[]>([]);
+	const bearerToken = useCookie("ufo_access_token");
+	const { stripParams } = useUtils();
 
-	const setValue = (event: { target: HTMLInputElement }) => {
-		term.value = event.target.value;
-	};
+	const searchTerm = ref("");
+	const query = ref("");
 
-	const debouncedSearch = useDebounceFn(() => {
-		loading.value = true;
-		client.value?.searchSubreddits({
-			query: term.value
-		}).then((res: Subreddit[]) => {
-			results.value = res;
-			loading.value = false;
-		});
-	}, 1000);
+	const updateQuery = useDebounceFn((val) => {
+		query.value = val;
+	}, 500);
+
+	const { data: results, status } = await useFetch<Subreddit[]>("/api/search", {
+		immediate: false,
+		query: {
+			bearerToken: bearerToken.value,
+			searchTerm: query
+		},
+		transform: (data) => {
+			return data?.map((res) => {
+				console.log(res)
+				return {
+					label: res.data.display_name_prefixed,
+					to: res.data.url,
+					icon: stripParams(res.data.community_icon)
+				}
+			}) || [];
+		}
+	});
 </script>

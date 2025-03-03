@@ -5,7 +5,7 @@
 		<UContainer>
 			<UPage>
 				<template #left>
-					<UPageAside>
+					<UPageAside v-if="isAuthenticated">
 						<SiteSidebar />
 					</UPageAside>
 				</template>

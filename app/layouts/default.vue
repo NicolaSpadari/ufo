@@ -15,6 +15,10 @@
 				</UPageBody>
 			</UPage>
 		</UContainer>
+
+		<template v-else>
+			<slot />
+		</template>
 	</div>
 </template>
 

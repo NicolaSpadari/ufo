@@ -30,13 +30,13 @@
 
 	console.log("call subreddit");
 
-	client.value!.getSubreddit((route.params as RouteParams).subreddit).fetch().then((res: Subreddit) => {
-		activeSubreddit.value = res;
+	// client.value!.getSubreddit((route.params as RouteParams).subreddit).fetch().then((res: Subreddit) => {
+	// 	activeSubreddit.value = res;
 
-		useSeoMeta({
-			title: `${activeSubreddit.value!.display_name} | ${appName}`
-		});
-	});
+	// 	useSeoMeta({
+	// 		title: `${activeSubreddit.value!.display_name} | ${appName}`
+	// 	});
+	// });
 
 	const loadFeed = () => {
 		console.log("call subreddit feed");
@@ -46,10 +46,10 @@
 			? [(route.params as RouteParams).subreddit, { time: sort.value, limit: batchSize }]
 			: [(route.params as RouteParams).subreddit, { limit: batchSize }];
 
-		client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
-			posts.value = res;
-			loading.value = false;
-		});
+		// client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
+		// 	posts.value = res;
+		// 	loading.value = false;
+		// });
 	};
 
 	if (user.value) loadFeed();
@@ -66,9 +66,9 @@
 			? [(route.params as RouteParams).subreddit, { time: sort.value, limit: batchSize, after: afterParam }]
 			: [(route.params as RouteParams).subreddit, { limit: batchSize, after: afterParam }];
 
-		client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
-			posts.value.push(...res);
-			loading.value = false;
-		});
+		// client.value?.[methodName](...methodArgs).then((res: Submission[]) => {
+		// 	posts.value.push(...res);
+		// 	loading.value = false;
+		// });
 	};
 </script>
