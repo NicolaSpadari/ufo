@@ -14,6 +14,7 @@
 		layout: "empty",
 		mini: "auth"
 	});
+
 	const { setSubscriptions, setMultireddits } = useReddit();
 	const bearerToken = useCookie("ufo_access_token");
 </script>

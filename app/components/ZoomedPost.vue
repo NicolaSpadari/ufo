@@ -7,11 +7,11 @@
 
 			<div bg-main absolute absolute-center-h bottom-3 flex items-center gap-2 rounded-full p-2 text-sm text-gray-400 shadow-sm>
 				<button type="button" @click="prev()">
-					<Icon name="heroicons-solid:chevron-left" size-4 />
+					<Icon name="lucide:chevron-left" size-4 />
 				</button>
 				<span>{{ curIndex }} / {{ activePost.gallery_data?.items?.length }}</span>
 				<button type="button" @click="next()">
-					<Icon name="heroicons-solid:chevron-right" size-4 />
+					<Icon name="lucide:chevron-right" size-4 />
 				</button>
 			</div>
 		</div>

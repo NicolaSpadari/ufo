@@ -21,7 +21,7 @@
 			<DialogClose
 				absolute right-3 top-3 size-8 flex-center appearance-none rounded-full bg-zinc-800 text-zinc-100
 			>
-				<Icon name="heroicons-outline:x-mark" size-5 />
+				<Icon name="lucide:x" size-5 />
 			</DialogClose>
 		</DialogContent>
 	</DialogPortal>

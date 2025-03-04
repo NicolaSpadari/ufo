@@ -10,6 +10,7 @@
 	});
 
 	const route = useRoute();
+	const router = useRouter();
 	const { randomString } = useConstants();
 	const { authorize } = useReddit();
 	const message = ref("Loading...");
@@ -36,5 +37,7 @@
 		expires: new Date(Date.now() + (data.value?.expires_in ?? 0) * 1000)
 	}).value = data.value?.refresh_token;
 
-	await authorize(data.value?.access_token);
+	const { success } = await authorize(data.value?.access_token);
+
+	if (success) setTimeout(() => router.push("/"), 1000);
 </script>

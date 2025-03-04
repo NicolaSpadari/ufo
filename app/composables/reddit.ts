@@ -7,7 +7,7 @@ export const useReddit = () => {
 	const favorites = useSessionStorage<Subreddit[]>("favorites", []);
 	const following = useSessionStorage<Subreddit[]>("following", []);
 	const subscriptions = useSessionStorage<Subreddit[]>("subscriptions", []);
-	const multireddits = useSessionStorage<MultiReddit[]>("multireddits", []);
+	const multireddits = useSessionStorage<Multireddit[]>("multireddits", []);
 	const order = useState<PostOrder>("order", () => "hot");
 	const sort = useState<PostSort>("sort", () => "day");
 	const client = useState<Snoowrap | null>("client", () => null);
@@ -72,7 +72,7 @@ export const useReddit = () => {
 	const authorize = async (bearerToken?: string) => {
 		console.log("call authorize");
 
-		if (!bearerToken) return;
+		if (!bearerToken) return { success: false };
 
 		await setUser(bearerToken);
 		await setSubscriptions(bearerToken);
@@ -80,12 +80,9 @@ export const useReddit = () => {
 
 		console.log("authorized done");
 
-		setTimeout(() => {
-			navigateTo({
-				path: "/",
-				hash: ""
-			});
-		}, 1000);
+		return {
+			success: true
+		};
 	};
 
 	const logout = async () => {

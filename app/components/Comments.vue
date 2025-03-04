@@ -23,12 +23,12 @@
 					<template v-if="item.hasChildren">
 						<Icon
 							v-if="!isExpanded"
-							name="heroicons-outline:plus-circle"
+							name="lucide:circle-plus"
 							class="mt-1 size-4 min-w-4"
 						/>
 						<Icon
 							v-else
-							name="heroicons-outline:minus-circle"
+							name="lucide:circle-minus"
 							class="mt-1 size-4 min-w-4"
 						/>
 					</template>

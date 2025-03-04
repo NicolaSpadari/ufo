@@ -31,7 +31,7 @@
 				flex-center border border-zinc-800 rounded-full bg-zinc-900 text-green-600 leading-none outline-none transition-colors duration-300 ease-cubic
 				hover="bg-zinc-800 border-zinc-700"
 			>
-				<Icon name="heroicons-solid:dots-horizontal" size-5 />
+				<Icon name="lucide:ellipsis" size-5 />
 			</button>
 		</div>
 

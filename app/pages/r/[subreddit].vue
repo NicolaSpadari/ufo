@@ -10,7 +10,7 @@
 						<span font-semibold>Warning:</span> You have been banned from this Subreddit
 					</p>
 
-					<Icon name="heroicons-solid:exclamation-triangle" text-light size-4 />
+					<Icon name="lucide:triangle-alert" text-light size-4 />
 				</div>
 			</div>
 		</Teleport>

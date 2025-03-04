@@ -10,7 +10,7 @@
 			<AccordionTrigger h="45px" flex flex-1 items-center justify-between bg-zinc-900 px-5 text-green-600 leading-none outline-none @click="emit('toggle')">
 				<span>{{ title }}</span>
 				<Icon
-					name="heroicons-solid:chevron-down"
+					name="lucide:chevron-down"
 					transition-transform duration-300 ease-cubic
 					ui-open="rotate-180"
 				/>

@@ -28,7 +28,7 @@
 			<DropdownMenuRoot>
 				<DropdownMenuTrigger>
 					<div size-6 flex-center rounded-full hover="bg-zinc-800">
-						<Icon name="heroicons-solid:ellipsis-horizontal" text-zinc-100 />
+						<Icon name="lucide:ellipsis" text-zinc-100 />
 					</div>
 				</DropdownMenuTrigger>
 
@@ -66,7 +66,7 @@
 			<Action>
 				<template #left>
 					<Icon
-						name="heroicons-solid:chevron-up" size-4
+						name="lucide:chevron-up" size-4
 						:class="{
 							'text-orange-500': upvoted,
 						}"
@@ -86,7 +86,7 @@
 				</template>
 				<template #right>
 					<Icon
-						name="heroicons-solid:chevron-down" size-4
+						name="lucide:chevron-down" size-4
 						:class="{
 							'text-blue-500': downvoted,
 						}"
@@ -98,7 +98,7 @@
 			</Action>
 			<Action :to="`/comment/${props.post.id}`">
 				<template #left>
-					<Icon name="heroicons-outline:chat-bubble-oval-left" size-4 />
+					<Icon name="lucide:message-circle" size-4 />
 				</template>
 				<template #center>
 					{{ formatNumber(props.post.num_comments) }}
@@ -108,7 +108,7 @@
 				<DropdownMenuTrigger>
 					<Action>
 						<template #left>
-							<Icon name="heroicons-outline:share" size-4 />
+							<Icon name="lucide:share" size-4 />
 						</template>
 						<template #center>
 							Share

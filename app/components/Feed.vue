@@ -22,13 +22,13 @@
 		loading: boolean
 	}>();
 
-	const emit = defineEmits(["more"]);
+	const emit = defineEmits(["loadMore"]);
 
 	const loader = ref<HTMLElement | null>(null);
 
-	useIntersectionObserver(loader, ([{ isIntersecting }]) => {
-		if (isIntersecting && !props.loading) {
-			emit("more");
+	useIntersectionObserver(loader, ([entry]) => {
+		if (entry?.isIntersecting && !props.loading) {
+			emit("loadMore");
 		}
 	});
 </script>
