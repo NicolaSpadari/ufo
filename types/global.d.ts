@@ -6,13 +6,6 @@ declare interface AuthResponse {
 	refresh_token: string
 }
 
-declare interface RouteParams {
-	subreddit?: string
-	profile?: string
-	id?: string
-	name: string
-}
-
 declare interface PostInfos {
 	title: string
 	text: string
