@@ -1,5 +1,4 @@
 import { vite as vidstack } from "vidstack/plugins";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { appDescription, appName, productionUrl } from "./constants";
 
 export default defineNuxtConfig({
@@ -13,13 +12,9 @@ export default defineNuxtConfig({
 		"nuxt3-date-fns",
 		"nuxt-svgo"
 	],
-	// ssr: false,
 	runtimeConfig: {
 		public: {
-			mdc: {},
-			redditApiKey: process.env.REDDIT_API_KEY,
-			redditSecretKey: process.env.REDDIT_SECRET_KEY,
-			authRedirectUrl: process.env.AUTH_REDIRECT_URL
+			mdc: {}
 		},
 		redditClientId: process.env.REDDIT_API_KEY,
 		redditSecretKey: process.env.REDDIT_SECRET_KEY,
@@ -82,25 +77,6 @@ export default defineNuxtConfig({
 				type: true
 			},
 			{
-				from: "snoowrap",
-				imports: [
-					{
-						name: "default",
-						as: "Reddit"
-					}
-				]
-			},
-			{
-				from: "snoowrap",
-				imports: ["RedditUser", "Subreddit", "Submission", "MultiReddit"],
-				type: true
-			},
-			{
-				from: "snoowrap",
-				imports: ["Snoowrap"],
-				type: true
-			},
-			{
 				from: "vidstack/elements",
 				imports: ["MediaPlayerElement"],
 				type: true
@@ -116,7 +92,6 @@ export default defineNuxtConfig({
 	},
 	vite: {
 		plugins: [
-			nodePolyfills(),
 			vidstack()
 		]
 	},
@@ -141,5 +116,5 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4
 	},
-	compatibilityDate: "2025-02-01"
+	compatibilityDate: "2025-03-01"
 });
