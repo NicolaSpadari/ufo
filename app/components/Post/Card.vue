@@ -1,18 +1,7 @@
 <template>
 	<div class="flex flex-col gap-2 rounded-xl bg-zinc-900 p-3">
 		<div class="flex items-start justify-between">
-			<div class="flex items-center gap-3">
-				<UUser
-					:name="props.type === 'feed' ? props.post.subreddit_name_prefixed : props.post.author"
-					:description="props.type === 'feed' ? props.post.subreddit_name_prefixed : props.post.author"
-					:avatar="{
-						src: stripParams(props.type === 'feed' ? props.post.subreddit.icon_img : props.post.author.icon_img),
-						alt: props.type === 'feed' ? props.post.subreddit_name_prefixed : props.post.author
-					}"
-					:to="props.type === 'feed' ? `/r/${props.post.subreddit_name_prefixed}` : `/u/${props.post.author}`"
-				/>
-				{{ getTimeAgo(props.post.created) }}
-			</div>
+			<PostHeading :post="props.post" />
 			<UDropdownMenu
 				:items="[{
 					label: 'Debug',
@@ -25,14 +14,12 @@
 				<UButton icon="i-lucide-ellipsis" variant="ghost" color="neutral" />
 			</UDropdownMenu>
 		</div>
-		<p class="text-lg text-light font-text">
-			{{ props.post.title }}
-		</p>
+		<ProseP class="my-0">{{ props.post.title }}</ProseP>
 		<div v-if="props.post.selftext !== ''" class="my-3 h-42rem">
 			<div :class="{ 'line-clamp-3': props.type !== 'full' }" class="text-sm text-light font-text" v-html="props.post.selftext_html" />
 		</div>
 		<div v-if="hasMedia" class="my-3 overflow-hidden rounded-xl shadow-lg h-42rem flex items-center">
-			<MediaSwitcher :post="props.post" />
+			<PostMedia :post="props.post" />
 		</div>
 		<div class="flex gap-3">
 			<UButtonGroup>
@@ -69,7 +56,7 @@
 	}>();
 
 	const { productionUrl } = useConstants();
-	const { formatNumber, stripParams, socialNetworks } = useUtils();
+	const { formatNumber, socialNetworks } = useUtils();
 
 	const upvoted = ref(false);
 	const downvoted = ref(false);
@@ -92,12 +79,6 @@
 			|| props.post.post_hint === "image"
 			|| props.post.post_hint === "link";
 	});
-
-	const getTimeAgo = (timestamp: number) => {
-		return useFormatDistance(useFromUnixTime(timestamp), new Date(), {
-			addSuffix: true
-		}).replace("about", "");
-	};
 
 	const upvote = () => {
 		// client.value!.getSubmission(props.post.id).upvote();

@@ -40,12 +40,19 @@ export const useUtils = () => {
 		return url.split("?")[0];
 	};
 
+	const getTimeAgo = (timestamp: number) => {
+		return useFormatDistance(useFromUnixTime(timestamp), new Date(), {
+			addSuffix: true
+		}).replace("about", "");
+	};
+
 	return {
 		formatNumber,
 		getInitials,
 		getIcon,
 		socialNetworks,
 		isEmpty,
-		stripParams
+		stripParams,
+		getTimeAgo
 	};
 };

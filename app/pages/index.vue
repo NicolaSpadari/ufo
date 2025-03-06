@@ -1,13 +1,16 @@
 <template>
-	<Transition name="fade" mode="out-in">
-		<Feed
-			v-if="posts?.length"
-			:posts="posts!"
-			type="feed"
-			:loading="status === 'pending'"
-			@load-more="loadMore()"
-		/>
-	</Transition>
+	<div>
+		<FeedFilter />
+		<Transition name="fade" mode="out-in">
+			<FeedContainer
+				v-if="posts?.length"
+				:posts="posts!"
+				type="feed"
+				:loading="status === 'pending'"
+				@load-more="loadMore()"
+			/>
+		</Transition>
+	</div>
 </template>
 
 <script lang="ts" setup>

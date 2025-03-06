@@ -1,7 +1,6 @@
 <template>
 	<div class="flex flex-col gap-y-5">
-		<PostSwitcher />
-		<Post
+		<PostCard
 			v-for="post in props.posts"
 			:key="post.name"
 			:post="post"
