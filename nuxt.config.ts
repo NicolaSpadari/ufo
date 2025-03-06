@@ -23,7 +23,11 @@ export default defineNuxtConfig({
 	},
 	app: {
 		head: {
-			title: appName,
+			titleTemplate: `%s %separator %siteName`,
+			templateParams: {
+				siteName: "UFO",
+				separator: "|"
+			},
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
 			meta: [
