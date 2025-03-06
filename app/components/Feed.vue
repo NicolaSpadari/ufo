@@ -1,17 +1,13 @@
 <template>
 	<div class="flex flex-col gap-y-5">
 		<PostSwitcher />
-
-		<UCard
-			variant="outline"
-			:ui="{
-				body: 'p-1 sm:p-2'
-			}"
-		>
-			<Post v-for="post in props.posts" :key="post.name" :post="post" :from="props.type" />
-
-			<Loader ref="loader" />
-		</UCard>
+		<Post
+			v-for="post in props.posts"
+			:key="post.name"
+			:post="post"
+			:from="props.type"
+		/>
+		<Loader ref="loader" />
 	</div>
 </template>
 

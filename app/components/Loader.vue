@@ -1,5 +1,5 @@
 <template>
-	<div flex-center>
-		<SvgoSpinner :font-controlled="false" animate-spin text-zinc-400 size="8" />
+	<div class="flex justify-center my-5">
+		<SvgoLogo :font-controlled="false" class="animate-pulse size-6" />
 	</div>
 </template>

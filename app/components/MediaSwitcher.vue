@@ -42,7 +42,7 @@
 			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" h="42rem" mx-auto object-contain />
 			<NuxtImg v-else :src="previewImage" h="42rem" mx-auto object-contain />
 
-			<DialogTrigger as-child>
+			<!-- <DialogTrigger as-child> -->
 				<button
 					type="button"
 					absolute bottom-2 right-2 size-8 flex-center rounded-full bg-zinc-800 opacity-0 shadow-xl transition-opacity
@@ -51,7 +51,7 @@
 				>
 					<Icon name="lucide:expand" size-5 text-zinc-100 />
 				</button>
-			</DialogTrigger>
+			<!-- </DialogTrigger> -->
 		</div>
 	</div>
 </template>

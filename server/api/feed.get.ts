@@ -11,7 +11,8 @@ export default defineEventHandler(async (event) => {
 			query: {
 				limit: batchSize,
 				t: sort,
-				after
+				after,
+				sr_detail: 1
 			}
 		});
 	} else {

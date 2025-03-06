@@ -2,28 +2,16 @@
 	<div class="flex flex-col gap-2 rounded-xl bg-zinc-900 p-3">
 		<div class="flex items-start justify-between">
 			<div class="flex items-center gap-3">
-				<template v-if="props.from === 'feed'">
-					<SubredditIcon :image="getPostIcon()" size="medium" />
-					<div class="flex flex-col">
-						<div class="flex-center gap-2">
-							<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" class="text-light font-text">
-								{{ props.post.subreddit_name_prefixed }}
-							</NuxtLink>
-							<span class="text-xs text-neutral-400">{{ getTimeAgo(props.post.created) }}</span>
-						</div>
-						<NuxtLink :to="`/u/${props.post.author}`" class="text-xs text-neutral-400 font-text hover:underline">
-							u/{{ props.post.author }}
-						</NuxtLink>
-					</div>
-				</template>
-				<template v-if="props.from === 'subreddit'">
-					<SubredditIcon :image="authorImage" size="medium" />
-					<div class="flex flex-col">
-						<NuxtLink :to="`/u/${props.post.author}`" class="text-light font-text">
-							u/{{ props.post.author }}
-						</NuxtLink>
-					</div>
-				</template>
+				<UUser
+					:name="props.type === 'feed' ? props.post.subreddit_name_prefixed : props.post.author"
+					:description="props.type === 'feed' ? props.post.subreddit_name_prefixed : props.post.author"
+					:avatar="{
+						src: stripParams(props.type === 'feed' ? props.post.subreddit.icon_img : props.post.author.icon_img),
+						alt: props.type === 'feed' ? props.post.subreddit_name_prefixed : props.post.author
+					}"
+					:to="props.type === 'feed' ? `/r/${props.post.subreddit_name_prefixed}` : `/u/${props.post.author}`"
+				/>
+				{{ getTimeAgo(props.post.created) }}
 			</div>
 			<UDropdownMenu
 				:items="[{
@@ -81,19 +69,10 @@
 	}>();
 
 	const { productionUrl } = useConstants();
-	const { formatNumber, socialNetworks } = useUtils();
+	const { formatNumber, stripParams, socialNetworks } = useUtils();
 
-	const subredditIcon = await props.post.subreddit?.icon_img;
-	const subredditCommunityIcon = await props.post.subreddit?.community_icon;
-	const authorImage = await props.post.author.icon_img;
 	const upvoted = ref(false);
 	const downvoted = ref(false);
-
-	const getPostIcon = () => {
-		if (subredditIcon !== "") return subredditIcon;
-		if (subredditCommunityIcon !== "") return subredditCommunityIcon;
-		return "";
-	};
 
 	const socialDropdownItems = ref(socialNetworks.map((network) => ({
 		label: network,

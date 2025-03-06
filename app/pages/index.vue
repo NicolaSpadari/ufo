@@ -1,18 +1,24 @@
 <template>
-	<Feed
-		:posts="posts!"
-		type="feed"
-		:loading="status === 'pending'"
-		@load-more="loadMore()"
-	/>
+	<Transition name="fade" mode="out-in">
+		<Feed
+			v-if="posts?.length"
+			:posts="posts!"
+			type="feed"
+			:loading="status === 'pending'"
+			@load-more="loadMore()"
+		/>
+	</Transition>
 </template>
 
 <script lang="ts" setup>
+	useHead({
+		title: "Home"
+	});
+
 	const { isAuthenticated, order, sort } = useReddit();
 	const after = ref<string | undefined>();
 
-	const { data: posts, status, execute: loadFeed } = await useFetch("/api/feed", {
-		immediate: false,
+	const { data: posts, status, execute: loadFeed } = await useLazyFetch("/api/feed", {
 		query: {
 			isAuthenticated,
 			order,
@@ -30,7 +36,6 @@
 
 	const loadMore = () => {
 		console.log("loadmore");
-		after.value = posts.value?.[posts.value.length - 1]?.name;
-		console.log("after", after.value);
+		after.value = posts.value?.at(-1)?.name;
 	};
 </script>
