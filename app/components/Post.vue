@@ -1,152 +1,74 @@
 <template>
-	<div flex flex-col gap-2 rounded-xl bg-zinc-900 p-3>
-		<div flex items-start justify-between>
-			<div flex items-center gap-3>
+	<div class="flex flex-col gap-2 rounded-xl bg-zinc-900 p-3">
+		<div class="flex items-start justify-between">
+			<div class="flex items-center gap-3">
 				<template v-if="props.from === 'feed'">
 					<SubredditIcon :image="getPostIcon()" size="medium" />
-					<div flex flex-col>
-						<div flex-center gap-2>
-							<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" text-light font-text>
+					<div class="flex flex-col">
+						<div class="flex-center gap-2">
+							<NuxtLink :to="`/${props.post.subreddit_name_prefixed}`" class="text-light font-text">
 								{{ props.post.subreddit_name_prefixed }}
 							</NuxtLink>
-							<span text-xs text-neutral-400>{{ getTimeAgo(props.post.created) }}</span>
+							<span class="text-xs text-neutral-400">{{ getTimeAgo(props.post.created) }}</span>
 						</div>
-						<NuxtLink :to="`/u/${authorName}`" text-xs text-neutral-400 font-text hover="underline">
-							u/{{ authorName }}
+						<NuxtLink :to="`/u/${props.post.author}`" class="text-xs text-neutral-400 font-text hover:underline">
+							u/{{ props.post.author }}
 						</NuxtLink>
 					</div>
 				</template>
 				<template v-if="props.from === 'subreddit'">
 					<SubredditIcon :image="authorImage" size="medium" />
-					<div flex flex-col>
-						<NuxtLink :to="`/u/${authorName}`" text-light font-text>
-							u/{{ authorName }}
+					<div class="flex flex-col">
+						<NuxtLink :to="`/u/${props.post.author}`" class="text-light font-text">
+							u/{{ props.post.author }}
 						</NuxtLink>
 					</div>
 				</template>
 			</div>
-			<DropdownMenuRoot>
-				<DropdownMenuTrigger>
-					<div size-6 flex-center rounded-full hover="bg-zinc-800">
-						<Icon name="lucide:ellipsis" text-zinc-100 />
-					</div>
-				</DropdownMenuTrigger>
-
-				<DropdownMenuPortal>
-					<DropdownMenuContent
-						min-w="160px" p="5px" border border-zinc-700 rounded-md bg-zinc-900 shadow-xl outline-none
-						ui-open="animate-slideDownAndFade"
-						ui-closed="animate-slideUpAndFade"
-						:side-offset="13"
-					>
-						<DropdownMenuArrow fill-zinc-700 />
-						<DropdownMenuItem
-							as-child
-							relative h-8 flex select-none items-center rounded-md px-3 text-sm text-green-600 leading-none outline-none
-							class="data-[highlighted]:(bg-green-600 text-zinc-100)"
-						>
-							<button type="button" w-full @click="console.log(post)">
-								Debug
-							</button>
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenuPortal>
-			</DropdownMenuRoot>
+			<UDropdownMenu
+				:items="[{
+					label: 'Debug',
+					icon: 'i-lucide-terminal',
+					onSelect() {
+						console.log(props.post);
+					}
+				}]" :content="{ align: 'end' }"
+			>
+				<UButton icon="i-lucide-ellipsis" variant="ghost" color="neutral" />
+			</UDropdownMenu>
 		</div>
-		<p text-lg text-light font-text>
+		<p class="text-lg text-light font-text">
 			{{ props.post.title }}
 		</p>
-		<div v-if="props.post.selftext !== ''" my-3 h-42rem>
-			<div :class="{ 'line-clamp-3': props.type !== 'full' }" text-sm text-light font-text v-html="props.post.selftext_html" />
+		<div v-if="props.post.selftext !== ''" class="my-3 h-42rem">
+			<div :class="{ 'line-clamp-3': props.type !== 'full' }" class="text-sm text-light font-text" v-html="props.post.selftext_html" />
 		</div>
-		<div v-if="hasMedia" my-3 overflow-hidden rounded-xl shadow-lg h-42rem flex items-center>
+		<div v-if="hasMedia" class="my-3 overflow-hidden rounded-xl shadow-lg h-42rem flex items-center">
 			<MediaSwitcher :post="props.post" />
 		</div>
-		<div flex gap-3>
-			<Action>
-				<template #left>
-					<Icon
-						name="lucide:chevron-up" size-4
-						:class="{
-							'text-orange-500': upvoted,
-						}"
-						hover="text-orange-500"
-						transition-colors
-						@click="upvote()"
-					/>
-				</template>
-				<template #center>
-					<span
-						pointer-events-none
-						:class="{
-							'text-orange-500': upvoted,
-							'text-blue-500': downvoted,
-						}"
-					>{{ formatNumber(props.post.score) }}</span>
-				</template>
-				<template #right>
-					<Icon
-						name="lucide:chevron-down" size-4
-						:class="{
-							'text-blue-500': downvoted,
-						}"
-						hover="text-blue-500"
-						transition-colors
-						@click="downvote()"
-					/>
-				</template>
-			</Action>
-			<Action :to="`/comment/${props.post.id}`">
-				<template #left>
-					<Icon name="lucide:message-circle" size-4 />
-				</template>
-				<template #center>
-					{{ formatNumber(props.post.num_comments) }}
-				</template>
-			</Action>
-			<DropdownMenuRoot>
-				<DropdownMenuTrigger>
-					<Action>
-						<template #left>
-							<Icon name="lucide:share" size-4 />
-						</template>
-						<template #center>
-							Share
-						</template>
-					</Action>
-				</DropdownMenuTrigger>
+		<div class="flex gap-3">
+			<UButtonGroup>
+				<UButton icon="i-lucide-chevron-up" variant="soft" color="neutral" :class="{ 'text-orange-500': upvoted }" @click="upvote()" />
+				<UBadge
+					variant="soft" color="neutral" :class="{
+						'text-orange-500': upvoted,
+						'text-blue-500': downvoted
+					}"
+				>
+					{{ formatNumber(props.post.score) }}
+				</UBadge>
+				<UButton icon="i-lucide-chevron-down" variant="soft" color="neutral" :class="{ 'text-blue-500': downvoted }" @click="downvote()" />
+			</UButtonGroup>
 
-				<DropdownMenuPortal>
-					<DropdownMenuContent
-						min-w="220px" p="5px" border border-zinc-700 rounded-md bg-zinc-900 shadow-xl outline-none
-						ui-open="animate-slideDownAndFade"
-						ui-closed="animate-slideUpAndFade"
-						:side-offset="13"
-					>
-						<DropdownMenuArrow fill-zinc-700 />
-						<DropdownMenuItem
-							v-for="network in socialNetworks"
-							:key="network"
+			<UButton leading-icon="lucide:message-circle" variant="ghost" color="neutral">
+				{{ formatNumber(props.post.num_comments) }}
+			</UButton>
 
-							as-child text-main relative h-8 flex select-none items-center rounded-md px-2 text-sm leading-none outline-none
-							class="data-[highlighted]:(bg-green-600 text-zinc-100)"
-						>
-							<SocialShare
-								:network="network"
-								:styled="false"
-								:label="true"
-								:title="postInfos.title"
-								:url="postInfos.url"
-								w-full text-green-600 space-x-2
-							>
-								<template #label>
-									<span text-zinc-100 capitalize>{{ network }}</span>
-								</template>
-							</SocialShare>
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenuPortal>
-			</DropdownMenuRoot>
+			<UDropdownMenu :items="socialDropdownItems">
+				<UButton leading-icon="lucide:share" variant="ghost" color="neutral">
+					Share
+				</UButton>
+			</UDropdownMenu>
 		</div>
 	</div>
 </template>
@@ -160,12 +82,10 @@
 
 	const { productionUrl } = useConstants();
 	const { formatNumber, socialNetworks } = useUtils();
-	const { client } = useReddit();
 
 	const subredditIcon = await props.post.subreddit?.icon_img;
 	const subredditCommunityIcon = await props.post.subreddit?.community_icon;
 	const authorImage = await props.post.author.icon_img;
-	const authorName = await props.post.author.name;
 	const upvoted = ref(false);
 	const downvoted = ref(false);
 
@@ -175,10 +95,16 @@
 		return "";
 	};
 
-	const postInfos = {
-		title: props.post.title,
-		url: `${productionUrl}/comment/${props.post.id}`
-	};
+	const socialDropdownItems = ref(socialNetworks.map((network) => ({
+		label: network,
+		onSelect() {
+			useSocialShare({
+				network,
+				title: props.post.title,
+				url: `${productionUrl}/comment/${props.post.id}`
+			});
+		}
+	})));
 
 	const hasMedia = computed(() => {
 		return props.post.post_hint === "rich:video"
@@ -195,14 +121,16 @@
 	};
 
 	const upvote = () => {
-		client.value!.getSubmission(props.post.id).upvote();
-		upvoted.value = true;
-		downvoted.value = false;
+		// client.value!.getSubmission(props.post.id).upvote();
+		// upvoted.value = true;
+		// downvoted.value = false;
+		console.log("upvote");
 	};
 
 	const downvote = () => {
-		client.value!.getSubmission(props.post.id).downvote();
-		upvoted.value = false;
-		downvoted.value = true;
+		// client.value!.getSubmission(props.post.id).downvote();
+		// upvoted.value = false;
+		// downvoted.value = true;
+		console.log("downvote");
 	};
 </script>

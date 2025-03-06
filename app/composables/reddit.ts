@@ -1,5 +1,5 @@
 export const useReddit = () => {
-	const config = useRuntimeConfig();
+	const { public: { redditClientId, authRedirectUrl } } = useRuntimeConfig();
 	const { randomString, allScopes } = useConstants();
 	const { isEmpty } = useUtils();
 
@@ -10,15 +10,14 @@ export const useReddit = () => {
 	const multireddits = useSessionStorage<Multireddit[]>("multireddits", []);
 	const order = useState<PostOrder>("order", () => "hot");
 	const sort = useState<PostSort>("sort", () => "day");
-	const client = useState<Snoowrap | null>("client", () => null);
 	const activePost = useState<Submission | null>("activePost", () => null);
 	const activeSubreddit = useState<Subreddit | null>("activeSubreddit", () => null);
 	const authUrl = computed(() => {
 		const url = new URL("https://www.reddit.com/api/v1/authorize");
-		url.searchParams.append("client_id", config.public.redditApiKey);
+		url.searchParams.append("client_id", redditClientId);
 		url.searchParams.append("response_type", "code");
 		url.searchParams.append("state", randomString);
-		url.searchParams.append("redirect_uri", config.public.authRedirectUrl);
+		url.searchParams.append("redirect_uri", authRedirectUrl);
 		url.searchParams.append("duration", "permanent");
 		url.searchParams.append("scope", allScopes.join(" "));
 
@@ -102,7 +101,6 @@ export const useReddit = () => {
 		authUrl,
 		authorize,
 		logout,
-		client,
 		subscriptions,
 		favorites,
 		following,

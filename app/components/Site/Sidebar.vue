@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-	const { subscriptions, favorites, following, multireddits } = useReddit();
+	const { subscriptions, favorites, following } = useReddit();
 
 	const sidebarContent = ref([
 		// {

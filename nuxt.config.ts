@@ -15,11 +15,11 @@ export default defineNuxtConfig({
 	],
 	runtimeConfig: {
 		public: {
-			mdc: {}
+			mdc: {},
+			redditClientId: process.env.REDDIT_CLIENT_ID,
+			authRedirectUrl: process.env.AUTH_REDIRECT_URL
 		},
-		redditClientId: process.env.REDDIT_API_KEY,
-		redditSecretKey: process.env.REDDIT_SECRET_KEY,
-		authRedirectUrl: process.env.AUTH_REDIRECT_URL
+		redditSecretKey: process.env.REDDIT_SECRET_KEY
 	},
 	app: {
 		head: {

@@ -2,7 +2,7 @@ import { Buffer } from "node:buffer";
 
 export default defineEventHandler(async (event) => {
 	const { code } = await readBody(event);
-	const { authRedirectUrl, redditClientId, redditSecretKey } = useRuntimeConfig();
+	const { public: { authRedirectUrl, redditClientId }, redditSecretKey } = useRuntimeConfig();
 
 	const auth = Buffer.from(`${redditClientId}:${redditSecretKey}`).toString("base64");
 

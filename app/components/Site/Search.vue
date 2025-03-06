@@ -7,14 +7,12 @@
 			icon="i-lucide-search"
 			placeholder="Search for a subreddit"
 			@update:search-term="updateQuery"
-			@update:model-value="(val) => navigateTo(val!.to)"
+			@update:model-value="(val) => navigateTo(val.to)"
 		>
-			<template #leading="{ modelValue, ui }">
+			<template #leading="{ modelValue }">
 				<UAvatar
 					v-if="modelValue"
-					v-bind="modelValue.icon"
-					:size="ui.leadingAvatarSize()"
-					:class="ui.leadingAvatar()"
+					:src="modelValue.icon"
 				/>
 			</template>
 		</UInputMenu>
@@ -25,27 +23,30 @@
 	const bearerToken = useCookie("ufo_access_token");
 	const { stripParams } = useUtils();
 
-	const searchTerm = ref("");
+	const searchTerm = ref({
+		label: "",
+		to: "",
+		icon: ""
+	});
 	const query = ref("");
 
 	const updateQuery = useDebounceFn((val) => {
 		query.value = val;
 	}, 500);
 
-	const { data: results, status } = await useFetch<Subreddit[]>("/api/search", {
+	const { data: results, status } = await useFetch("/api/search", {
 		immediate: false,
 		query: {
 			bearerToken: bearerToken.value,
 			searchTerm: query
 		},
-		transform: (data) => {
-			return data?.map((res) => {
-				console.log(res)
+		transform: (results: RedditResponse<RawSubreddit>[]) => {
+			return results?.map((res) => {
 				return {
-					label: res.data.display_name_prefixed,
+					label: res.data?.display_name_prefixed,
 					to: res.data.url,
-					icon: stripParams(res.data.community_icon)
-				}
+					icon: stripParams(res.data.community_icon) || ""
+				};
 			}) || [];
 		}
 	});

@@ -13,9 +13,3 @@
 		</Body>
 	</Html>
 </template>
-
-<script lang="ts" setup>
-	// const { initializeClient, user } = useReddit();
-
-	// if (user?.value) initializeClient();
-</script>

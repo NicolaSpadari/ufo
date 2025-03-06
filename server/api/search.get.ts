@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
 	const { bearerToken, searchTerm } = getQuery(event);
 
-	const results = await client<SubredditsResponse>("/subreddits/search", {
+	const results = await client<RedditResponse<RawSubreddit>>("/subreddits/search", {
 		headers: {
 			Authorization: `Bearer ${bearerToken}`
 		},

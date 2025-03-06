@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
 	const { sort, order, after = undefined } = getQuery(event);
 	const bearerToken = getCookie(event, "ufo_access_token");
 
-	const subreddits = await client(`/${order}`, {
+	const feed = await client<RedditResponse<RawSubmission>>(`/${order}`, {
 		headers: {
 			Authorization: `Bearer ${bearerToken}`
 		},
@@ -14,5 +14,5 @@ export default defineEventHandler(async (event) => {
 		}
 	});
 
-	return subreddits;
+	return feed;
 });

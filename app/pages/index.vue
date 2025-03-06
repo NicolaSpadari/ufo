@@ -1,31 +1,28 @@
 <template>
-	<div mt-3>
+	<ClientOnly>
 		<Feed
 			v-if="isAuthenticated"
-			:posts="posts"
+			:posts="posts!"
 			type="feed"
 			:loading="status === 'pending'"
 			@load-more="loadMore()"
 		/>
-
-		<pre v-if="error">{{ error }}</pre>
-	</div>
+	</ClientOnly>
 </template>
 
 <script lang="ts" setup>
 	const { isAuthenticated, order, sort } = useReddit();
 	const after = ref<string | undefined>();
 
-	const { data: posts, error, status, execute: loadFeed } = await useFetch<RedditResponse<RawSubreddit>>("/api/feed", {
+	const { data: posts, status, execute: loadFeed } = await useFetch("/api/feed", {
 		immediate: false,
 		query: {
 			order,
 			sort,
 			after: after.value
 		},
-		transform: (data) => {
-			console.log(data);
-			return data.data.children.map((child) => child.data);
+		transform: (feed: RedditResponse<RawSubmission>) => {
+			return feed.data.children?.map((child) => child.data) || [];
 		}
 	});
 
@@ -39,7 +36,7 @@
 
 	const loadMore = () => {
 		console.log("loadmore");
-		after.value = posts.value[posts.value.length - 1].name;
+		after.value = posts.value?.[posts.value.length - 1]?.name;
 		console.log("after", after.value);
 	};
 </script>
