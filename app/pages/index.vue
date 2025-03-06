@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="flex flex-col gap-y-5">
 		<FeedFilter />
 		<Transition name="fade" mode="out-in">
 			<FeedContainer

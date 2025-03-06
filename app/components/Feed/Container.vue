@@ -1,13 +1,16 @@
 <template>
-	<div class="flex flex-col gap-y-5">
+	<UPageList class="gap-y-5">
 		<PostCard
 			v-for="post in props.posts"
 			:key="post.name"
 			:post="post"
 			:from="props.type"
 		/>
-		<Loader ref="loader" />
-	</div>
+
+		<UPageCard variant="naked">
+			<Loader ref="loader" />
+		</UPageCard>
+	</UPageList>
 </template>
 
 <script lang="ts" setup>

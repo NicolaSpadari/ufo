@@ -8,14 +8,7 @@
 			placeholder="Search for a subreddit"
 			@update:search-term="updateQuery"
 			@update:model-value="(val) => navigateTo(val.to)"
-		>
-			<template #leading="{ modelValue }">
-				<UAvatar
-					v-if="modelValue && status === 'success'"
-					:src="modelValue.icon"
-				/>
-			</template>
-		</UInputMenu>
+		/>
 	</div>
 </template>
 
