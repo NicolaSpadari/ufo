@@ -1,13 +1,10 @@
 <template>
-	<ClientOnly>
-		<Feed
-			v-if="isAuthenticated"
-			:posts="posts!"
-			type="feed"
-			:loading="status === 'pending'"
-			@load-more="loadMore()"
-		/>
-	</ClientOnly>
+	<Feed
+		:posts="posts!"
+		type="feed"
+		:loading="status === 'pending'"
+		@load-more="loadMore()"
+	/>
 </template>
 
 <script lang="ts" setup>
@@ -17,22 +14,19 @@
 	const { data: posts, status, execute: loadFeed } = await useFetch("/api/feed", {
 		immediate: false,
 		query: {
+			isAuthenticated,
 			order,
 			sort,
-			after: after.value
+			after
 		},
 		transform: (feed: RedditResponse<RawSubmission>) => {
 			return feed.data.children?.map((child) => child.data) || [];
 		}
 	});
 
-	onMounted(async () => {
-		if (isAuthenticated?.value) await loadFeed();
-	});
+	onMounted(async () => await loadFeed());
 
-	watchOnce(isAuthenticated, async (val) => {
-		if (val) await loadFeed();
-	});
+	watchOnce(isAuthenticated, async () => await loadFeed());
 
 	const loadMore = () => {
 		console.log("loadmore");

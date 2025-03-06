@@ -11,7 +11,7 @@
 		>
 			<template #leading="{ modelValue }">
 				<UAvatar
-					v-if="modelValue"
+					v-if="modelValue && status === 'success'"
 					:src="modelValue.icon"
 				/>
 			</template>

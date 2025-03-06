@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 		redirect_uri: authRedirectUrl
 	});
 
-	const authorization = await reddit<AuthResponse>("/access_token", {
+	const authorization = await api<AuthResponse>("/access_token", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
