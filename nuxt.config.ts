@@ -7,6 +7,7 @@ export default defineNuxtConfig({
 		"@nuxt/image",
 		"@nuxt/ui-pro",
 		"@nuxt/eslint",
+		"@vite-pwa/nuxt",
 		"@stefanobartoletti/nuxt-social-share",
 		"reka-ui/nuxt",
 		"nuxt3-date-fns",
@@ -40,6 +41,41 @@ export default defineNuxtConfig({
 		layoutTransition: {
 			name: "layout",
 			mode: "out-in"
+		}
+	},
+	pwa: {
+		strategies: "generateSW",
+		registerType: "autoUpdate",
+		base: "/",
+		includeAssets: ["favicon.svg"],
+		manifest: {
+			name: "UFO",
+			short_name: "UFO",
+			theme_color: "#18181B",
+			icons: [
+				{
+					src: "pwa-64x64.png",
+					sizes: "64x64",
+					type: "image/png"
+				},
+				{
+					src: "pwa-192x192.png",
+					sizes: "192x192",
+					type: "image/png"
+				},
+				{
+					src: "pwa-512x512.png",
+					sizes: "512x512",
+					type: "image/png",
+					purpose: "any"
+				},
+				{
+					src: "maskable-icon-512x512.png",
+					sizes: "512x512",
+					type: "image/png",
+					purpose: "maskable"
+				}
+			]
 		}
 	},
 	uiPro: {
