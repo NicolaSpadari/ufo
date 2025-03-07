@@ -5,7 +5,7 @@
 		<Transition name="fade" mode="out-in">
 			<FeedContainer
 				v-if="posts?.length"
-				:posts="posts!"
+				:posts="posts"
 				type="feed"
 				:loading="status === 'pending'"
 				@load-more="loadMore()"
@@ -23,6 +23,7 @@
 
 	const { isAuthenticated, order, sort } = useReddit();
 	const after = ref<string | undefined>();
+	const fetchedPosts = ref<Submission[]>([]);
 
 	const { data: posts, status, execute: loadFeed } = await useLazyFetch("/api/feed", {
 		query: {
@@ -32,7 +33,9 @@
 			after
 		},
 		transform: (feed: RedditResponse<RawSubmission>) => {
-			return feed.data.children?.map((child) => child.data) || [];
+			const newPosts = feed.data.children?.map((child) => child.data) || [];
+			fetchedPosts.value.push(...newPosts);
+			return fetchedPosts.value;
 		}
 	});
 
