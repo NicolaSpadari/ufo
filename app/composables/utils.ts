@@ -1,17 +1,45 @@
 export const useUtils = () => {
 	const socialNetworks = [
-		"facebook",
-		"twitter",
-		"linkedin",
-		"pinterest",
-		"reddit",
-		"bluesky",
-		"pocket",
-		"whatsapp",
-		"telegram",
-		"skype",
-		"line",
-		"email"
+		{
+			name: "facebook",
+			label: "Facebook",
+			icon: "simple-icons:facebook"
+		},
+		{
+			name: "threads",
+			label: "Threads",
+			icon: "simple-icons:threads"
+		},
+		{
+			name: "x",
+			label: "X",
+			icon: "simple-icons:x"
+		},
+		{
+			name: "linkedin",
+			label: "LinkedIn",
+			icon: "simple-icons:linkedin"
+		},
+		{
+			name: "bluesky",
+			label: "Bluesky",
+			icon: "simple-icons:bluesky"
+		},
+		{
+			name: "whatsapp",
+			label: "WhatsApp",
+			icon: "simple-icons:whatsapp"
+		},
+		{
+			name: "telegram",
+			label: "Telegram",
+			icon: "simple-icons:telegram"
+		},
+		{
+			name: "email",
+			label: "Email",
+			icon: "lucide:mail"
+		}
 	];
 
 	const formatNumber = (num: number) => {
@@ -26,8 +54,8 @@ export const useUtils = () => {
 	};
 
 	const getIcon = (entry: Subreddit) => {
-		if (entry.icon_img !== "") return entry.icon_img;
-		if (entry.community_icon !== "") return entry.community_icon;
+		if (entry?.icon_img !== "") return entry?.icon_img;
+		if (entry?.community_icon !== "") return entry?.community_icon;
 		return "";
 	};
 

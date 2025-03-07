@@ -11,6 +11,9 @@ declare interface Submission {
 declare interface Multireddit {
 	[key: string]: any
 }
+declare interface Comment {
+	[key: string]: any
+}
 
 // Raw interfaces
 declare interface RawSubreddit {
@@ -20,6 +23,10 @@ declare interface RawSubreddit {
 declare interface RawSubmission {
 	kind: string
 	data: Submission
+}
+declare interface RawComment {
+	kind: string
+	data: Comment
 }
 
 // API responses
@@ -40,3 +47,15 @@ declare interface SubscriptionList {
 	subscriptions: Subreddit[]
 	following: Subreddit[]
 }
+
+declare interface AuthResponse {
+	access_token: string
+	token_type: string
+	expires_in: number
+	scope: string
+	refresh_token: string
+}
+
+declare type PostOrder = "hot" | "new" | "top" | "rising" | "controversial";
+
+declare type PostSort = "hour" | "day" | "week" | "month" | "year" | "all";

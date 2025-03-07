@@ -99,8 +99,7 @@ export default defineNuxtConfig({
 			"reddit.com",
 			"reddit.it",
 			"redditmedia.com",
-			"i.redd.it",
-			"preview.redd.it"
+			"redd.it"
 		]
 	},
 	icon: {

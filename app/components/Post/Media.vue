@@ -1,7 +1,7 @@
 <template>
 	<div v-if="post.post_hint === 'rich:video'" class="video-wrapper w-full" h="42rem" v-html="post.secure_media_embed?.content?.replace('position:absolute;', '')" />
 
-	<div v-else-if="post.post_hint === 'hosted:video'">
+	<div v-if="post.post_hint === 'hosted:video'">
 		<media-player
 			ref="player"
 			:src="post.secure_media?.reddit_video?.fallback_url"
@@ -19,7 +19,7 @@
 		</media-player>
 	</div>
 
-	<div v-else-if="post.is_gallery">
+	<div v-if="post.is_gallery">
 		<div relative>
 			<div w-full bg-neutral-700>
 				<NuxtImg :src="post.media_metadata[state.media_id].p[post.media_metadata[state.media_id].p.length - 1].u" mx-auto />
@@ -37,23 +37,27 @@
 		</div>
 	</div>
 
-	<div v-else-if="post.post_hint === 'image' || post.post_hint === 'link'" h-full>
+	<div v-if="post.post_hint === 'link'" h-full>
 		<div class="group" relative h-full w-full bg-neutral-700>
 			<NuxtImg v-if="post.is_reddit_media_domain" :src="post.url" h="42rem" mx-auto object-contain />
 			<NuxtImg v-else :src="previewImage" h="42rem" mx-auto object-contain />
-
-			<!-- <DialogTrigger as-child> -->
-				<button
-					type="button"
-					absolute bottom-2 right-2 size-8 flex-center rounded-full bg-zinc-800 opacity-0 shadow-xl transition-opacity
-					class="expander group-hover:opacity-100"
-					@click="activePost = props.post"
-				>
-					<Icon name="lucide:expand" size-5 text-zinc-100 />
-				</button>
-			<!-- </DialogTrigger> -->
 		</div>
 	</div>
+
+	<NuxtLink :to="`/comments/${props.post.name}`"
+		v-if="props.post.post_hint === 'image'"
+		class="grid-stack place-items-center rounded-[calc(var(--ui-radius)*2)] overflow-hidden"
+	>
+		<NuxtImg
+			:src="previewImage"
+			:placeholder="img(props.post.thumbnail, { blur: 10 })"
+			class="post-image h-full max-h-[36rem] object-contain z-[1]"
+		/>
+		<NuxtImg
+			:src="props.post.thumbnail"
+			class="post-background size-full max-h-[36rem] object-cover opacity-75 blur-lg"
+		/>
+	</NuxtLink>
 </template>
 
 <script lang="ts" setup>
@@ -65,8 +69,16 @@
 		post: Submission
 	}>();
 
+	const img = useImage();
+	const { stripParams } = useUtils();
+
+	const previewImage = computed(() => {
+		if (props.post.is_reddit_media_domain) return props.post.url;
+		const preview = props.post.preview?.images[0].resolutions.at(-1).url;
+		return preview.replace("amp;", "");
+	});
+
 	const post = toRef(props.post);
-	const { activePost } = useReddit();
 
 	const player = ref<MediaPlayerElement | null>(null);
 
@@ -74,7 +86,6 @@
 		post.value = props.post.crosspost_parent_list[0];
 	}
 
-	const previewImage = post.value.preview?.images[0].resolutions[post.value.preview.images[0].resolutions.length - 1].url;
 	const { state, index, next, prev } = useCycleList(post.value.gallery_data?.items || []);
 	const curIndex = computed(() => index.value + 1);
 </script>
@@ -86,5 +97,14 @@
 	.vds-google-cast-button,
 	.vds-menu-button{
 		@apply hidden;
+	}
+
+	.grid-stack {
+		display: grid;
+		grid-template-areas: "stack";
+	}
+	.post-image,
+	.post-background{
+		grid-area: stack;
 	}
 </style>

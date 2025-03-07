@@ -1,5 +1,5 @@
 <template>
-	<Html class="min-h-[100dvh] scroll-smooth overflow-x-hidden">
+	<Html class="min-h-[100dvh] scroll-smooth">
 		<Body class="antialiased font-sans">
 			<NuxtPwaManifest />
 			<UApp>

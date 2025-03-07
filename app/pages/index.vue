@@ -1,6 +1,7 @@
 <template>
 	<div class="flex flex-col gap-y-5">
 		<FeedFilter />
+
 		<Transition name="fade" mode="out-in">
 			<FeedContainer
 				v-if="posts?.length"
@@ -32,8 +33,6 @@
 			return feed.data.children?.map((child) => child.data) || [];
 		}
 	});
-
-	onMounted(async () => await loadFeed());
 
 	watchOnce(isAuthenticated, async () => await loadFeed());
 
