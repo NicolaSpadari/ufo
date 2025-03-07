@@ -1,6 +1,6 @@
 <template>
-	<div>
-		{{ message }}
+	<div class="h-[100dvh] w-screen grid place-content-center">
+		<Loader />
 	</div>
 </template>
 
@@ -13,13 +13,13 @@
 	const router = useRouter();
 	const { randomString } = useConstants();
 	const { authorize } = useReddit();
-	const message = ref("Loading...");
+	const message = ref("");
 
 	if (route.query.state !== randomString) {
 		message.value = "Code mismatch";
 		throw createError({
 			statusCode: 500,
-			statusMessage: "Code mismatch"
+			statusMessage: "Auth code mismatch"
 		});
 	}
 

@@ -63,9 +63,9 @@ export const useUtils = () => {
 		return (typeof obj === "object" && obj !== null) && Object.keys(obj).length > 0;
 	};
 
-	const stripParams = (url?: string) => {
+	const fixSource = (url?: string) => {
 		if (!url) return "";
-		return url.split("?")[0];
+		return url.replaceAll("amp;", "");
 	};
 
 	const getTimeAgo = (timestamp: number) => {
@@ -74,13 +74,21 @@ export const useUtils = () => {
 		}).replace("about", "");
 	};
 
+	const decodeHtml = (text: string) => {
+		return new DOMParser()
+			.parseFromString(text, 'text/html')
+			.documentElement
+			.textContent;
+	}
+
 	return {
 		formatNumber,
 		getInitials,
 		getIcon,
 		socialNetworks,
 		isEmpty,
-		stripParams,
-		getTimeAgo
+		fixSource,
+		getTimeAgo,
+		decodeHtml
 	};
 };

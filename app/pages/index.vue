@@ -11,6 +11,8 @@
 				@load-more="loadMore()"
 			/>
 		</Transition>
+
+		<PostZoomed />
 	</div>
 </template>
 

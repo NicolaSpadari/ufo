@@ -65,6 +65,13 @@
 	@apply opacity-0 translate-y-5;
 }
 
+.grid-stack {
+	@apply grid;
+	grid-template-areas: "stack";
+}
+.grid-area-stack {
+	grid-area: stack;
+}
 .flex-center {
 	@apply flex justify-center items-center;
 }
@@ -73,4 +80,12 @@
 }
 .absolute-center-v {
 	@apply top-1/2 transform -translate-y-1/2;
+}
+
+.video-wrapper > iframe {
+	@apply size-full;
+}
+.vds-google-cast-button,
+.vds-menu-button{
+	@apply hidden;
 }

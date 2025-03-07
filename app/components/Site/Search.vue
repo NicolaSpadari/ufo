@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 	const bearerToken = useCookie("ufo_access_token");
-	const { stripParams } = useUtils();
+	const { fixSource } = useUtils();
 
 	const searchTerm = ref({
 		label: "",
@@ -38,7 +38,7 @@
 				return {
 					label: res.data?.display_name_prefixed,
 					to: res.data.url,
-					icon: stripParams(res.data.community_icon) || ""
+					icon: fixSource(res.data.community_icon)
 				};
 			}) || [];
 		}

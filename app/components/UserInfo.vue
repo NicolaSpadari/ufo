@@ -16,7 +16,7 @@
 					:name="(user as RedditUser).name"
 					:description="`Karma ${formatNumber((user as RedditUser).total_karma)}`"
 					:avatar="{
-						src: stripParams((user as RedditUser)?.icon_img || ''),
+						src: fixSource((user as RedditUser)?.icon_img),
 						alt: (user as RedditUser).name || ''
 					}"
 					:ui="{
@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 	const { user, logout } = useReddit();
-	const { formatNumber, stripParams } = useUtils();
+	const { formatNumber, fixSource } = useUtils();
 
 	const items = ref([
 		{

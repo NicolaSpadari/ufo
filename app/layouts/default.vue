@@ -2,11 +2,11 @@
 	<div>
 		<SiteHeader />
 
-		<UContainer v-if="isAuthenticated">
+		<UContainer>
 			<UPage>
 				<template #left>
 					<UPageAside>
-						<SiteSidebar />
+						<SiteSidebar v-if="isAuthenticated" />
 					</UPageAside>
 				</template>
 
@@ -15,10 +15,6 @@
 				</UPageBody>
 			</UPage>
 		</UContainer>
-
-		<template v-else>
-			<slot />
-		</template>
 	</div>
 </template>
 

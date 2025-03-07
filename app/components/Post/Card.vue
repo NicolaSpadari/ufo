@@ -9,14 +9,18 @@
 		<template #header>
 			<PostHeading :post="props.post" />
 		</template>
-		<template #title>
-			<ProseP class="my-0">
-				{{ props.post.title }}
-			</ProseP>
-		</template>
 		<template #body>
-			<PostText v-if="props.post.selftext !== ''" :post="props.post" />
-			<PostMedia v-if="hasMedia" :post="props.post" />
+			<ProseP class="line-clamp-1 mt-0">
+				<NuxtLink :to="`/comments/${props.post.name}`">
+					{{ props.post.title }}
+				</NuxtLink>
+			</ProseP>
+			<div
+				v-if="props.post.is_self && props.post.selftext !== ''"
+				v-html="decodeHtml(props.post.selftext_html)"
+				class="line-clamp-4"
+			/>
+			<PostMedia v-else :post="props.post" />
 		</template>
 		<template #footer>
 			<PostActions :post="props.post" />
@@ -31,11 +35,5 @@
 		type?: string
 	}>();
 
-	const hasMedia = computed(() => {
-		return props.post.post_hint === "rich:video"
-			|| props.post.post_hint === "hosted:video"
-			|| props.post.is_gallery
-			|| props.post.post_hint === "image"
-			|| props.post.post_hint === "link";
-	});
+	const { decodeHtml } = useUtils();
 </script>

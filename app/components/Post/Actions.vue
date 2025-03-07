@@ -13,7 +13,7 @@
 			<UButton icon="i-lucide-chevron-down" variant="soft" color="neutral" :class="{ 'text-blue-500': downvoted }" @click="downvote()" />
 		</UButtonGroup>
 
-		<UButton leading-icon="lucide:message-circle" variant="ghost" color="neutral">
+		<UButton leading-icon="lucide:message-circle" variant="ghost" color="neutral" :to="`/comments/${props.post.name}`">
 			{{ formatNumber(props.post.num_comments) }}
 		</UButton>
 

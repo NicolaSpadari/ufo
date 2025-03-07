@@ -2,7 +2,7 @@
 	<div class="flex items-start justify-between">
 		<UUser
 			:avatar="{
-				src: stripParams(postIcon),
+				src: fixSource(postIcon),
 				alt: props.post.subreddit_name_prefixed
 			}"
 		>
@@ -43,7 +43,7 @@
 		post: Submission
 	}>();
 
-	const { stripParams, getTimeAgo } = useUtils();
+	const { fixSource, getTimeAgo } = useUtils();
 
 	const postIcon = computed(() => {
 		if (props.post.sr_detail?.icon_img !== "") return props.post.sr_detail?.icon_img;
