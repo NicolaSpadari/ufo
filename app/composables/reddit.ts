@@ -66,8 +66,6 @@ export const useReddit = () => {
 			}
 		});
 
-		console.log(data)
-
 		multireddits.value = data;
 
 		console.log("set multireddits done");
@@ -80,7 +78,7 @@ export const useReddit = () => {
 
 		await setUser(bearerToken);
 		await setSubscriptions(bearerToken);
-		// await setMultireddits(bearerToken);
+		await setMultireddits(bearerToken);
 
 		console.log("authorized done");
 
