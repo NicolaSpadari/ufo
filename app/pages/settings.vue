@@ -3,7 +3,7 @@
 		<UButton @click="setSubscriptions(bearerToken!)">
 			setSubscriptions
 		</UButton>
-		<UButton disabled @click="setMultireddits()">
+		<UButton @click="setMultireddits(bearerToken!)">
 			setMultireddits
 		</UButton>
 	</div>

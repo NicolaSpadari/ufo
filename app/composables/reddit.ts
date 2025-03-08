@@ -43,7 +43,7 @@ export const useReddit = () => {
 	const setSubscriptions = async (bearerToken: string) => {
 		console.log("call set subscriptions");
 
-		const data = await $fetch<Subscriptions>("/api/subreddits", {
+		const data = await $fetch<SubscriptionList>("/api/subreddits", {
 			query: {
 				bearerToken,
 				limit: 999
@@ -57,13 +57,18 @@ export const useReddit = () => {
 		console.log("set subscriptions done");
 	};
 
-	const setMultireddits = () => {
+	const setMultireddits = async (bearerToken: string) => {
 		console.log("call set multireddits");
 
-		// client.value!.getUser(user.value.name).getMultireddits().then((multis: MultiReddit[]) => {
-		// 	console.log("got", multis);
-		// 	multireddits.value = multis;
-		// });
+		const data = await $fetch<Multireddit[]>("/api/multireddits", {
+			query: {
+				bearerToken
+			}
+		});
+
+		console.log(data)
+
+		multireddits.value = data;
 
 		console.log("set multireddits done");
 	};

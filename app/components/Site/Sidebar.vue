@@ -7,15 +7,21 @@
 </template>
 
 <script setup lang="ts">
-	const { subscriptions, favorites, following } = useReddit();
+	const { subscriptions, favorites, following, multireddits } = useReddit();
 
 	const sidebarContent = ref([
-		// {
-		// 	title: "Multireddits",
-		// 	handle: "multireddits",
-		// 	multiredditList: multireddits,
-		// 	open: true
-		// },
+		{
+			label: "Multireddits",
+			icon: "lucide:copy",
+			children: multireddits.value.map((multireddit) => ({
+				label: multireddit.display_name,
+				avatar: {
+					src: multireddit.icon_url,
+					alt: "/m"
+				},
+				to: `/m/${multireddit.name}`
+			}))
+		},
 		{
 			label: "Favorites",
 			icon: "i-lucide-star",

@@ -1,4 +1,10 @@
 // Generic interfaces
+declare interface Multireddit {
+	subreddits: {
+		name: string
+	}[]
+	[key: string]: any
+}
 declare interface Subreddit {
 	[key: string]: any
 }
@@ -8,14 +14,15 @@ declare interface RedditUser {
 declare interface Submission {
 	[key: string]: any
 }
-declare interface Multireddit {
-	[key: string]: any
-}
 declare interface Comment {
 	[key: string]: any
 }
 
 // Raw interfaces
+declare interface RawMultireddit {
+	kind: string
+	data: Multireddit
+}
 declare interface RawSubreddit {
 	kind: string
 	data: Subreddit
