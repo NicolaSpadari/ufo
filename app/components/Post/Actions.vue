@@ -72,4 +72,20 @@
 		}
 		console.log("downvote");
 	};
+
+	// const { data: upvoteStatus, execute: upvote } = await useFetch("/api/vote", {
+	// 	method: "POST",
+	// 	immediate: false,
+	// 	body: {
+	// 		dir: 1,
+	// 		link: props.post.name
+	// 	},
+	// 	onRequest() {
+	// 		if (upvoted.value) {
+	// 			unvote();
+	// 			return;
+	// 		};
+	// 		console.log("upvote");
+	// 	}
+	// });
 </script>
