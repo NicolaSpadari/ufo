@@ -2,7 +2,6 @@
 	<UNavigationMenu
 		orientation="vertical"
 		:items="sidebarContent"
-		class="data-[orientation=vertical]:w-48"
 	/>
 </template>
 

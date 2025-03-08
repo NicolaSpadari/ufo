@@ -18,6 +18,11 @@ export default defineAppConfig({
 				item: "cursor-pointer"
 			}
 		},
+		navigationMenu: {
+			slots: {
+				link: "cursor-pointer"
+			}
+		},
 		modal: {
 			slots: {
 				description: "mt-0"

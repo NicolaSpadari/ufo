@@ -1,6 +1,12 @@
 <template>
 	<div class="flex flex-col gap-y-5">
-		<SubredditBanner type="subreddit" :subreddit="subreddit" />
+		<Transition name="fade" mode="out-in">
+			<SubredditBanner
+				v-if="subreddit"
+				type="subreddit"
+				:subreddit="subreddit"
+			/>
+		</Transition>
 
 		<FeedFilter />
 
