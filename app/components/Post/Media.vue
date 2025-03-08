@@ -16,7 +16,12 @@
 			/>
 		</div>
 
-		<div v-if="post.post_hint === 'rich:video'" class="video-wrapper w-full" h="42rem" v-html="post.secure_media_embed?.content?.replace('position:absolute;', '')" />
+		<ClientOnly v-if="post.post_hint === 'rich:video'">
+			<div
+				class="video-wrapper w-full max-h-[36rem]"
+				v-html="decodeHtml(post.secure_media_embed?.content?.replace('position:absolute;', ''))"
+			/>
+		</ClientOnly>
 
 		<div v-if="post.post_hint === 'hosted:video'">
 			<media-player
@@ -100,7 +105,7 @@
 
 	const img = useImage();
 	const { modalOpen, activeMedia } = useUI();
-	const { fixSource } = useUtils();
+	const { fixSource, decodeHtml } = useUtils();
 
 	const previewImage = computed(() => {
 		if (props.post.is_reddit_media_domain) return props.post.url;

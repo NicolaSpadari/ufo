@@ -24,7 +24,8 @@
 				avatar: {
 					src: favorite.icon_img,
 					alt: favorite.display_name_prefixed
-				}
+				},
+				to: favorite.url
 			}))
 		},
 		{
@@ -35,7 +36,8 @@
 				avatar: {
 					src: following.icon_img,
 					alt: following.display_name_prefixed
-				}
+				},
+				to: following.url
 			}))
 		},
 		{
@@ -46,7 +48,8 @@
 				avatar: {
 					src: subscription.icon_img,
 					alt: subscription.display_name_prefixed
-				}
+				},
+				to: subscription.url
 			}))
 		}
 	]);

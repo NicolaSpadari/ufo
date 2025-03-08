@@ -15,11 +15,12 @@
 					{{ props.post.title }}
 				</NuxtLink>
 			</ProseP>
-			<div
-				v-if="props.post.is_self && props.post.selftext !== ''"
-				v-html="decodeHtml(props.post.selftext_html)"
-				class="line-clamp-4"
-			/>
+			<ClientOnly v-if="props.post.is_self && props.post.selftext !== ''">
+				<div
+					v-html="decodeHtml(props.post.selftext_html)"
+					class="line-clamp-4"
+				/>
+			</ClientOnly>
 			<PostMedia v-else :post="props.post" />
 		</template>
 		<template #footer>

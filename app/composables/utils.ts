@@ -76,10 +76,10 @@ export const useUtils = () => {
 
 	const decodeHtml = (text: string) => {
 		return new DOMParser()
-			.parseFromString(text, 'text/html')
+			.parseFromString(text, "text/html")
 			.documentElement
 			.textContent;
-	}
+	};
 
 	return {
 		formatNumber,
