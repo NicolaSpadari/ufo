@@ -7,7 +7,7 @@
 			}"
 		>
 			<template #name>
-				<ULink :to="props.post.subreddit_name_prefixed">
+				<ULink :to="`/${props.post.subreddit_name_prefixed}`">
 					{{ props.post.subreddit_name_prefixed }}
 				</ULink>
 			</template>

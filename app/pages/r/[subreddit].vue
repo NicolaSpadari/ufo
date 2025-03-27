@@ -50,6 +50,7 @@
 
 	const { data: posts, status, execute: loadFeed } = await useLazyFetch("/api/feed", {
 		query: {
+			type: "subreddit",
 			isAuthenticated,
 			order,
 			sort,

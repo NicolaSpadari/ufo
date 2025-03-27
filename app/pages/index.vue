@@ -24,9 +24,11 @@
 	const { isAuthenticated, order, sort } = useReddit();
 	const after = ref<string | undefined>();
 	const fetchedPosts = ref<Submission[]>([]);
+	const isFirstLoad = ref(true);
 
 	const { data: posts, status, execute: loadFeed } = await useLazyFetch("/api/feed", {
 		query: {
+			type: "subreddit",
 			isAuthenticated,
 			order,
 			sort,
@@ -34,7 +36,14 @@
 		},
 		transform: (feed: RedditResponse<RawSubmission>) => {
 			const newPosts = feed.data.children?.map((child) => child.data) || [];
-			fetchedPosts.value.push(...newPosts);
+
+			if (isFirstLoad.value) {
+				fetchedPosts.value = newPosts;
+				isFirstLoad.value = false;
+			} else {
+				fetchedPosts.value.push(...newPosts);
+			}
+
 			return fetchedPosts.value;
 		}
 	});

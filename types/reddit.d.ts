@@ -35,6 +35,10 @@ declare interface RawComment {
 	kind: string
 	data: Comment
 }
+declare interface RawUser {
+	kind: string
+	data: RedditUser
+}
 
 // API responses
 declare interface RedditData<T> {
