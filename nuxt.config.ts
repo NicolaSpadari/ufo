@@ -1,5 +1,5 @@
 import { vite as vidstack } from "vidstack/plugins";
-import { appDescription, appName, productionUrl } from "./constants";
+import { appDescription, productionUrl } from "./constants";
 
 export default defineNuxtConfig({
 	modules: [
@@ -35,7 +35,7 @@ export default defineNuxtConfig({
 				{ name: "format-detection", content: "no" }
 			],
 			noscript: [
-				{ children: "JavaScript is required to run this project" }
+				{ textContent: "JavaScript is required to run this project" }
 			]
 		},
 		pageTransition: {

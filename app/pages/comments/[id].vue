@@ -18,7 +18,7 @@
 			return post.data.children[0]?.data || null;
 		}
 	});
-	console.log(submission)
+	console.log(submission);
 
 	const { data: comments } = await useFetch("/api/comments", {
 		query: {

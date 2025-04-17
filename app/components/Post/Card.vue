@@ -17,8 +17,8 @@
 			</ProseP>
 			<ClientOnly v-if="props.post.is_self && props.post.selftext !== ''">
 				<div
-					v-html="decodeHtml(props.post.selftext_html)"
 					class="line-clamp-4"
+					v-html="decodeHtml(props.post.selftext_html)"
 				/>
 			</ClientOnly>
 			<PostMedia v-else :post="props.post" />

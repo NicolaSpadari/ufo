@@ -7,7 +7,7 @@
 		comments: Comment[]
 	}>();
 
-	console.log(props.comments)
+	console.log(props.comments);
 
 	const commentList = props.comments.map((comment) => {
 		return [
@@ -19,6 +19,6 @@
 					}
 				]
 			}
-		]
-	})
+		];
+	});
 </script>
