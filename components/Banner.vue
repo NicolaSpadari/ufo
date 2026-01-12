@@ -12,9 +12,9 @@
 		</div>
 		<div mt="-15" flex items-end gap-4 p-3>
 			<SubredditIcon :image="props.type === 'subreddit' ? getIcon(props.subreddit) : props.redditor?.snoovatar_img" size="big" />
-			<h1 text-3xl text-light font-bold font-heading>
+			<NuxtLink :to="link" text-3xl text-light font-bold font-heading>
 				{{ props.type === "subreddit" ? props.subreddit?.display_name_prefixed : `u/${props.redditor?.name}` }}
-			</h1>
+			</NuxtLink>
 		</div>
 	</div>
 </template>
@@ -27,4 +27,9 @@
 	}>();
 
 	const { getIcon } = useUtils();
+
+	const link = computed(() => {
+		const domain = "https://www.reddit.com";
+		return props.type === "subreddit" ? `${domain}/${props.subreddit?.display_name_prefixed.toLowerCase()}` : `${domain}/u/${props.redditor?.name}`;
+	});
 </script>
